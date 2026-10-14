@@ -1,6 +1,6 @@
 {
  "version": 1,
- "updated": "",
+ "updated": "2026-10-14T20:37:57.140Z",
  "contact": {
   "telegram": "@gwat",
   "instagram": "@gwat.design",
@@ -305,14 +305,6 @@
   }
  ],
  "graphic": [
-  {
-   "id": "g1",
-   "title": "پوستر برند گوات",
-   "cat": "برندینگ",
-   "meta": "هویت شخصی · ۴:۵",
-   "concept": false,
-   "img": "assets/img/g1.jpg"
-  },
   {
    "id": "g2",
    "title": "استوری یاسین دبی",
