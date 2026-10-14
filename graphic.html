@@ -44,12 +44,14 @@
     <p class="note">طرح‌هایی که نشان «طرح مفهومی» دارند برای نمایش سبک ساخته شده‌اند و سفارش مشتری نبوده‌اند.</p>
   </section>
 </main>
+<script src="assets/content.js"></script>
+<script src="assets/render.js"></script>
 <script src="assets/sig.js"></script>
 <script src="assets/gl3d.js"></script>
 <script src="assets/app.js"></script>
 <script src="assets/fx.js"></script>
 <script>
-const works=[
+const works=window.SITE&&SITE.graphic?SITE.graphic.map(g=>({id:g.id,t:g.title,c:g.cat,m:g.meta,k:g.concept,img:g.img})):[
  {id:'g1',t:'پوستر برند گوات',c:'برندینگ',m:'هویت شخصی · ۴:۵'},
  {id:'g2',t:'استوری یاسین دبی',c:'استوری',m:'Yasin automedia · ۹:۱۶'},
  {id:'g3',t:'پوستر شب یلدا',c:'پوستر',m:'مناسبتی · ۴:۵',k:1},
@@ -60,8 +62,8 @@ const works=[
  {id:'g6',t:'کاور آلبوم شب‌های تهران',c:'پوستر',m:'کاور موسیقی · ۱:۱',k:1}];
 const cats=['همه',...new Set(works.map(w=>w.c))];
 const grid=document.getElementById('grid'),fil=document.getElementById('filters');
-let curCat='همه';const cache={};const opener=()=>cache[curCat]||(cache[curCat]=lightbox(works.filter(w=>curCat==='همه'||w.c===curCat).map(w=>({src:`assets/img/${w.id}.jpg`,title:w.t,meta:w.m}))));
-works.forEach((w,i)=>{grid.insertAdjacentHTML('beforeend',`<button class="item rv" type="button" id="${w.id}" data-c="${w.c}" aria-label="نمایش بزرگ: ${w.t}"><div class="fr">${w.k?'<span class="badge">طرح مفهومی</span>':''}<span class="zoom" aria-hidden="true">⤢</span><img src="assets/img/${w.id}.jpg" alt="${w.t}" loading="lazy"></div><div class="cap"><b>${w.t}</b><span>${w.c}</span></div></button>`)});
+let curCat='همه';const cache={};const opener=()=>cache[curCat]||(cache[curCat]=lightbox(works.filter(w=>curCat==='همه'||w.c===curCat).map(w=>({src:`${w.img||`assets/img/${w.id}.jpg`}`,title:w.t,meta:w.m}))));
+works.forEach((w,i)=>{grid.insertAdjacentHTML('beforeend',`<button class="item rv" type="button" id="${w.id}" data-c="${w.c}" aria-label="نمایش بزرگ: ${w.t}"><div class="fr">${w.k?'<span class="badge">طرح مفهومی</span>':''}<span class="zoom" aria-hidden="true">⤢</span><img src="${w.img||`assets/img/${w.id}.jpg`}" alt="${w.t}" loading="lazy"></div><div class="cap"><b>${w.t}</b><span>${w.c}</span></div></button>`)});
 grid.querySelectorAll('.item').forEach(b=>b.onclick=()=>{const vis=[...grid.querySelectorAll('.item:not(.hide)')];opener()(vis.indexOf(b))});
 cats.forEach((c,i)=>{const n=c==='همه'?works.length:works.filter(w=>w.c===c).length;fil.insertAdjacentHTML('beforeend',`<button type="button" aria-pressed="${i===0}">${c}<span>${fa(n)}</span></button>`)});
 fil.querySelectorAll('button').forEach(b=>b.onclick=()=>{fil.querySelectorAll('button').forEach(x=>x.setAttribute('aria-pressed',x===b));const c=b.firstChild.textContent;curCat=c;grid.querySelectorAll('.item').forEach(it=>it.classList.toggle('hide',c!=='همه'&&it.dataset.c!==c))});

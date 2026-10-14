@@ -1,6 +1,5 @@
-<!doctype html><html lang="fa" dir="rtl"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><link rel="icon" href="assets/img/mark.svg">
 <title>گوات</title>
-<link rel="stylesheet" href="assets/style.css"></head><body>
+<link rel="stylesheet" href="assets/style.css">
 <style>
 /* home: dusk-sky hero with a 3D gold signature, statement, featured web, graphic strip, bento, 3D coin CTA */
 .hero{position:relative;min-height:100vh;min-height:100svh;display:flex;flex-direction:column;justify-content:flex-end;overflow:hidden;isolation:isolate;perspective:1200px}
@@ -301,6 +300,8 @@
   </section>
 </main>
 
+<script src="assets/content.js"></script>
+<script src="assets/render.js"></script>
 <script src="assets/sig.js"></script>
 <script src="assets/gl3d.js"></script>
 <script src="assets/app.js"></script>
@@ -349,9 +350,10 @@ document.querySelectorAll('[data-arrow]').forEach(s=>s.outerHTML=ICON_ARROW.repl
 
 /* 3D poster ring: auto-spins, drag to rotate, scroll gives it a push */
 (function(){
-  const items=[['g3','پوستر یلدا'],['g1','پوستر برند گوات'],['g4','پوستر نوروز'],['g2','استوری یاسین دبی'],['g5','بسته‌بندی قهوه'],['g7','کاروسل اینستاگرام'],['g6','کاور آلبوم'],['g8','استوری طوطیا']];
+  const DEF=[['g3','پوستر یلدا'],['g1','پوستر برند گوات'],['g4','پوستر نوروز'],['g2','استوری یاسین دبی'],['g5','بسته‌بندی قهوه'],['g7','کاروسل اینستاگرام'],['g6','کاور آلبوم'],['g8','استوری طوطیا']];
+  const items=window.SITE&&SITE.graphic&&SITE.graphic.length?SITE.graphic.slice(0,8).map(g=>[g.id,g.title,g.img]):DEF;
   const ring=document.getElementById('ring'),st=document.getElementById('ringStage'),n=items.length;
-  ring.innerHTML=items.map(([id,t])=>`<a href="graphic.html#${id}" draggable="false"><img src="assets/img/${id}.jpg" alt="${t}" loading="lazy"><span>${t}</span></a>`).join('');
+  ring.innerHTML=items.map(([id,t,src])=>`<a href="graphic.html#${id}" draggable="false"><img src="${src||`assets/img/${id}.jpg`}" alt="${t}" loading="lazy"><span>${t}</span></a>`).join('');
   const cards=[...ring.children];let R=0;
   function layout(){const cw=parseFloat(getComputedStyle(ring).getPropertyValue('--cw'));R=Math.round((cw/2)/Math.tan(Math.PI/n)*1.18);cards.forEach((c,i)=>c.style.transform=`rotateY(${i*360/n}deg) translateZ(${R}px)`)}
   layout();addEventListener('resize',layout);
@@ -369,4 +371,3 @@ document.querySelectorAll('[data-arrow]').forEach(s=>s.outerHTML=ICON_ARROW.repl
     requestAnimationFrame(loop)})();
 })();
 </script>
-</body></html>

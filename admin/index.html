@@ -1,0 +1,564 @@
+<!doctype html>
+<html lang="fa" dir="rtl"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>پنل گوات</title>
+<meta name="robots" content="noindex">
+<link rel="icon" href="../assets/img/mark.svg">
+<style>
+@font-face{font-family:"Yekan Bakh";src:url("../assets/fonts/YekanBakh-Regular.woff2") format("woff2");font-weight:400;font-display:swap}
+@font-face{font-family:"Yekan Bakh";src:url("../assets/fonts/YekanBakh-SemiBold.woff2") format("woff2");font-weight:600;font-display:swap}
+@font-face{font-family:"Yekan Bakh";src:url("../assets/fonts/YekanBakh-Bold.woff2") format("woff2");font-weight:700;font-display:swap}
+@font-face{font-family:"Paykan";src:url("../assets/fonts/Paykan-800.woff2") format("woff2");font-weight:800;font-display:swap}
+/* Gwat admin: near-black surfaces, one violet accent (from the reference shot), sidebar + topbar + card grid */
+:root{--bg:#09090c;--side:#0d0d11;--panel:#121217;--card:#17171e;--card-2:#1d1d26;--line:#ffffff12;--line-2:#ffffff1f;
+  --v:#5b4bdb;--v2:#7b6cf2;--v3:#a99dff;--vbg:#5b4bdb22;--text:#ececf1;--dim:#ececf1b3;--mute:#8b8b99;
+  --good:#3ccf91;--warn:#f5b14c;--bad:#ef5b5b;--fa:"Yekan Bakh",Tahoma,system-ui,sans-serif;color-scheme:dark}
+*{box-sizing:border-box}
+html,body{height:100%}
+body{margin:0;background:var(--bg);color:var(--text);font-family:var(--fa);font-size:14px;line-height:1.75;-webkit-font-smoothing:antialiased}
+button,input,select,textarea{font:inherit;color:inherit}
+a{color:inherit;text-decoration:none}
+:focus-visible{outline:2px solid var(--v2);outline-offset:2px;border-radius:8px}
+h1,h2,h3{margin:0;font-weight:700;line-height:1.4}
+.fa{font-variant-numeric:tabular-nums}
+svg.i{width:18px;height:18px;flex:none;fill:none;stroke:currentColor;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;border:0;border-radius:12px;padding:10px 18px;background:var(--v);color:#fff;font-weight:700;cursor:pointer;transition:background .2s,transform .2s,opacity .2s;white-space:nowrap}
+.btn:hover{background:var(--v2)}.btn:active{transform:scale(.97)}
+.btn.ghost{background:var(--card);color:var(--text);border:1px solid var(--line-2)}.btn.ghost:hover{background:var(--card-2)}
+.btn.danger{background:#ef5b5b1f;color:var(--bad)}.btn.danger:hover{background:#ef5b5b33}
+.btn.sm{padding:6px 12px;font-size:13px;border-radius:10px}
+.btn[disabled]{opacity:.45;pointer-events:none}
+.field{display:flex;flex-direction:column;gap:6px}
+.field label{font-size:12.5px;color:var(--mute)}
+.inp,textarea.inp,select.inp{width:100%;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:10px 14px;outline:none;transition:border-color .2s,background .2s}
+.inp:focus{border-color:var(--v2);background:var(--card-2)}
+textarea.inp{min-height:90px;resize:vertical;line-height:1.9}
+.hint{font-size:12px;color:var(--mute)}
+.ltr{direction:ltr;text-align:left}
+
+/* ---------- login (split, like the reference) ---------- */
+#login{position:fixed;inset:0;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);background:var(--bg);z-index:50}
+.lg-art{position:relative;margin:14px;border-radius:26px;overflow:hidden;background:#111 center/cover}
+.lg-art img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.lg-art::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,#09090c00 50%,#09090ccc)}
+.lg-art b{position:absolute;top:28px;right:30px;z-index:1;font-family:Paykan;font-size:30px;font-weight:800;color:#fff}
+.lg-art p{position:absolute;bottom:26px;right:30px;left:30px;z-index:1;margin:0;color:#fffc;font-size:13px}
+.lg-form{display:flex;flex-direction:column;justify-content:center;padding:clamp(24px,6vw,90px);max-width:560px;width:100%;margin-inline:auto;gap:14px}
+.lg-form h1{font-family:Paykan;font-weight:800;font-size:clamp(30px,3.6vw,44px)}
+.lg-form h1 span{color:var(--v2)}
+.lg-form .sub{color:var(--mute);margin:-6px 0 10px}
+.lg-form .sub button{background:none;border:0;color:var(--v3);cursor:pointer;padding:0}
+.lg-or{display:flex;align-items:center;gap:12px;color:var(--mute);font-size:12px}.lg-or::before,.lg-or::after{content:"";flex:1;height:1px;background:var(--line)}
+.chk{display:flex;align-items:center;gap:8px;font-size:13px;color:var(--dim);cursor:pointer}
+.chk input{accent-color:var(--v);width:16px;height:16px}
+.err{color:var(--bad);font-size:13px;min-height:20px}
+@media (max-width:860px){#login{grid-template-columns:1fr}.lg-art{display:none}}
+
+/* ---------- shell ---------- */
+#app{display:grid;grid-template-columns:250px minmax(0,1fr);height:100%}
+#app[hidden]{display:none}
+.side{background:var(--side);border-left:1px solid var(--line);display:flex;flex-direction:column;padding:18px 14px;gap:6px;overflow:auto}
+.brand{display:flex;align-items:center;gap:10px;padding:4px 8px 18px}
+.brand .lg{font-family:Paykan;font-weight:800;font-size:22px;color:var(--v2)}
+.brand b{display:block;font-size:13.5px}.brand small{color:var(--mute);font-size:11.5px}
+.nav{display:flex;flex-direction:column;gap:2px}
+.nav a{display:flex;align-items:center;gap:12px;padding:9px 12px;border-radius:12px;color:var(--dim);font-size:14px;transition:background .2s,color .2s;position:relative}
+.nav a:hover{background:#ffffff08;color:var(--text)}
+.nav a.on{background:var(--vbg);color:#fff}
+.nav a.on::before{content:"";position:absolute;right:-14px;top:8px;bottom:8px;width:3px;border-radius:3px;background:var(--v2)}
+.nav .badge{margin-inline-start:auto;font-size:11px;background:var(--v);color:#fff;border-radius:999px;padding:0 7px}
+.nav-sep{font-size:11px;color:var(--mute);padding:12px 12px 4px}
+.me{margin-top:auto;display:flex;align-items:center;gap:10px;padding:10px;border-radius:14px;background:var(--panel);border:1px solid var(--line)}
+.av{width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,var(--v2),#2c2470);display:grid;place-items:center;font-weight:700;overflow:hidden;flex:none}
+.av img{width:100%;height:100%;object-fit:cover}
+.me b{font-size:13px;display:flex;align-items:center;gap:4px}.me small{color:var(--mute);font-size:11.5px;direction:ltr;display:block}
+.md{font-size:10.5px;letter-spacing:.14em;color:var(--mute);text-align:center;direction:ltr;padding-top:10px}
+.main{display:flex;flex-direction:column;min-width:0;height:100%;overflow:hidden}
+.top{display:flex;align-items:center;gap:12px;padding:14px 24px;border-bottom:1px solid var(--line);background:#09090ce6;backdrop-filter:blur(10px)}
+.search{flex:1;max-width:420px;display:flex;align-items:center;gap:8px;background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:8px 12px;color:var(--mute)}
+.search input{flex:1;background:none;border:0;outline:none;min-width:0}
+.top .sp{flex:1}
+.icon-btn{position:relative;width:40px;height:40px;border-radius:12px;border:1px solid var(--line);background:var(--panel);display:grid;place-items:center;cursor:pointer;color:var(--dim)}
+.icon-btn:hover{color:var(--text)}
+.icon-btn .dot{position:absolute;top:8px;left:9px;width:8px;height:8px;border-radius:50%;background:var(--warn);box-shadow:0 0 0 3px var(--panel)}
+.menu-btn{display:none}
+.view{flex:1;overflow:auto;padding:24px;scroll-behavior:smooth}
+.vh{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:18px}
+.vh h1{font-size:22px}
+.vh p{margin:2px 0 0;color:var(--mute);font-size:13px}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:20px;padding:18px}
+.card h3{font-size:15px;display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:12px}
+.card h3 small{font-size:12px;color:var(--mute);font-weight:400}
+.grid{display:grid;gap:16px}
+.g-dash{grid-template-columns:minmax(0,1.7fr) minmax(0,1fr)}
+.g-2{grid-template-columns:repeat(2,minmax(0,1fr))}
+@media (max-width:1100px){.g-dash{grid-template-columns:1fr}}
+@media (max-width:760px){.g-2{grid-template-columns:1fr}}
+
+/* overview gradient card */
+.ov{background:linear-gradient(160deg,#1a1730 0%,#2a2163 55%,#5b4bdb 130%);border:1px solid #7b6cf244;border-radius:22px;padding:18px;position:relative;overflow:hidden}
+.ov::after{content:"";position:absolute;inset:auto -10% -60% 20%;height:120%;background:radial-gradient(closest-side,#7b6cf266,transparent);pointer-events:none}
+.ov h3{margin-bottom:14px}
+.tiles{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;position:relative;z-index:1}
+.tile{background:#0b0b10e6;border:1px solid #ffffff14;border-radius:16px;padding:14px;transition:transform .3s}
+.tile:hover{transform:translateY(-3px)}
+.tile .ic{width:34px;height:34px;border-radius:10px;display:grid;place-items:center;background:var(--vbg);color:var(--v3);margin-bottom:10px}
+.tile b{display:block;font-size:22px;line-height:1.3}
+.tile span{font-size:12.5px}.tile small{display:block;color:var(--mute);font-size:11px}
+@media (max-width:760px){.tiles{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.chart{width:100%;height:auto;display:block;overflow:visible}
+.chart text{fill:var(--mute);font-size:10px;font-family:var(--fa)}
+.chart .ln{fill:none;stroke:var(--v2);stroke-width:2;stroke-linejoin:round;stroke-linecap:round}
+.chart .ar{fill:url(#ga)}
+.chart .gd{stroke:#ffffff10}
+.chart .pt{fill:var(--bg);stroke:var(--v2);stroke-width:2}
+.chart .bar{fill:var(--v);transition:opacity .2s}.chart .bar:hover{opacity:.8}
+.cal{display:flex;align-items:center;gap:6px;justify-content:space-between}
+.cal .d{flex:1;text-align:center;border-radius:12px;padding:8px 0;font-size:12px;color:var(--mute);position:relative}
+.cal .d b{display:block;color:var(--text);font-size:15px}
+.cal .d.today{background:var(--v);color:#fff}.cal .d.today b{color:#fff}
+.cal .d.has::after{content:"";position:absolute;bottom:3px;left:50%;width:5px;height:5px;margin-left:-2.5px;border-radius:50%;background:var(--good)}
+.list{display:flex;flex-direction:column;gap:8px}
+.row{display:flex;align-items:center;gap:12px;padding:10px 12px;border-radius:14px;background:var(--card);border:1px solid var(--line)}
+.row .t{flex:1;min-width:0}
+.row .t b{display:block;font-size:13.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.row .t small{color:var(--mute);font-size:12px}
+.row img.th{width:62px;height:42px;border-radius:8px;object-fit:cover;background:#000;flex:none}
+.pill{display:inline-flex;align-items:center;gap:6px;font-size:12px;padding:2px 10px;border-radius:999px;background:var(--card-2);color:var(--dim);white-space:nowrap}
+.pill.good{background:#3ccf9122;color:var(--good)}.pill.warn{background:#f5b14c22;color:var(--warn)}.pill.bad{background:#ef5b5b22;color:var(--bad)}.pill.v{background:var(--vbg);color:var(--v3)}
+.pill i{width:6px;height:6px;border-radius:50%;background:currentColor}
+
+/* editors */
+.form{display:grid;gap:14px}
+.f2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+@media (max-width:640px){.f2{grid-template-columns:1fr}}
+.prev-hero{border-radius:18px;padding:30px 20px;text-align:center;background:radial-gradient(80% 90% at 50% 120%,#c98f5e55,transparent),linear-gradient(180deg,#0c0b10,#3d2f3a);border:1px solid var(--line)}
+.prev-hero small{color:#f1d79a;font-size:12px}.prev-hero h2{font-family:Paykan;font-weight:800;font-size:26px;margin:8px 0;color:#efe8da;line-height:1.5}.prev-hero p{color:#efe8dacc;font-size:13px;margin:0 auto;max-width:44ch}
+.items{display:grid;gap:10px}
+.item{display:grid;grid-template-columns:auto 92px minmax(0,1fr) auto;gap:14px;align-items:center;padding:10px;border-radius:16px;background:var(--card);border:1px solid var(--line);transition:border-color .2s,transform .3s}
+.item:hover{border-color:var(--line-2)}
+.item img{width:92px;height:62px;border-radius:10px;object-fit:cover;background:#000}
+.item .t b{display:block;font-size:14.5px}.item .t small{color:var(--mute);font-size:12px}
+.item .acts{display:flex;gap:6px;flex-wrap:wrap;justify-content:flex-end}
+.ord{display:flex;flex-direction:column;gap:2px}
+.ord button{width:28px;height:22px;border-radius:7px;border:1px solid var(--line);background:var(--panel);cursor:pointer;color:var(--dim);font-size:11px;line-height:1}
+.ord button:hover{color:#fff;border-color:var(--v2)}
+@media (max-width:640px){.item{grid-template-columns:auto 70px minmax(0,1fr)}.item img{width:70px;height:50px}.item .acts{grid-column:1/-1;justify-content:flex-start}}
+.ggrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:12px}
+.gcard{background:var(--card);border:1px solid var(--line);border-radius:16px;overflow:hidden;display:flex;flex-direction:column}
+.gcard img{width:100%;aspect-ratio:4/5;object-fit:cover;background:#000}
+.gcard .b{padding:10px 12px;display:flex;flex-direction:column;gap:6px}
+.gcard .b b{font-size:13.5px}.gcard .b small{color:var(--mute);font-size:12px}
+.gcard .acts{display:flex;gap:4px;flex-wrap:wrap}
+.up{display:flex;align-items:center;gap:12px;padding:10px;border:1px dashed var(--line-2);border-radius:14px;background:var(--card)}
+.up img{width:84px;height:56px;border-radius:8px;object-fit:cover;background:#000}
+.up .t{flex:1;min-width:0;font-size:12.5px;color:var(--mute);word-break:break-all}
+.drop{border:2px dashed #7b6cf266;border-radius:20px;padding:34px 20px;text-align:center;background:var(--vbg);cursor:pointer;transition:background .2s,border-color .2s}
+.drop:hover,.drop.over{background:#5b4bdb33;border-color:var(--v2)}
+.drop b{display:block;font-size:16px;margin:8px 0 4px}
+.drop svg{width:40px;height:40px;color:var(--v3)}
+.tbl{width:100%;border-collapse:collapse;font-size:13px}
+.tbl th{color:var(--mute);font-weight:400;text-align:right;padding:8px;border-bottom:1px solid var(--line)}
+.tbl td{padding:8px;border-bottom:1px solid var(--line);vertical-align:middle}
+.tbl td.p{direction:ltr;text-align:left;font-family:ui-monospace,Menlo,monospace;font-size:12px;word-break:break-all}
+.tbl-wrap{overflow:auto;max-height:380px;border:1px solid var(--line);border-radius:14px}
+.tabs{display:flex;gap:4px;border-bottom:1px solid var(--line);margin-bottom:16px;overflow:auto}
+.tabs button{background:none;border:0;padding:10px 14px;color:var(--mute);cursor:pointer;display:flex;align-items:center;gap:6px;border-bottom:2px solid transparent;white-space:nowrap}
+.tabs button.on{color:#fff;border-color:var(--v2)}
+.steps-mini{display:grid;gap:10px;counter-reset:s;margin:0;padding:0;list-style:none}
+.steps-mini li{counter-increment:s;display:grid;grid-template-columns:28px 1fr;gap:10px;align-items:start}
+.steps-mini li::before{content:counter(s,persian);width:26px;height:26px;border-radius:8px;background:var(--vbg);color:var(--v3);display:grid;place-items:center;font-size:12px;font-weight:700}
+.steps-mini code{direction:ltr;unicode-bidi:isolate;background:var(--card-2);padding:0 6px;border-radius:6px;font-size:12px}
+.media{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:10px}
+.media div{background:var(--card);border:1px solid var(--line);border-radius:12px;overflow:hidden}
+.media img{width:100%;aspect-ratio:4/3;object-fit:cover;background:#000;display:block}
+.media span{display:block;font-size:11px;padding:6px 8px;direction:ltr;text-align:left;color:var(--mute);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;cursor:pointer}
+.media span:hover{color:var(--v3)}
+
+/* drawer + modal */
+.scrim{position:fixed;inset:0;background:#000a;backdrop-filter:blur(4px);z-index:60;opacity:0;visibility:hidden;transition:opacity .3s,visibility .3s}
+.scrim.on{opacity:1;visibility:visible}
+.drawer{position:fixed;top:0;bottom:0;left:0;width:min(520px,100%);background:var(--panel);border-right:1px solid var(--line);z-index:61;transform:translateX(-102%);transition:transform .45s cubic-bezier(.2,.9,.25,1);display:flex;flex-direction:column}
+.drawer.on{transform:none}
+.drawer header{display:flex;justify-content:space-between;align-items:center;padding:16px 20px;border-bottom:1px solid var(--line)}
+.drawer .bd{flex:1;overflow:auto;padding:20px}
+.drawer footer{display:flex;gap:8px;padding:14px 20px;border-top:1px solid var(--line);padding-bottom:calc(14px + env(safe-area-inset-bottom,0px))}
+.modal{position:fixed;left:50%;top:50%;z-index:62;width:min(560px,calc(100vw - 24px));max-height:calc(100vh - 24px);overflow:auto;background:var(--panel);border:1px solid var(--line-2);border-radius:22px;padding:24px;translate:-50% -46%;opacity:0;visibility:hidden;transition:all .35s cubic-bezier(.2,.9,.25,1.1)}
+.modal.on{translate:-50% -50%;opacity:1;visibility:visible}
+.stepper{display:flex;align-items:flex-start;margin:22px 0 18px}
+.stepper .s{flex:1;text-align:center;position:relative;font-size:12px;color:var(--mute)}
+.stepper .s::before{content:"";position:absolute;top:7px;right:50%;width:100%;height:2px;background:var(--line-2)}
+.stepper .s:first-child::before{display:none}
+.stepper .s i{position:relative;z-index:1;display:block;width:16px;height:16px;margin:0 auto 8px;border-radius:50%;background:var(--card-2);border:2px solid var(--line-2);transition:all .3s}
+.stepper .s.done{color:var(--text)}.stepper .s.done i{background:var(--v);border-color:var(--v)}.stepper .s.done::before{background:var(--v)}
+.stepper .s.act{color:#fff}.stepper .s.act i{border-color:var(--v2);box-shadow:0 0 0 5px var(--vbg);animation:pulse 1.2s infinite}
+.stepper .s.err i{background:var(--bad);border-color:var(--bad)}
+@keyframes pulse{50%{box-shadow:0 0 0 9px #5b4bdb11}}
+.log{font-size:12.5px;color:var(--mute);background:var(--card);border-radius:12px;padding:10px 12px;max-height:140px;overflow:auto;white-space:pre-wrap}
+#toast{position:fixed;bottom:calc(20px + env(safe-area-inset-bottom,0px));left:50%;translate:-50% 140px;z-index:90;background:var(--card-2);border:1px solid var(--line-2);border-radius:14px;padding:10px 18px;box-shadow:0 20px 50px -10px #000;transition:translate .5s cubic-bezier(.2,.9,.25,1.2);max-width:calc(100vw - 32px)}
+#toast.on{translate:-50% 0}
+#toast.good{border-color:#3ccf9166}#toast.bad{border-color:#ef5b5b66}
+.demo-bar{background:#f5b14c1a;color:var(--warn);border:1px solid #f5b14c44;border-radius:12px;padding:8px 14px;font-size:13px;margin-bottom:16px}
+.pop{position:absolute;top:52px;left:0;width:300px;background:var(--panel);border:1px solid var(--line-2);border-radius:16px;padding:12px;z-index:30;box-shadow:0 30px 60px -20px #000;display:none}
+.pop.on{display:block}
+.skel{background:linear-gradient(90deg,var(--card),var(--card-2),var(--card));background-size:200% 100%;animation:sk 1.2s infinite;border-radius:10px;min-height:20px}
+@keyframes sk{to{background-position:-200% 0}}
+.fadein{animation:fi .5s cubic-bezier(.2,.8,.2,1) both}
+@keyframes fi{from{opacity:0;transform:translateY(10px)}}
+@media (max-width:900px){
+  #app{grid-template-columns:1fr}
+  .side{position:fixed;top:0;bottom:0;right:0;width:270px;z-index:55;transform:translateX(102%);transition:transform .4s cubic-bezier(.2,.9,.25,1)}
+  .side.on{transform:none}
+  .menu-btn{display:grid}
+  .top{padding:10px 14px}.view{padding:16px}
+  .top .hide-s{display:none}
+  .top{gap:8px}.search{min-width:0}#pubBtn{padding-inline:12px;white-space:nowrap;flex:none}
+}
+@media (max-width:480px){.search{display:none}.top .sp{display:block}}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style></head>
+<body>
+
+<!-- LOGIN -->
+<section id="login" aria-label="ورود به پنل">
+  <div class="lg-art"><img src="../assets/img/g1.jpg" alt=""><b>گوات</b><p>پنل مدیریت سایت · هر تغییر مستقیم روی GitHub ذخیره و منتشر می‌شود.</p></div>
+  <form class="lg-form" id="lgForm" novalidate>
+    <h1>به پنل <span>گوات</span> خوش آمدی</h1>
+    <p class="sub">برای ورود، توکن GitHub لازم است. <button type="button" data-open="help">توکن را چطور بسازم؟</button></p>
+    <div class="field"><label for="lgRepo">مخزن سایت</label><input class="inp ltr" id="lgRepo" value="gwatdesign/gwat" autocomplete="off" spellcheck="false"></div>
+    <div class="field"><label for="lgTok">توکن GitHub</label><input class="inp ltr" id="lgTok" type="password" placeholder="github_pat_…" autocomplete="current-password" spellcheck="false"></div>
+    <label class="chk"><input type="checkbox" id="lgRem" checked>روی همین مرورگر به خاطر بسپار</label>
+    <div class="err" id="lgErr" role="alert"></div>
+    <button class="btn" type="submit" id="lgBtn">ورود</button>
+    <div class="lg-or">یا</div>
+    <button class="btn ghost" type="button" id="lgDemo">ورود نمایشی (بدون انتشار)</button>
+  </form>
+</section>
+
+<!-- APP -->
+<div id="app" hidden>
+  <aside class="side" id="side">
+    <div class="brand"><span class="lg">گوات</span><div><b>پنل مدیریت سایت</b><small>gwatdesign.github.io</small></div></div>
+    <nav class="nav" id="nav" aria-label="بخش‌ها"></nav>
+    <div class="me"><div class="av" id="meAv">گ</div><div style="min-width:0"><b id="meName">گوات</b><small id="meLogin">—</small></div></div>
+    <div class="md">Made By M.D</div>
+  </aside>
+  <div class="main">
+    <header class="top">
+      <button class="icon-btn menu-btn" type="button" id="menuBtn" aria-label="منو"><svg class="i" viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
+      <label class="search"><svg class="i" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><input id="srch" placeholder="جستجو در بخش‌ها و پروژه‌ها…" autocomplete="off"></label>
+      <span class="sp"></span>
+      <a class="btn ghost sm hide-s" href="../index.html" target="_blank" rel="noopener">مشاهده‌ی سایت ↗</a>
+      <div style="position:relative">
+        <button class="icon-btn" type="button" id="bell" aria-label="تغییرهای منتشرنشده"><svg class="i" viewBox="0 0 24 24"><path d="M6 8a6 6 0 1 1 12 0c0 7 3 8 3 8H3s3-1 3-8M10 20a2 2 0 0 0 4 0"/></svg></button>
+        <div class="pop" id="bellPop"></div>
+      </div>
+      <button class="btn" type="button" id="pubBtn" disabled>انتشار تغییرات</button>
+    </header>
+    <main class="view" id="view" tabindex="-1"></main>
+  </div>
+</div>
+
+<div class="scrim" id="scrim"></div>
+<aside class="drawer" id="drawer" aria-modal="true" role="dialog" aria-labelledby="dwT"><header><h3 id="dwT"></h3><button class="icon-btn" type="button" data-close aria-label="بستن">✕</button></header><div class="bd" id="dwBody"></div><footer id="dwFoot"></footer></aside>
+<div class="modal" id="modal" role="dialog" aria-modal="true"></div>
+<div id="toast" role="status" aria-live="polite"></div>
+<input type="file" id="filePick" hidden>
+
+<script>
+'use strict';
+/* ================= helpers ================= */
+const $=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)];
+const fa=n=>String(n).replace(/\d/g,d=>'۰۱۲۳۴۵۶۷۸۹'[d]);
+const esc=t=>String(t??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const I={dash:'<path d="M4 4h7v7H4zM13 4h7v4h-7zM13 10h7v10h-7zM4 13h7v7H4z"/>',home:'<path d="M3 11 12 4l9 7v9h-6v-6H9v6H3z"/>',web:'<rect x="3" y="4" width="18" height="14" rx="2"/><path d="M3 8h18M8 21h8"/>',
+ gfx:'<rect x="4" y="3" width="16" height="18" rx="2"/><circle cx="10" cy="9" r="2"/><path d="m4 17 5-4 4 3 3-2 4 3"/>',contact:'<path d="M4 5h16v12H8l-4 3z"/>',media:'<rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="9" cy="10" r="2"/><path d="m3 17 6-5 5 4 3-2 4 3"/>',
+ upd:'<path d="M12 3v12m0 0-4-4m4 4 4-4M4 17v3h16v-3"/>',set:'<circle cx="12" cy="12" r="3"/><path d="M19 12a7 7 0 0 0-.1-1.2l2-1.6-2-3.4-2.4 1a7 7 0 0 0-2-1.2L14 3h-4l-.5 2.6a7 7 0 0 0-2 1.2l-2.4-1-2 3.4 2 1.6A7 7 0 0 0 5 12c0 .4 0 .8.1 1.2l-2 1.6 2 3.4 2.4-1a7 7 0 0 0 2 1.2L10 21h4l.5-2.6a7 7 0 0 0 2-1.2l2.4 1 2-3.4-2-1.6c.1-.4.1-.8.1-1.2z"/>',
+ user:'<circle cx="12" cy="8" r="4"/><path d="M4 21c1-4 4-6 8-6s7 2 8 6"/>',money:'<circle cx="12" cy="12" r="9"/><path d="M15 9c-.5-1-1.6-1.5-3-1.5-1.8 0-3 .9-3 2.2 0 3 6 1.6 6 4.6 0 1.3-1.3 2.2-3 2.2-1.5 0-2.6-.6-3-1.6M12 6v1.5M12 16.5V18"/>',
+ clock:'<circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/>',folder:'<path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>',plus:'<path d="M12 5v14M5 12h14"/>',edit:'<path d="M4 20h4L19 9l-4-4L4 16z"/>',trash:'<path d="M4 7h16M10 11v6M14 11v6M6 7l1 13h10l1-13M9 7V4h6v3"/>',copy:'<rect x="8" y="8" width="12" height="12" rx="2"/><path d="M16 8V5a1 1 0 0 0-1-1H5a1 1 0 0 0-1 1v10a1 1 0 0 0 1 1h3"/>',ext:'<path d="M14 4h6v6M20 4l-9 9M18 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h5"/>'};
+const ic=(k,c='i')=>`<svg class="${c}" viewBox="0 0 24 24">${I[k]||''}</svg>`;
+let tt;function toast(m,k=''){const t=$('#toast');t.className=k;t.textContent=m;t.classList.add('on');clearTimeout(tt);tt=setTimeout(()=>t.classList.remove('on'),3200)}
+const ago=d=>{if(!d)return'—';const s=(Date.now()-new Date(d))/1000;if(s<60)return'همین الان';if(s<3600)return fa(Math.round(s/60))+' دقیقه پیش';if(s<86400)return fa(Math.round(s/3600))+' ساعت پیش';return fa(Math.round(s/86400))+' روز پیش'};
+const slug=t=>(t||'').toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'')||('p'+Date.now().toString(36));
+const b64ToUtf8=b=>new TextDecoder().decode(Uint8Array.from(atob(b.replace(/\n/g,'')),c=>c.charCodeAt(0)));
+const bufToB64=buf=>{const u=new Uint8Array(buf);let s='';for(let i=0;i<u.length;i+=0x8000)s+=String.fromCharCode.apply(null,u.subarray(i,i+0x8000));return btoa(s)};
+const utf8ToB64=s=>bufToB64(new TextEncoder().encode(s));
+const kb=n=>n>1048576?fa((n/1048576).toFixed(1))+' مگابایت':fa(Math.max(1,Math.round(n/1024)))+' کیلوبایت';
+
+/* ================= state ================= */
+const ST={repo:'gwatdesign/gwat',branch:'main',token:'',demo:false,user:null,data:null,orig:'',sha:null,uploads:new Map(),repoInfo:null,tree:null,commits:null,pages:null,view:'dash'};
+const dirty=()=>JSON.stringify(ST.data)!==ST.orig||ST.uploads.size>0;
+function src(p){if(!p)return'';const u=ST.uploads.get(p);return u?u.url:(/^https?:/.test(p)?p:'../'+p)}
+function pendingList(){const L=[];const o=JSON.parse(ST.orig||'{}'),d=ST.data||{};
+  if(JSON.stringify(o.home)!==JSON.stringify(d.home))L.push('متن‌های صفحه‌ی اصلی');
+  if(JSON.stringify(o.web)!==JSON.stringify(d.web))L.push('نمونه‌کارهای سایت');
+  if(JSON.stringify(o.graphic)!==JSON.stringify(d.graphic))L.push('نمونه‌کارهای گرافیک');
+  if(JSON.stringify(o.contact)!==JSON.stringify(d.contact))L.push('اطلاعات تماس');
+  ST.uploads.forEach((u,p)=>L.push('عکس جدید: '+p.split('/').pop()));return L}
+function markDirty(){const n=pendingList().length;$('#pubBtn').disabled=!n;$('#pubBtn').textContent=n?`انتشار تغییرات (${fa(n)})`:'انتشار تغییرات';
+  $('#bell').querySelector('.dot')?.remove();if(n)$('#bell').insertAdjacentHTML('beforeend','<i class="dot"></i>');
+  $('#bellPop').innerHTML=n?`<b style="font-size:13px">تغییرهای منتشرنشده</b><div class="list" style="margin-top:8px">${pendingList().map(x=>`<div class="row"><span class="pill warn"><i></i></span><div class="t"><b>${esc(x)}</b></div></div>`).join('')}</div><button class="btn sm" style="width:100%;margin-top:10px" onclick="openPublish()">انتشار</button>`:'<span class="hint">همه‌چیز منتشر شده است.</span>'}
+
+/* ================= GitHub API ================= */
+async function gh(path,opt={}){if(ST.demo)throw new Error('demo');
+  const r=await fetch('https://api.github.com'+path,{...opt,headers:{'Accept':'application/vnd.github+json','Authorization':'Bearer '+ST.token,'X-GitHub-Api-Version':'2022-11-28',...(opt.body?{'Content-Type':'application/json'}:{}),...(opt.headers||{})}});
+  if(!r.ok){let m='';try{m=(await r.json()).message}catch(e){}const er=new Error(m||('HTTP '+r.status));er.status=r.status;throw er}
+  return r.status===204?null:r.json()}
+async function commitFiles(files,message,log=()=>{}){
+  const ref=await gh(`/repos/${ST.repo}/git/ref/heads/${ST.branch}`);const head=ref.object.sha;
+  const base=await gh(`/repos/${ST.repo}/git/commits/${head}`);
+  const tree=[];let i=0;
+  for(const f of files){i++;log(`آپلود ${fa(i)} از ${fa(files.length)}: ${f.path}`);
+    const b=await gh(`/repos/${ST.repo}/git/blobs`,{method:'POST',body:JSON.stringify({content:f.b64,encoding:'base64'})});tree.push({path:f.path,mode:'100644',type:'blob',sha:b.sha})}
+  log('ساخت درخت فایل‌ها…');const t=await gh(`/repos/${ST.repo}/git/trees`,{method:'POST',body:JSON.stringify({base_tree:base.tree.sha,tree})});
+  log('ثبت کامیت…');const c=await gh(`/repos/${ST.repo}/git/commits`,{method:'POST',body:JSON.stringify({message,tree:t.sha,parents:[head]})});
+  await gh(`/repos/${ST.repo}/git/refs/heads/${ST.branch}`,{method:'PATCH',body:JSON.stringify({sha:c.sha})});return c}
+async function waitPages(log){const t0=Date.now();
+  while(Date.now()-t0<180000){try{const b=await gh(`/repos/${ST.repo}/pages/builds/latest`);log('وضعیت ساخت: '+b.status);if(b.status==='built')return'built';if(b.status==='errored')return'errored'}catch(e){if(e.status===403||e.status===404)return'unknown'}
+    await new Promise(r=>setTimeout(r,5000))}return'timeout'}
+
+/* ================= login ================= */
+const KEY='gwat-admin';
+function saveCreds(rem){const v=JSON.stringify({repo:ST.repo,token:ST.token});try{(rem?localStorage:sessionStorage).setItem(KEY,v);(rem?sessionStorage:localStorage).removeItem(KEY)}catch(e){}}
+function loadCreds(){try{return JSON.parse(localStorage.getItem(KEY)||sessionStorage.getItem(KEY)||'null')}catch(e){return null}}
+async function login(repo,token,rem){ST.repo=repo.trim().replace(/^https?:\/\/github.com\//,'').replace(/\/$/,'');ST.token=token.trim();ST.demo=false;
+  const info=await gh(`/repos/${ST.repo}`);if(!info.permissions||!info.permissions.push)throw new Error('این توکن اجازه‌ی نوشتن در مخزن را ندارد.');
+  ST.repoInfo=info;ST.branch=info.default_branch||'main';try{ST.user=await gh('/user')}catch(e){ST.user={login:ST.repo.split('/')[0]}}
+  await loadData();saveCreds(rem);start()}
+async function loadData(){
+  if(!ST.demo){try{const f=await gh(`/repos/${ST.repo}/contents/data/site.json?ref=${ST.branch}`);ST.sha=f.sha;ST.data=JSON.parse(b64ToUtf8(f.content))}catch(e){if(e.status!==404)throw e}}
+  if(!ST.data){const r=await fetch('../data/site.json?v='+Date.now());ST.data=await r.json()}
+  ST.data.web=ST.data.web||[];ST.data.graphic=ST.data.graphic||[];ST.data.home=ST.data.home||{};ST.data.contact=ST.data.contact||{};ST.orig=JSON.stringify(ST.data)}
+$('#lgForm').addEventListener('submit',async e=>{e.preventDefault();const b=$('#lgBtn');$('#lgErr').textContent='';
+  if(!$('#lgTok').value.trim()){$('#lgErr').textContent='توکن را وارد کن.';return}
+  b.disabled=true;b.textContent='در حال بررسی…';
+  try{await login($('#lgRepo').value,$('#lgTok').value,$('#lgRem').checked)}catch(er){$('#lgErr').textContent=er.status===401?'توکن نامعتبر است یا منقضی شده.':er.status===404?'مخزن پیدا نشد؛ اسم مخزن و دسترسی توکن را بررسی کن.':('خطا: '+er.message)}
+  b.disabled=false;b.textContent='ورود'});
+$('#lgDemo').onclick=async()=>{ST.demo=true;ST.user={login:'gwatdesign',name:'گوات'};try{await loadData()}catch(e){ST.data={home:{},contact:{},web:[],graphic:[]};ST.orig=JSON.stringify(ST.data)}start()};
+
+/* ================= shell ================= */
+const NAV=[['dash','داشبورد','dash'],['home','صفحه‌ی اصلی','home'],['web','نمونه‌کار سایت','web'],['gfx','نمونه‌کار گرافیک','gfx'],['contact','تماس','contact'],['media','رسانه','media'],['sep','سیستم'],['upd','نصب آپدیت','upd'],['set','تنظیمات','set']];
+function start(){$('#login').hidden=true;$('#login').style.display='none';$('#app').hidden=false;
+  $('#nav').innerHTML=NAV.map(([k,t,i])=>k==='sep'?`<div class="nav-sep">${t}</div>`:`<a href="#${k}" data-v="${k}">${ic(i)}<span>${t}</span>${k==='web'||k==='gfx'?`<span class="badge" data-cnt="${k}"></span>`:''}</a>`).join('');
+  const u=ST.user||{};$('#meName').innerHTML=esc(u.name||u.login||'گوات')+' <span style="color:var(--v3)">✔</span>';$('#meLogin').textContent='@'+(u.login||'');
+  if(u.avatar_url)$('#meAv').innerHTML=`<img src="${esc(u.avatar_url)}" alt="" onerror="this.remove()">`;
+  addEventListener('hashchange',route);route();markDirty();counts()}
+function counts(){$$('[data-cnt]').forEach(b=>b.textContent=fa((b.dataset.cnt==='web'?ST.data.web:ST.data.graphic).length))}
+function route(){const v=(location.hash||'#dash').slice(1);ST.view=NAV.some(n=>n[0]===v)?v:'dash';
+  $$('#nav a').forEach(a=>a.classList.toggle('on',a.dataset.v===ST.view));$('#side').classList.remove('on');
+  const V=$('#view');V.innerHTML=(ST.demo?'<div class="demo-bar">حالت نمایشی: تغییرها فقط روی همین صفحه می‌مانند و منتشر نمی‌شوند.</div>':'')+'<div class="fadein" id="vc"></div>';V.scrollTop=0;
+  ({dash:vDash,home:vHome,web:vWeb,gfx:vGfx,contact:vContact,media:vMedia,upd:vUpd,set:vSet})[ST.view]($('#vc'))}
+$('#menuBtn').onclick=()=>$('#side').classList.toggle('on');
+$('#bell').onclick=e=>{e.stopPropagation();$('#bellPop').classList.toggle('on')};document.addEventListener('click',()=>$('#bellPop').classList.remove('on'));
+$('#srch').addEventListener('keydown',e=>{if(e.key!=='Enter')return;const q=e.target.value.trim();if(!q)return;
+  const n=NAV.find(n=>n[1]&&n[1].includes(q));if(n){location.hash=n[0];return}
+  const w=ST.data.web.findIndex(x=>x.title.includes(q));if(w>-1){location.hash='web';setTimeout(()=>editWeb(w),50);return}
+  const g=ST.data.graphic.findIndex(x=>x.title.includes(q));if(g>-1){location.hash='gfx';setTimeout(()=>editGfx(g),50);return}toast('چیزی پیدا نشد')});
+$('#pubBtn').onclick=()=>openPublish();
+
+/* ================= views ================= */
+function bind(root){root.querySelectorAll('[data-b]').forEach(el=>{const [a,b]=el.dataset.b.split('.');el.value=ST.data[a][b]??'';
+  el.addEventListener('input',()=>{ST.data[a][b]=el.value;markDirty();root.dispatchEvent(new Event('bound'))})})}
+function lineChart(vals,labels,h=170){const w=520,p=26,max=Math.max(4,...vals),n=vals.length;const X=i=>w-p-(i*(w-2*p)/(n-1||1)),Y=v=>h-22-(v/max)*(h-40);
+  const pts=vals.map((v,i)=>[X(i),Y(v)]);const d=pts.map((q,i)=>(i?'L':'M')+q[0].toFixed(1)+' '+q[1].toFixed(1)).join(' ');
+  let g='';for(let k=0;k<=4;k++){const v=Math.round(max*k/4),y=Y(v);g+=`<line class="gd" x1="${p}" x2="${w-p}" y1="${y}" y2="${y}"/><text x="${w-4}" y="${y+3}" text-anchor="end">${fa(v)}</text>`}
+  const lab=labels.map((l,i)=>l?`<text x="${X(i)}" y="${h-4}" text-anchor="middle">${l}</text>`:'').join('');
+  const dots=pts.map((q,i)=>vals[i]?`<circle class="pt" cx="${q[0]}" cy="${q[1]}" r="${vals[i]===max?5:3.5}"><title>${fa(vals[i])} کامیت</title></circle>`:'').join('');
+  return `<svg class="chart" viewBox="0 0 ${w} ${h}"><defs><linearGradient id="ga" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#7b6cf2" stop-opacity=".45"/><stop offset="1" stop-color="#7b6cf2" stop-opacity="0"/></linearGradient></defs>${g}<path class="ar" d="${d} L${X(n-1)} ${h-22} L${X(0)} ${h-22}Z"/><path class="ln" d="${d}"/>${dots}${lab}</svg>`}
+function barChart(rows,h=180){const w=320,p=24,max=Math.max(1,...rows.map(r=>r[1])),bw=Math.min(54,(w-2*p)/rows.length-14);
+  return `<svg class="chart" viewBox="0 0 ${w} ${h}">${[0,.5,1].map(k=>{const y=h-24-k*(h-44);return`<line class="gd" x1="${p}" x2="${w-6}" y1="${y}" y2="${y}"/><text x="${p-4}" y="${y+3}" text-anchor="end">${fa(Math.round(max*k))}</text>`}).join('')}
+  ${rows.map((r,i)=>{const x=w-p-(i+1)*((w-2*p)/rows.length)+((w-2*p)/rows.length-bw)/2,bh=(r[1]/max)*(h-44);return`<rect class="bar" x="${x}" y="${h-24-bh}" width="${bw}" height="${bh}" rx="8"><title>${r[0]}: ${fa(r[1])}</title></rect><text x="${x+bw/2}" y="${h-8}" text-anchor="middle">${r[0]}</text>`}).join('')}</svg>`}
+async function fetchStats(){if(ST.demo){const now=Date.now();ST.commits=Array.from({length:14},(_,i)=>({commit:{message:['نصب آپدیت نمایشگر','به‌روزرسانی نمونه‌کارها','افزودن پوستر','ویرایش متن خانه'][i%4],author:{date:new Date(now-i*86400000*1.7).toISOString()}}}));
+    ST.repoInfo={size:3900,pushed_at:new Date(now-3600000).toISOString()};ST.tree={tree:[...Array(36)].map((_,i)=>({path:'assets/img/x'+i+'.jpg',type:'blob',size:60000})).concat([...Array(9)].map((_,i)=>({path:'p'+i+'.html',type:'blob',size:20000})),[...Array(8)].map((_,i)=>({path:'s'+i+'.js',type:'blob'})),[...Array(8)].map((_,i)=>({path:'f'+i+'.woff2',type:'blob'})))};ST.pages={status:'built',html_url:'https://gwatdesign.github.io/gwat/'};return}
+  const since=new Date(Date.now()-30*86400000).toISOString();
+  const [c,t,p,r]=await Promise.allSettled([gh(`/repos/${ST.repo}/commits?sha=${ST.branch}&since=${since}&per_page=100`),gh(`/repos/${ST.repo}/git/trees/${ST.branch}?recursive=1`),gh(`/repos/${ST.repo}/pages`),gh(`/repos/${ST.repo}`)]);
+  ST.commits=c.value||[];ST.tree=t.value||{tree:[]};ST.pages=p.value||null;if(r.value)ST.repoInfo=r.value}
+async function vDash(el){
+  el.innerHTML=`<div class="vh"><div><h1>داشبورد</h1><p>نمای کلی سایت و آخرین فعالیت‌ها</p></div><button class="btn ghost sm" id="rfr">${ic('clock')} به‌روزرسانی</button></div>
+  <div class="grid g-dash"><div class="grid" style="gap:16px">
+    <div class="ov"><h3>نمای کلی</h3><div class="tiles" id="tiles">${'<div class="tile"><div class="skel" style="height:80px"></div></div>'.repeat(4)}</div></div>
+    <div class="grid g-2"><div class="card"><h3>فعالیت ۳۰ روز اخیر <small>کامیت در روز</small></h3><div id="cLine"><div class="skel" style="height:160px"></div></div></div>
+    <div class="card"><h3>فایل‌های سایت <small>بر اساس نوع</small></h3><div id="cBar"><div class="skel" style="height:160px"></div></div></div></div>
+  </div><div class="grid" style="gap:16px;align-content:start">
+    <div class="card"><h3>وضعیت سایت</h3><div id="pgSt"><div class="skel"></div></div></div>
+    <div class="card"><h3 id="calT">این هفته</h3><div class="cal" id="cal"></div></div>
+    <div class="card"><h3>آخرین تغییرها <small><a href="#upd" style="color:var(--v3)">نصب آپدیت</a></small></h3><div class="list" id="recent"><div class="skel" style="height:120px"></div></div></div>
+  </div></div>`;
+  $('#rfr').onclick=()=>{ST.commits=null;vDash(el)};
+  if(!ST.commits)try{await fetchStats()}catch(e){toast('آمار GitHub خوانده نشد: '+e.message,'bad');ST.commits=[];ST.tree={tree:[]}}
+  if(!el.isConnected)return;
+  const last=ST.commits[0]?.commit?.author?.date||ST.repoInfo?.pushed_at,size=(ST.repoInfo?.size||0)*1024;
+  const tiles=[['web',fa(ST.data.web.length),'پروژه‌ی سایت','در صفحه‌ی نمونه‌کار'],['gfx',fa(ST.data.graphic.length),'طرح گرافیک','در گالری'],['clock',ago(last),'آخرین انتشار','روی GitHub Pages'],['folder',kb(size),'حجم سایت','از ۱ گیگابایت مجاز']];
+  $('#tiles').innerHTML=tiles.map(([i,b,s,m])=>`<div class="tile"><div class="ic">${ic(i)}</div><b>${b}</b><span>${s}</span><small>${m}</small></div>`).join('');
+  const days=[...Array(30)].map((_,i)=>{const d=new Date(Date.now()-(29-i)*86400000);return d.toISOString().slice(0,10)});
+  const cnt=days.map(d=>ST.commits.filter(c=>(c.commit.author.date||'').slice(0,10)===d).length);
+  const fmt=new Intl.DateTimeFormat('fa-IR',{day:'numeric',month:'short'});
+  $('#cLine').innerHTML=lineChart(cnt,days.map((d,i)=>i%7===0||i===29?fmt.format(new Date(d)):''));
+  const T=ST.tree.tree.filter(x=>x.type==='blob');const by=r=>T.filter(x=>r.test(x.path)).length;
+  $('#cBar').innerHTML=barChart([['تصویر',by(/\.(jpe?g|png|webp|svg)$/i)],['صفحه',by(/\.html$/i)],['اسکریپت',by(/\.(js|css|json)$/i)],['فونت',by(/\.woff2?$/i)]]);
+  const pg=ST.pages;$('#pgSt').innerHTML=pg?`<div class="row"><span class="pill ${pg.status==='built'?'good':pg.status==='errored'?'bad':'warn'}"><i></i>${pg.status==='built'?'آنلاین':pg.status==='errored'?'خطا در ساخت':'در حال ساخت'}</span><div class="t"><b class="ltr" style="direction:ltr">${esc((pg.html_url||'').replace('https://',''))}</b></div><a class="btn ghost sm" href="${esc(pg.html_url||'../')}" target="_blank" rel="noopener">${ic('ext')}</a></div>`:'<span class="hint">برای دیدن وضعیت، دسترسی Pages را به توکن بده.</span>';
+  const wk=[...Array(7)].map((_,i)=>new Date(Date.now()+(i-3)*86400000));const wd=new Intl.DateTimeFormat('fa-IR',{weekday:'short'}),dd=new Intl.DateTimeFormat('fa-IR',{day:'numeric'});
+  $('#calT').textContent=new Intl.DateTimeFormat('fa-IR',{month:'long',year:'numeric'}).format(new Date());
+  $('#cal').innerHTML=wk.map((d,i)=>`<div class="d${i===3?' today':''}${ST.commits.some(c=>(c.commit.author.date||'').slice(0,10)===d.toISOString().slice(0,10))?' has':''}">${wd.format(d)}<b>${dd.format(d)}</b></div>`).join('');
+  $('#recent').innerHTML=ST.commits.slice(0,6).map(c=>`<div class="row"><span class="pill v"><i></i></span><div class="t"><b>${esc(c.commit.message.split('\n')[0])}</b><small>${ago(c.commit.author.date)}</small></div></div>`).join('')||'<span class="hint">فعالیتی ثبت نشده.</span>'}
+function vHome(el){el.innerHTML=`<div class="vh"><div><h1>صفحه‌ی اصلی</h1><p>متن‌های بالای صفحه‌ی اول سایت</p></div></div>
+  <div class="grid g-2"><div class="card form">
+    <div class="field"><label for="h1">برچسب کوچک بالای تیتر</label><input class="inp" id="h1" data-b="home.eyebrow"></div>
+    <div class="field"><label for="h2">تیتر اصلی</label><textarea class="inp" id="h2" data-b="home.title" style="min-height:70px"></textarea><span class="hint">هر خط جدید = یک خط تیتر.</span></div>
+    <div class="field"><label for="h3">توضیح زیر تیتر</label><textarea class="inp" id="h3" data-b="home.lead"></textarea></div>
+    <div class="field"><label for="h4">متن معرفی (بخشی که با اسکرول روشن می‌شود)</label><textarea class="inp" id="h4" data-b="home.statement" style="min-height:120px"></textarea><span class="hint">کلمه‌ای که بین دو ستاره بیاید (*مثل این*) طلایی می‌شود.</span></div>
+  </div><div class="card"><h3>پیش‌نمایش</h3><div class="prev-hero" id="pv"></div></div></div>`;
+  const pv=()=>{const h=ST.data.home;$('#pv').innerHTML=`<small>${esc(h.eyebrow)}</small><h2>${esc(h.title).replace(/\n/g,'<br>')}</h2><p>${esc(h.lead)}</p>`};
+  bind(el);el.addEventListener('bound',pv);pv()}
+function vContact(el){el.innerHTML=`<div class="vh"><div><h1>تماس</h1><p>اطلاعاتی که در صفحه‌ی تماس دیده می‌شود</p></div></div>
+  <div class="card form" style="max-width:640px"><div class="f2"><div class="field"><label for="c1">آیدی تلگرام</label><input class="inp ltr" id="c1" data-b="contact.telegram" placeholder="@username"></div>
+  <div class="field"><label for="c2">آیدی اینستاگرام</label><input class="inp ltr" id="c2" data-b="contact.instagram" placeholder="@username"></div>
+  <div class="field"><label for="c3">زمان پاسخ</label><input class="inp" id="c3" data-b="contact.response"></div>
+  <div class="field"><label for="c4">زمان ساخت یک سایت</label><input class="inp" id="c4" data-b="contact.build"></div></div></div>`;bind(el)}
+/* ---- web projects ---- */
+function moveIn(arr,i,d){const j=i+d;if(j<0||j>=arr.length)return;[arr[i],arr[j]]=[arr[j],arr[i]];markDirty();counts();route()}
+let confirmAt=-1;function askDelete(btn,fn){if(btn.dataset.sure){fn();return}btn.dataset.sure=1;btn.innerHTML='مطمئنی؟ دوباره بزن';setTimeout(()=>{if(btn.isConnected){delete btn.dataset.sure;btn.innerHTML=ic('trash')}},3000)}
+function vWeb(el){const W=ST.data.web;el.innerHTML=`<div class="vh"><div><h1>نمونه‌کار سایت</h1><p>${fa(W.length)} پروژه · ترتیب همین فهرست روی سایت نمایش داده می‌شود</p></div><button class="btn" id="addW">${ic('plus')} پروژه‌ی جدید</button></div>
+  <div class="items">${W.map((w,i)=>`<div class="item"><div class="ord"><button type="button" data-u="${i}" aria-label="بالا">▲</button><button type="button" data-d="${i}" aria-label="پایین">▼</button></div>
+  <img src="${esc(src(w.img?.d||w.img?.poster))}" alt="" onerror="this.style.visibility='hidden'"><div class="t"><b>${esc(w.title)}</b><small>${esc([w.year,w.tag,(w.chips||[]).slice(0,3).join('، ')].filter(Boolean).join(' · '))}</small></div>
+  <div class="acts">${w.url?`<a class="btn ghost sm" href="${esc(/^https?:/.test(w.url)?w.url:'../'+w.url)}" target="_blank" rel="noopener">${ic('ext')}</a>`:''}<button class="btn ghost sm" data-e="${i}">${ic('edit')} ویرایش</button><button class="btn danger sm" data-x="${i}" aria-label="حذف">${ic('trash')}</button></div></div>`).join('')}</div>`;
+  $('#addW').onclick=()=>{W.push({id:'p'+Date.now().toString(36),title:'پروژه‌ی جدید',year:'۱۴۰۵',tag:'',desc:'',did:[],chips:[],url:'',img:{d:'',m:'',poster:''},stats:[],shots:[]});markDirty();counts();route();editWeb(W.length-1)};
+  el.querySelectorAll('[data-u]').forEach(b=>b.onclick=()=>moveIn(W,+b.dataset.u,-1));el.querySelectorAll('[data-d]').forEach(b=>b.onclick=()=>moveIn(W,+b.dataset.d,1));
+  el.querySelectorAll('[data-e]').forEach(b=>b.onclick=()=>editWeb(+b.dataset.e));
+  el.querySelectorAll('[data-x]').forEach(b=>b.onclick=()=>askDelete(b,()=>{W.splice(+b.dataset.x,1);markDirty();counts();route();toast('پروژه حذف شد؛ با «انتشار» روی سایت اعمال می‌شود')}))}
+function imgField(label,val,key){return `<div class="field"><label>${label}</label><div class="up"><img src="${esc(src(val))}" alt="" data-pv="${key}" onerror="this.style.visibility='hidden'"><div class="t" data-path="${key}">${esc(val||'هنوز عکسی انتخاب نشده')}</div><button type="button" class="btn ghost sm" data-pick="${key}">انتخاب عکس</button></div></div>`}
+function pickImage(cb){const f=$('#filePick');f.accept='image/*';f.onchange=async()=>{const file=f.files[0];f.value='';if(!file)return;
+  try{const r=await prepImage(file);cb(r)}catch(e){toast('عکس خوانده نشد','bad')}};f.click()}
+async function prepImage(file){const isSvg=/svg/.test(file.type);const name=slug(file.name.replace(/\.[^.]+$/,''))+'-'+Date.now().toString(36);
+  if(isSvg){const buf=await file.arrayBuffer();const p=`assets/img/uploads/${name}.svg`;ST.uploads.set(p,{b64:bufToB64(buf),url:URL.createObjectURL(file)});return p}
+  const bmp=await createImageBitmap(file);const sc=Math.min(1,1800/Math.max(bmp.width,bmp.height));const c=document.createElement('canvas');c.width=Math.round(bmp.width*sc);c.height=Math.round(bmp.height*sc);c.getContext('2d').drawImage(bmp,0,0,c.width,c.height);
+  const blob=await new Promise(r=>c.toBlob(r,'image/jpeg',.86));const p=`assets/img/uploads/${name}.jpg`;ST.uploads.set(p,{b64:bufToB64(await blob.arrayBuffer()),url:URL.createObjectURL(blob)});markDirty();return p}
+function openDrawer(title,body,foot){$('#dwT').textContent=title;$('#dwBody').innerHTML=body;$('#dwFoot').innerHTML=foot;$('#drawer').classList.add('on');$('#scrim').classList.add('on');setTimeout(()=>$('#dwBody').querySelector('input,textarea')?.focus(),300)}
+function closeDrawer(){$('#drawer').classList.remove('on');$('#modal').classList.remove('on');$('#scrim').classList.remove('on')}
+$('#scrim').onclick=closeDrawer;document.addEventListener('click',e=>{if(e.target.closest('[data-close]'))closeDrawer()});addEventListener('keydown',e=>{if(e.key==='Escape')closeDrawer()});
+function editWeb(i){const w=JSON.parse(JSON.stringify(ST.data.web[i]));w.img=w.img||{};
+  openDrawer('ویرایش پروژه',`<div class="form">
+   <div class="f2"><div class="field"><label for="wT">نام پروژه</label><input class="inp" id="wT" value="${esc(w.title)}"></div><div class="field"><label for="wY">سال</label><input class="inp" id="wY" value="${esc(w.year)}"></div></div>
+   <div class="f2"><div class="field"><label for="wTag">برچسب (اختیاری)</label><input class="inp" id="wTag" value="${esc(w.tag)}" placeholder="مثلاً نمونه‌کار مفهومی"></div><div class="field"><label for="wU">لینک سایت زنده</label><input class="inp ltr" id="wU" value="${esc(w.url)}" placeholder="https://… یا work/…"></div></div>
+   <div class="field"><label for="wD">توضیح</label><textarea class="inp" id="wD">${esc(w.desc)}</textarea></div>
+   <div class="field"><label for="wDid">کارهای انجام‌شده (هر خط یک مورد)</label><textarea class="inp" id="wDid">${esc((w.did||[]).join('\n'))}</textarea></div>
+   <div class="field"><label for="wC">برچسب‌های فنی (با ویرگول جدا کن)</label><input class="inp" id="wC" value="${esc((w.chips||[]).join('، '))}"></div>
+   <div class="field"><label for="wS">عددهای کلیدی (هر خط: عدد | توضیح)</label><textarea class="inp" id="wS" style="min-height:70px" placeholder="۳ | نما: روز، هفته، برد">${esc((w.stats||[]).map(s=>s.join(' | ')).join('\n'))}</textarea></div>
+   ${imgField('اسکرین‌شات دسکتاپ (۱۴۴۰×۹۰۰)',w.img.d,'d')}${imgField('اسکرین‌شات موبایل (۳۹۰×۸۴۴)',w.img.m,'m')}${imgField('یا پوستر (اگر اسکرین‌شات ندارد)',w.img.poster,'poster')}
+  </div>`,`<button class="btn" id="wSave">ذخیره</button><button class="btn ghost" data-close>انصراف</button>`);
+  $('#dwBody').querySelectorAll('[data-pick]').forEach(b=>b.onclick=()=>pickImage(p=>{const k=b.dataset.pick;w.img[k]=p;$(`[data-pv="${k}"]`).src=src(p);$(`[data-pv="${k}"]`).style.visibility='visible';$(`[data-path="${k}"]`).textContent=p}));
+  $('#wSave').onclick=()=>{const old=ST.data.web[i];w.title=$('#wT').value.trim()||'بدون نام';w.year=$('#wY').value.trim();w.tag=$('#wTag').value.trim();w.url=$('#wU').value.trim();w.desc=$('#wD').value.trim();
+    w.did=$('#wDid').value.split('\n').map(s=>s.trim()).filter(Boolean);w.chips=$('#wC').value.split(/[،,]/).map(s=>s.trim()).filter(Boolean);
+    w.stats=$('#wS').value.split('\n').map(l=>l.split('|').map(s=>s.trim())).filter(r=>r[0]&&r[1]);
+    if(!old.img||old.img.d!==w.img.d||old.img.m!==w.img.m||!(w.shots||[]).length)w.shots=[w.img.d&&{img:w.img.d,cap:'صفحه‌ی اصلی',dev:'دسکتاپ'},w.img.m&&{img:w.img.m,cap:'موبایل',dev:'موبایل'}].filter(Boolean);
+    if(/^p[0-9a-z]+$/.test(w.id)&&w.title)w.id=slug(w.title)!==('p'+Date.now().toString(36))&&/[a-z]/.test(slug(w.title))?slug(w.title):w.id;
+    ST.data.web[i]=w;markDirty();closeDrawer();route();toast('ذخیره شد؛ برای نمایش روی سایت «انتشار» را بزن','good')}}
+/* ---- graphic ---- */
+function vGfx(el){const G=ST.data.graphic;const cats=[...new Set(G.map(g=>g.cat))];
+  el.innerHTML=`<div class="vh"><div><h1>نمونه‌کار گرافیک</h1><p>${fa(G.length)} طرح در ${fa(cats.length)} دسته</p></div><button class="btn" id="addG">${ic('plus')} طرح جدید</button></div>
+  <div class="ggrid">${G.map((g,i)=>`<div class="gcard"><img src="${esc(src(g.img))}" alt="" loading="lazy" onerror="this.style.visibility='hidden'"><div class="b"><b>${esc(g.title)}</b><small>${esc(g.cat)}${g.concept?' · طرح مفهومی':''}</small>
+   <div class="acts"><button class="btn ghost sm" data-u="${i}" aria-label="جلوتر">▶</button><button class="btn ghost sm" data-d="${i}" aria-label="عقب‌تر">◀</button><button class="btn ghost sm" data-e="${i}">${ic('edit')}</button><button class="btn danger sm" data-x="${i}" aria-label="حذف">${ic('trash')}</button></div></div></div>`).join('')}</div>`;
+  $('#addG').onclick=()=>pickImage(p=>{G.unshift({id:'g'+Date.now().toString(36),title:'طرح جدید',cat:cats[0]||'پوستر',meta:'',concept:false,img:p});markDirty();counts();route();editGfx(0)});
+  el.querySelectorAll('[data-u]').forEach(b=>b.onclick=()=>moveIn(G,+b.dataset.u,-1));el.querySelectorAll('[data-d]').forEach(b=>b.onclick=()=>moveIn(G,+b.dataset.d,1));
+  el.querySelectorAll('[data-e]').forEach(b=>b.onclick=()=>editGfx(+b.dataset.e));
+  el.querySelectorAll('[data-x]').forEach(b=>b.onclick=()=>askDelete(b,()=>{G.splice(+b.dataset.x,1);markDirty();counts();route();toast('طرح حذف شد')}))}
+function editGfx(i){const g={...ST.data.graphic[i]};const cats=[...new Set(ST.data.graphic.map(x=>x.cat))];
+  openDrawer('ویرایش طرح',`<div class="form">${imgField('تصویر طرح',g.img,'img')}
+   <div class="field"><label for="gT">نام طرح</label><input class="inp" id="gT" value="${esc(g.title)}"></div>
+   <div class="f2"><div class="field"><label for="gC">دسته</label><input class="inp" id="gC" value="${esc(g.cat)}" list="gcats"><datalist id="gcats">${cats.map(c=>`<option value="${esc(c)}">`).join('')}</datalist></div>
+   <div class="field"><label for="gM">توضیح کوتاه</label><input class="inp" id="gM" value="${esc(g.meta)}" placeholder="مثلاً اینستاگرام · ۴:۵"></div></div>
+   <label class="chk"><input type="checkbox" id="gK" ${g.concept?'checked':''}>برچسب «طرح مفهومی» بخورد</label></div>`,`<button class="btn" id="gSave">ذخیره</button><button class="btn ghost" data-close>انصراف</button>`);
+  $('#dwBody').querySelector('[data-pick]').onclick=()=>pickImage(p=>{g.img=p;$('[data-pv="img"]').src=src(p);$('[data-pv="img"]').style.visibility='visible';$('[data-path="img"]').textContent=p});
+  $('#gSave').onclick=()=>{g.title=$('#gT').value.trim()||'بدون نام';g.cat=$('#gC').value.trim()||'پوستر';g.meta=$('#gM').value.trim();g.concept=$('#gK').checked;ST.data.graphic[i]=g;markDirty();closeDrawer();route();toast('ذخیره شد','good')}}
+/* ---- media ---- */
+async function vMedia(el){el.innerHTML=`<div class="vh"><div><h1>رسانه</h1><p>تصویرهای سایت · روی مسیر هر عکس بزن تا کپی شود</p></div><button class="btn" id="mUp">${ic('plus')} آپلود عکس</button></div><div class="media" id="mg"><div class="skel" style="height:120px"></div></div>`;
+  $('#mUp').onclick=()=>pickImage(p=>{toast('عکس آماده‌ی انتشار شد','good');vMedia(el)});
+  if(!ST.tree)try{await fetchStats()}catch(e){ST.tree={tree:[]}}
+  let imgs=ST.demo?[...new Set([...ST.data.graphic.map(g=>g.img),...ST.data.web.flatMap(w=>[w.img?.d,w.img?.m])].filter(Boolean))]:(ST.tree.tree||[]).filter(x=>x.type==='blob'&&/^assets\/img\/.*\.(jpe?g|png|webp|svg)$/i.test(x.path)).map(x=>x.path);
+  imgs=[...ST.uploads.keys(),...imgs];if(!el.isConnected)return;
+  $('#mg').innerHTML=imgs.map(p=>`<div><img src="${esc(src(p))}" alt="" loading="lazy"><span data-cp="${esc(p)}" title="کپی مسیر">${ST.uploads.has(p)?'● ':''}${esc(p.replace('assets/img/',''))}</span></div>`).join('')||'<span class="hint">عکسی پیدا نشد.</span>';
+  $$('#mg [data-cp]').forEach(s=>s.onclick=()=>{navigator.clipboard?.writeText(s.dataset.cp).then(()=>toast('مسیر کپی شد'),()=>toast(s.dataset.cp))})}
+/* ---- update installer (zip) ---- */
+async function unzip(buf){const dv=new DataView(buf),u8=new Uint8Array(buf);let e=-1;for(let i=u8.length-22;i>=Math.max(0,u8.length-65558);i--){if(dv.getUint32(i,true)===0x06054b50){e=i;break}}
+  if(e<0)throw new Error('فایل zip معتبر نیست');const n=dv.getUint16(e+10,true);let p=dv.getUint32(e+16,true);const out=[];const td=new TextDecoder();
+  for(let k=0;k<n;k++){if(dv.getUint32(p,true)!==0x02014b50)throw new Error('ساختار zip خراب است');
+    const method=dv.getUint16(p+10,true),cs=dv.getUint32(p+20,true),us=dv.getUint32(p+24,true),nl=dv.getUint16(p+28,true),xl=dv.getUint16(p+30,true),cl=dv.getUint16(p+32,true),lo=dv.getUint32(p+42,true);
+    const name=td.decode(u8.subarray(p+46,p+46+nl));p+=46+nl+xl+cl;
+    if(name.endsWith('/')||/(^|\/)(__MACOSX|\.DS_Store|\._)/.test(name))continue;
+    const ds=lo+30+dv.getUint16(lo+26,true)+dv.getUint16(lo+28,true);const raw=u8.slice(ds,ds+cs);
+    out.push({name,size:us,get:async()=>method===0?raw.buffer:method===8?await new Response(new Blob([raw]).stream().pipeThrough(new DecompressionStream('deflate-raw'))).arrayBuffer():(()=>{throw new Error('روش فشرده‌سازی پشتیبانی نمی‌شود')})()})}
+  const first=out.map(f=>f.name.split('/')[0]);if(out.length&&first.every(x=>x===first[0])&&out.every(f=>f.name.includes('/'))&&!['assets','work','data','admin'].includes(first[0]))out.forEach(f=>f.name=f.name.slice(first[0].length+1));
+  return out}
+let UPD=null;
+function vUpd(el){el.innerHTML=`<div class="vh"><div><h1>نصب آپدیت</h1><p>فایل zip آپدیتی که گرفته‌ای را اینجا بینداز؛ پنل خودش بازش می‌کند و فایل‌ها را جایگزین می‌کند.</p></div></div>
+  <div class="grid g-2"><div class="grid" style="gap:16px;align-content:start">
+   <label class="drop" id="drop" tabindex="0"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 15V3m0 0L7 8m5-5 5 5M4 15v4a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-4"/></svg><b>فایل zip آپدیت را اینجا بکش</b><span class="hint">یا بزن تا انتخابش کنی · مثلاً gwat-update-3.zip</span><input type="file" id="zipIn" accept=".zip,application/zip" hidden></label>
+   <div class="card" id="updInfo" hidden></div></div>
+   <div class="card"><h3>آپدیت چطور کار می‌کند؟</h3><ol class="steps-mini"><li>از من آپدیت می‌خواهی و یک فایل zip می‌گیری.</li><li>اینجا آپلودش می‌کنی؛ فهرست فایل‌ها و جدید یا جایگزین بودن هر کدام را می‌بینی.</li><li>«نصب آپدیت» را می‌زنی؛ همه‌ی فایل‌ها در یک کامیت روی GitHub ذخیره می‌شوند.</li><li>یکی دو دقیقه بعد سایت با نسخه‌ی جدید آنلاین است.</li></ol>
+   <p class="hint" style="margin-top:12px">محتوایی که در پنل ویرایش کرده‌ای (متن‌ها و نمونه‌کارها) در فایل <code class="ltr" style="direction:ltr">data/site.json</code> است و آپدیت‌ها آن را تغییر نمی‌دهند، مگر خود آپدیت این فایل را داشته باشد؛ در آن صورت هشدار می‌بینی.</p></div></div>`;
+  const inp=$('#zipIn'),drop=$('#drop');drop.onkeydown=e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();inp.click()}};
+  ['dragover','dragenter'].forEach(t=>drop.addEventListener(t,e=>{e.preventDefault();drop.classList.add('over')}));['dragleave','drop'].forEach(t=>drop.addEventListener(t,e=>{e.preventDefault();drop.classList.remove('over')}));
+  drop.addEventListener('drop',e=>{const f=e.dataTransfer.files[0];if(f)readZip(f)});inp.onchange=()=>{if(inp.files[0])readZip(inp.files[0]);inp.value=''}}
+async function readZip(file){const box=$('#updInfo');box.hidden=false;box.innerHTML='<div class="skel" style="height:120px"></div>';
+  try{const files=await unzip(await file.arrayBuffer());if(!files.length)throw new Error('فایلی داخل zip نیست');
+    if(!ST.tree)try{await fetchStats()}catch(e){ST.tree={tree:[]}}
+    const have=new Set((ST.tree.tree||[]).map(x=>x.path));const notes=files.find(f=>/^(README|UPDATE|notes?)\.(txt|md)$/i.test(f.name));
+    UPD={name:file.name,files:files.filter(f=>f!==notes)};let noteTxt='';if(notes)noteTxt=new TextDecoder().decode(await notes.get());
+    const touchesData=UPD.files.some(f=>f.name==='data/site.json');
+    box.innerHTML=`<h3>${esc(file.name)} <small>${fa(UPD.files.length)} فایل · ${kb(UPD.files.reduce((a,f)=>a+f.size,0))}</small></h3>
+     ${noteTxt?`<div class="log" style="margin-bottom:10px">${esc(noteTxt)}</div>`:''}${touchesData?'<div class="demo-bar">این آپدیت فایل محتوای سایت (data/site.json) را هم دارد و تغییرهای پنل را جایگزین می‌کند.</div>':''}
+     <div class="tbl-wrap"><table class="tbl"><thead><tr><th>فایل</th><th>حجم</th><th>وضعیت</th></tr></thead><tbody>${UPD.files.map(f=>`<tr><td class="p">${esc(f.name)}</td><td>${kb(f.size)}</td><td>${have.has(f.name)?'<span class="pill warn"><i></i>جایگزین</span>':'<span class="pill good"><i></i>جدید</span>'}</td></tr>`).join('')}</tbody></table></div>
+     <div style="display:flex;gap:8px;margin-top:14px"><button class="btn" id="instBtn">${ic('upd')} نصب آپدیت</button><button class="btn ghost" id="instCancel">انصراف</button></div>`;
+    $('#instCancel').onclick=()=>{UPD=null;box.hidden=true};$('#instBtn').onclick=()=>runPublish('install')}
+  catch(e){box.innerHTML=`<div class="err">${esc(e.message)}</div>`}}
+/* ---- settings ---- */
+function vSet(el){const u=ST.user||{};el.innerHTML=`<div class="vh"><div><h1>تنظیمات</h1><p>حساب، دسترسی و انتشار</p></div></div>
+  <div class="tabs" role="tablist"><button class="on" data-t="acc">${ic('user')} حساب</button><button data-t="sec">${ic('set')} امنیت و توکن</button><button data-t="pub">${ic('upd')} انتشار</button></div><div id="tabc"></div>`;
+  const T={acc:`<div class="grid g-2"><div class="card"><h3>حساب GitHub</h3><div class="row"><div class="av">${u.avatar_url?`<img src="${esc(u.avatar_url)}" alt="" onerror="this.remove()">`:'گ'}</div><div class="t"><b>${esc(u.name||u.login||'—')}</b><small class="ltr" style="direction:ltr;display:block">@${esc(u.login||'')}</small></div></div></div>
+     <div class="card"><h3>مخزن سایت</h3><div class="list"><div class="row"><div class="t"><b class="ltr" style="direction:ltr">${esc(ST.repo)}</b><small>شاخه‌ی ${esc(ST.branch)}</small></div><a class="btn ghost sm" href="https://github.com/${esc(ST.repo)}" target="_blank" rel="noopener">${ic('ext')}</a></div></div></div></div>`,
+   sec:`<div class="grid g-2"><div class="card"><h3>توکن فعلی</h3><div class="row"><div class="t"><b class="ltr" style="direction:ltr">${ST.demo?'— حالت نمایشی —':esc(ST.token.slice(0,11))+'••••••••'+esc(ST.token.slice(-4))}</b><small>فقط روی همین مرورگر ذخیره است و جایی ارسال نمی‌شود جز GitHub.</small></div></div>
+      <div style="display:flex;gap:8px;margin-top:12px;flex-wrap:wrap"><button class="btn danger" id="logout">خروج و پاک کردن توکن</button></div></div>
+     <div class="card"><h3>دسترسی‌های لازم توکن</h3><table class="tbl"><thead><tr><th>دسترسی</th><th>سطح</th></tr></thead><tbody><tr><td>Contents</td><td><span class="pill v"><i></i>Read and write</span></td></tr><tr><td>Pages</td><td><span class="pill"><i></i>Read-only</span></td></tr><tr><td>Metadata</td><td><span class="pill"><i></i>Read-only (خودکار)</span></td></tr></tbody></table><button class="btn ghost sm" style="margin-top:12px" data-open="help">راهنمای ساخت توکن</button></div></div>`,
+   pub:`<div class="card" style="max-width:640px"><h3>انتشار</h3><p class="hint">هر انتشار یک کامیت در مخزن می‌سازد و GitHub Pages سایت را دوباره می‌سازد (معمولاً زیر دو دقیقه). عکس‌های جدید در پوشه‌ی <span class="ltr" style="direction:ltr">assets/img/uploads</span> ذخیره می‌شوند.</p></div>`};
+  const tabs=el.querySelectorAll('.tabs button');const show=k=>{tabs.forEach(b=>b.classList.toggle('on',b.dataset.t===k));$('#tabc').innerHTML=T[k];$('#logout')?.addEventListener('click',logout)};tabs.forEach(b=>b.onclick=()=>show(b.dataset.t));show('acc')}
+function logout(){try{localStorage.removeItem(KEY);sessionStorage.removeItem(KEY)}catch(e){}location.hash='';location.reload()}
+
+/* ================= publish (content + images, or an update zip) ================= */
+function openPublish(){if(!dirty()){toast('تغییری برای انتشار نیست');return}runPublish('content')}
+async function runPublish(kind){const M=$('#modal');const S=['آماده‌سازی','آپلود فایل‌ها','ثبت در گیت‌هاب','ساخت سایت','آنلاین'];
+  M.innerHTML=`<h3 style="font-size:18px">${kind==='install'?'نصب آپدیت':'انتشار تغییرات'}</h3><p class="hint" style="margin:4px 0 0">${kind==='install'?esc(UPD.name):fa(pendingList().length)+' تغییر'}</p>
+   <div class="stepper">${S.map(s=>`<div class="s"><i></i>${s}</div>`).join('')}</div><div class="log" id="plog"></div><div style="display:flex;gap:8px;margin-top:14px"><button class="btn" id="pClose" disabled>بستن</button><a class="btn ghost" id="pSite" href="../index.html" target="_blank" rel="noopener" hidden>دیدن سایت ↗</a></div>`;
+  M.classList.add('on');$('#scrim').classList.add('on');$('#pClose').onclick=closeDrawer;
+  const st=$$('#modal .stepper .s');const step=(k,err)=>st.forEach((s,i)=>{s.className='s'+(i<k?' done':i===k?(err?' err':' act'):'')});
+  const log=m=>{const l=$('#plog');l.textContent+=(l.textContent?'\n':'')+m;l.scrollTop=l.scrollHeight};
+  try{step(0);log('آماده‌سازی فایل‌ها…');let files=[];
+    if(kind==='install'){for(const f of UPD.files)files.push({path:f.name,b64:bufToB64(await f.get())})}
+    else{ST.data.updated=new Date().toISOString();ST.uploads.forEach((u,p)=>files.push({path:p,b64:u.b64}));files.push({path:'data/site.json',b64:utf8ToB64(JSON.stringify(ST.data,null,1))})}
+    log(fa(files.length)+' فایل آماده شد.');
+    if(ST.demo){for(let k=1;k<5;k++){await new Promise(r=>setTimeout(r,700));step(k);log(['','آپلود (نمایشی)…','ثبت (نمایشی)…','ساخت سایت (نمایشی)…','انجام شد (نمایشی).'][k])}
+      step(5);if(kind!=='install'){ST.orig=JSON.stringify(ST.data);ST.uploads.clear()}markDirty();$('#pClose').disabled=false;toast('در حالت نمایشی چیزی منتشر نشد','good');return}
+    step(1);const msg=kind==='install'?`نصب آپدیت: ${UPD.name}`:'به‌روزرسانی محتوا از پنل: '+pendingList().join('، ').slice(0,120);
+    const c=await commitFiles(files,msg,m=>{log(m);if(m.startsWith('ساخت'))step(2)});step(3);log('کامیت ثبت شد: '+c.sha.slice(0,7));
+    if(kind==='install'){UPD=null}else{ST.orig=JSON.stringify(ST.data);ST.uploads.clear()}markDirty();ST.commits=null;ST.tree=null;
+    log('منتظر ساخت سایت در GitHub Pages…');const r=await waitPages(log);
+    if(r==='errored'){step(3,true);log('ساخت سایت با خطا روبه‌رو شد؛ از صفحه‌ی Actions مخزن جزئیات را ببین.')}
+    else{step(5);log(r==='built'?'سایت آنلاین شد ✓':'ثبت شد؛ سایت تا یکی دو دقیقه‌ی دیگر به‌روز می‌شود.');toast(kind==='install'?'آپدیت نصب شد':'منتشر شد','good')}
+    $('#pSite').hidden=false;$('#pSite').href=ST.pages?.html_url||'../index.html'}
+  catch(e){const i=st.findIndex(s=>s.classList.contains('act'));step(Math.max(0,i),true);log('خطا: '+(e.status===403?'توکن اجازه‌ی نوشتن ندارد (Contents: Read and write).':e.status===409?'مخزن هم‌زمان تغییر کرده؛ دوباره امتحان کن.':e.message));toast('انتشار انجام نشد','bad')}
+  $('#pClose').disabled=false;if(ST.view==='upd'&&kind==='install')route()}
+addEventListener('beforeunload',e=>{if(ST.data&&dirty()){e.preventDefault();e.returnValue=''}});
+
+/* ================= token help ================= */
+document.addEventListener('click',e=>{if(!e.target.closest('[data-open="help"]'))return;const M=$('#modal');
+  M.innerHTML=`<h3 style="font-size:18px;margin-bottom:12px">ساخت توکن GitHub (یک بار)</h3><ol class="steps-mini">
+   <li><span>در GitHub بالا راست روی عکس پروفایل بزن، بعد <b>Settings</b>.</span></li>
+   <li><span>پایین منوی کنار: <b>Developer settings</b> ← <b>Personal access tokens</b> ← <b>Fine-grained tokens</b> ← <b>Generate new token</b>.</span></li>
+   <li><span>اسم: <code>gwat-panel</code> · انقضا: <b>1 year</b> (یا هر چه می‌خواهی).</span></li>
+   <li><span>در <b>Repository access</b> گزینه‌ی <b>Only select repositories</b> و مخزن <code>gwat</code> را انتخاب کن.</span></li>
+   <li><span>در <b>Permissions</b>: <b>Contents</b> را روی <b>Read and write</b> و <b>Pages</b> را روی <b>Read-only</b> بگذار.</span></li>
+   <li><span><b>Generate token</b> را بزن، توکن را کپی کن و در صفحه‌ی ورود پنل بگذار. توکن را به کسی نده.</span></li></ol>
+   <button class="btn" style="margin-top:16px" data-close>متوجه شدم</button>`;M.classList.add('on');$('#scrim').classList.add('on')});
+
+/* ================= boot ================= */
+(async function(){const c=loadCreds();if(c&&c.token){$('#lgRepo').value=c.repo;$('#lgTok').value=c.token;try{await login(c.repo,c.token,!!localStorage.getItem(KEY))}catch(e){$('#lgErr').textContent='ورود خودکار انجام نشد؛ توکن را دوباره وارد کن.'}}})();
+</script>
+</body></html>

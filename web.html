@@ -38,6 +38,7 @@
   </div></header>
 
   <div class="wrap">
+    <div id="cases">
     <article class="glass case rv" id="yasin">
       <div class="case-top">
         <div>
@@ -170,19 +171,22 @@
       </div>
     </article>
 
+    </div>
     <div class="glass rv" style="padding:28px;display:flex;justify-content:space-between;align-items:center;gap:18px;flex-wrap:wrap;margin-block:10px 60px">
       <div><h2 style="font-size:20px">پروژه‌ی سایت دارید؟</h2><p style="margin:6px 0 0;color:var(--dim)">از سایت معرفی ساده تا فروشگاه با پنل مدیریت.</p></div>
       <a class="beam solid" href="contact.html">درخواست برآورد</a>
     </div>
   </div>
 </main>
+<script src="assets/content.js"></script>
+<script src="assets/render.js"></script>
 <script src="assets/sig.js"></script>
 <script src="assets/gl3d.js"></script>
 <script src="assets/app.js"></script>
 <script src="assets/fx.js"></script>
 <script>
-const sets={yasin:[['yasin-d','صفحه‌ی اصلی','دسکتاپ'],['yasin-d2','دسته‌بندی خودروها','دسکتاپ'],['yasin-m','اسلایدر موبایل','موبایل'],['yasin-m2','دسته‌بندی در موبایل','موبایل']],tootia:[['tootia-d','نمای روز','دسکتاپ'],['tootia-m','نمای روز در موبایل','موبایل']],solstra:[['solstra-d','کشتی سه‌بعدی','دسکتاپ'],['solstra-d2','گالری پروژه‌ها','دسکتاپ'],['solstra-m','موبایل','موبایل']],narenj:[['narenj-d','صفحه‌ی اصلی','دسکتاپ'],['narenj-d2','منو','دسکتاپ'],['narenj-m','موبایل','موبایل']],rastak:[['rastak-d','ویرایشگر کد','دسکتاپ'],['rastak-d2','دوره‌ها','دسکتاپ'],['rastak-m','موبایل','موبایل']],kish:[['kish-d','دریای متحرک','دسکتاپ'],['kish-d2','ویلاها','دسکتاپ'],['kish-m','موبایل','موبایل']]};
-document.querySelectorAll('.thumbs').forEach(t=>{const items=sets[t.dataset.set].map(([f,ti,m])=>({src:`assets/img/${f}.jpg`,title:ti,meta:m}));const open=lightbox(items);
+const sets=window.SITE&&SITE.web?Object.fromEntries(SITE.web.map(w=>[w.id,(w.shots||[]).map(x=>[x.img,x.cap,x.dev])])):{yasin:[['yasin-d','صفحه‌ی اصلی','دسکتاپ'],['yasin-d2','دسته‌بندی خودروها','دسکتاپ'],['yasin-m','اسلایدر موبایل','موبایل'],['yasin-m2','دسته‌بندی در موبایل','موبایل']],tootia:[['tootia-d','نمای روز','دسکتاپ'],['tootia-m','نمای روز در موبایل','موبایل']],solstra:[['solstra-d','کشتی سه‌بعدی','دسکتاپ'],['solstra-d2','گالری پروژه‌ها','دسکتاپ'],['solstra-m','موبایل','موبایل']],narenj:[['narenj-d','صفحه‌ی اصلی','دسکتاپ'],['narenj-d2','منو','دسکتاپ'],['narenj-m','موبایل','موبایل']],rastak:[['rastak-d','ویرایشگر کد','دسکتاپ'],['rastak-d2','دوره‌ها','دسکتاپ'],['rastak-m','موبایل','موبایل']],kish:[['kish-d','دریای متحرک','دسکتاپ'],['kish-d2','ویلاها','دسکتاپ'],['kish-m','موبایل','موبایل']]};
+document.querySelectorAll('.thumbs').forEach(t=>{const items=(sets[t.dataset.set]||[]).map(([f,ti,m])=>({src:f.includes('/')?f:`assets/img/${f}.jpg`,title:ti,meta:m}));const open=lightbox(items);
   items.forEach((it,i)=>{const b=document.createElement('button');b.type='button';b.setAttribute('aria-label','نمایش بزرگ: '+it.title);b.innerHTML=`<img src="${it.src}" alt="" loading="lazy">`;b.onclick=()=>open(i);t.appendChild(b)});
   t.closest('.case').querySelectorAll('.shots img').forEach((im,i)=>{im.style.cursor='zoom-in';im.onclick=()=>open(Math.min(i===0?0:i+1,items.length-1))});});
 </script>
