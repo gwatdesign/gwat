@@ -1,0 +1,224 @@
+<!doctype html>
+<html lang="fa" dir="rtl"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>آکادمی رستاک</title>
+<link rel="stylesheet" href="../common.css">
+<style>
+@font-face{font-family:"Paykan";src:url("../../assets/fonts/Paykan-800.woff2") format("woff2");font-weight:800;font-display:swap}
+@font-face{font-family:"Yekan Bakh";src:url("../../assets/fonts/YekanBakh-Regular.woff2") format("woff2");font-weight:400;font-display:swap}
+@font-face{font-family:"Yekan Bakh";src:url("../../assets/fonts/YekanBakh-SemiBold.woff2") format("woff2");font-weight:600;font-display:swap}
+@font-face{font-family:"Yekan Bakh";src:url("../../assets/fonts/YekanBakh-Bold.woff2") format("woff2");font-weight:700;font-display:swap}
+/* Rastak: online coding academy. Bright paper + deep ink + electric violet + lime; live code editor in the hero. */
+:root{--paper:#f6f5fb;--white:#fff;--ink:#16133a;--ink-2:#4a4770;--mute:#8a87a8;--violet:#6b4dff;--violet-2:#8f78ff;--lime:#c6ff4d;--line:#16133a14;
+  --gw-bg:#fff;--gw-fg:#16133a;--gw-ac:#6b4dff;--gw-acfg:#fff;--gw-tagbg:#16133ae6;--gw-tagfg:#c6ff4d;color-scheme:light}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;overflow-x:clip}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:"Yekan Bakh",Tahoma,sans-serif;font-size:15px;line-height:1.85}
+a{color:inherit;text-decoration:none}
+h1,h2,h3{font-family:"Paykan","Yekan Bakh",sans-serif;font-weight:800;margin:0;line-height:1.35;text-wrap:balance}
+.wrap{max-width:1180px;margin-inline:auto;padding-inline:clamp(16px,4vw,44px)}
+:focus-visible{outline:2px solid var(--violet);outline-offset:3px;border-radius:8px}
+.rv{transition:transform .9s cubic-bezier(.2,.8,.2,1)}.js .rv:not(.in){transform:translateY(30px)}
+.nav{position:sticky;top:0;z-index:50;background:#f6f5fbd9;backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-bottom:1px solid var(--line)}
+.nav .wrap{display:flex;align-items:center;justify-content:space-between;height:68px;gap:14px}
+.logo{display:flex;align-items:center;gap:10px;font-family:"Paykan";font-size:22px}
+.logo i{width:34px;height:34px;border-radius:10px;background:var(--ink);display:grid;place-items:center;color:var(--lime);font-style:normal;font-family:monospace;font-size:15px;font-weight:700;direction:ltr}
+.nav nav{display:flex;gap:2px}.nav nav a{padding:6px 14px;border-radius:10px;font-size:14px;color:var(--ink-2)}.nav nav a:hover{background:#16133a0a;color:var(--ink)}
+.btn{display:inline-flex;align-items:center;gap:8px;padding:11px 22px;border-radius:14px;background:var(--violet);color:#fff;font-weight:700;font-size:15px;border:0;cursor:pointer;font-family:inherit;transition:transform .3s,box-shadow .3s}
+.btn:hover{transform:translateY(-2px);box-shadow:0 14px 30px -12px var(--violet)}
+.btn.dark{background:var(--ink)}.btn.ghost{background:#fff;color:var(--ink);border:1px solid var(--line)}
+@media (max-width:820px){.nav nav{display:none}}
+/* hero */
+.hero{padding-block:clamp(50px,8vw,90px) 60px}
+.hero .wrap{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.05fr);gap:40px;align-items:center}
+.pill{display:inline-flex;align-items:center;gap:8px;padding:4px 12px 4px 4px;border-radius:999px;background:#fff;border:1px solid var(--line);font-size:13px}
+.pill b{background:var(--lime);border-radius:999px;padding:1px 10px;font-weight:700}
+.hero h1{font-size:clamp(36px,5.2vw,66px);margin:18px 0 14px}
+.hero h1 .hl{position:relative;white-space:nowrap}
+.hero h1 .hl::after{content:"";position:absolute;inset:auto -4px 6px;height:.35em;background:var(--lime);z-index:-1;border-radius:6px;transform-origin:right;animation:mark 1s cubic-bezier(.2,.8,.2,1) .6s both}
+@keyframes mark{from{transform:scaleX(0)}}
+.hero p{color:var(--ink-2);max-width:44ch;margin:0 0 24px;font-size:16px}
+.hero .acts{display:flex;gap:10px;flex-wrap:wrap}
+.avatars{display:flex;align-items:center;gap:12px;margin-top:28px;font-size:13px;color:var(--ink-2)}
+.avatars span{display:flex}.avatars span i{width:32px;height:32px;border-radius:50%;border:2px solid var(--paper);margin-inline-start:-10px;display:block}
+.avatars span i:first-child{margin:0}
+.editor-wrap{position:relative;perspective:1400px}
+.editor{background:#141130;border-radius:20px;box-shadow:0 50px 100px -40px #16133a99,0 0 0 1px #ffffff10 inset;overflow:hidden;transform:rotateY(10deg) rotateX(6deg);transition:transform .8s cubic-bezier(.2,.8,.2,1);direction:ltr}
+.editor-wrap:hover .editor{transform:none}
+.ed-bar{display:flex;align-items:center;gap:6px;padding:12px 14px;background:#1c1840}
+.ed-bar i{width:10px;height:10px;border-radius:50%}
+.ed-bar span{margin-left:12px;font:12px monospace;color:#8f8bc4}
+.code{font:13.5px/1.9 ui-monospace,Menlo,Consolas,monospace;color:#e6e3ff;padding:16px 18px;min-height:280px;white-space:pre;overflow:hidden}
+.code .k{color:#c792ea}.code .s{color:#c6ff4d}.code .f{color:#82aaff}.code .c{color:#6e6a99}.code .n{color:#ffcb6b}
+.caret{display:inline-block;width:8px;height:16px;background:var(--lime);vertical-align:-3px;animation:bl 1s steps(1) infinite}
+@keyframes bl{50%{opacity:0}}
+.preview{position:absolute;bottom:-26px;left:-20px;width:46%;background:#fff;border-radius:16px;padding:14px;box-shadow:0 30px 60px -20px #16133a55;direction:rtl;animation:float 5s ease-in-out infinite}
+.preview b{display:block;font-size:13px}.preview small{color:var(--mute);font-size:11px}
+.preview .bar{height:8px;border-radius:8px;background:#eee;margin-top:8px;overflow:hidden}.preview .bar i{display:block;height:100%;width:72%;background:linear-gradient(90deg,var(--violet),var(--violet-2));border-radius:8px}
+.badge{position:absolute;top:-18px;right:-12px;background:var(--lime);color:var(--ink);font-weight:700;font-size:13px;border-radius:14px;padding:8px 14px;box-shadow:0 20px 40px -14px #16133a66;transform:rotate(6deg);animation:float 6s ease-in-out infinite reverse;direction:rtl}
+@keyframes float{50%{translate:0 -10px}}
+@media (max-width:900px){.hero .wrap{grid-template-columns:1fr}.editor{transform:none}.preview{left:8px}}
+/* stats */
+.stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin-top:60px}
+.stats div{background:#fff;border:1px solid var(--line);border-radius:20px;padding:20px}
+.stats b{display:block;font-family:"Paykan";font-size:clamp(28px,3vw,40px);line-height:1.1;color:var(--violet)}
+.stats span{color:var(--ink-2);font-size:13px}
+@media (max-width:760px){.stats{grid-template-columns:repeat(2,minmax(0,1fr))}}
+section{padding-block:clamp(60px,9vw,110px)}
+.sh{display:flex;justify-content:space-between;align-items:flex-end;gap:16px;flex-wrap:wrap;margin-bottom:28px}
+.sh small{color:var(--violet);font-weight:700;font-size:13px}.sh h2{font-size:clamp(26px,3.4vw,42px)}.sh p{margin:0;color:var(--ink-2);max-width:42ch}
+/* courses */
+.chips{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:22px}
+.chips button{font:inherit;font-size:14px;padding:7px 16px;border-radius:12px;border:1px solid var(--line);background:#fff;color:var(--ink);cursor:pointer;transition:all .25s}
+.chips button[aria-pressed="true"]{background:var(--ink);color:#fff;border-color:var(--ink)}
+.courses{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
+.course{background:#fff;border:1px solid var(--line);border-radius:22px;overflow:hidden;display:flex;flex-direction:column;transition:transform .45s cubic-bezier(.2,.8,.2,1),box-shadow .45s;animation:cin .5s cubic-bezier(.2,.8,.2,1) both;animation-delay:calc(var(--i)*70ms)}
+@keyframes cin{from{opacity:0;transform:translateY(20px) scale(.97)}}
+.course:hover{transform:translateY(-6px);box-shadow:0 30px 50px -30px #16133a55}
+.course .cv{height:130px;position:relative;display:grid;place-items:center;font:700 34px ui-monospace,monospace;color:#fff;direction:ltr}
+.course .cv small{position:absolute;top:12px;right:12px;font:600 11px "Yekan Bakh";background:#ffffff33;border-radius:999px;padding:1px 9px;direction:rtl}
+.course .bd{padding:16px 18px 18px;display:flex;flex-direction:column;gap:8px;flex:1}
+.course h3{font-family:"Yekan Bakh";font-weight:700;font-size:17px}
+.course .meta{display:flex;gap:12px;font-size:12.5px;color:var(--mute)}
+.course .ft{display:flex;justify-content:space-between;align-items:center;margin-top:auto;padding-top:8px;border-top:1px solid var(--line)}
+.course .ft b{font-size:15px}.course .ft button{font:inherit;font-size:13px;border:0;background:#6b4dff14;color:var(--violet);font-weight:700;border-radius:10px;padding:6px 12px;cursor:pointer}
+@media (max-width:900px){.courses{grid-template-columns:repeat(2,minmax(0,1fr))}}@media (max-width:560px){.courses{grid-template-columns:1fr}}
+/* path */
+.path{background:var(--ink);color:#fff;border-radius:36px;margin-inline:clamp(8px,2vw,24px)}
+.path .sh small{color:var(--lime)}.path .sh p{color:#ffffffaa}
+.steps{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px;counter-reset:s}
+.step{position:relative;background:#ffffff0a;border:1px solid #ffffff1a;border-radius:22px;padding:22px;transition:background .3s,transform .4s}
+.step:hover{background:#ffffff14;transform:translateY(-4px)}
+.step::before{counter-increment:s;content:counter(s,persian);display:grid;place-items:center;width:40px;height:40px;border-radius:12px;background:var(--lime);color:var(--ink);font-weight:700;margin-bottom:12px}
+.step h3{font-family:"Yekan Bakh";font-weight:700;font-size:16px;margin-bottom:4px}.step p{margin:0;color:#ffffffaa;font-size:13.5px}
+.step .w{position:absolute;top:22px;left:22px;font-size:12px;color:var(--lime)}
+@media (max-width:900px){.steps{grid-template-columns:repeat(2,minmax(0,1fr))}}@media (max-width:520px){.steps{grid-template-columns:1fr}}
+/* pricing */
+.toggle{display:inline-flex;background:#fff;border:1px solid var(--line);border-radius:14px;padding:4px;margin-bottom:24px}
+.toggle button{font:inherit;font-size:14px;border:0;background:none;padding:7px 16px;border-radius:10px;cursor:pointer;color:var(--ink-2)}
+.toggle button[aria-pressed="true"]{background:var(--ink);color:#fff}
+.toggle em{font-style:normal;font-size:11px;background:var(--lime);color:var(--ink);border-radius:999px;padding:0 6px;margin-inline-start:4px}
+.plans{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;align-items:stretch}
+.plan{background:#fff;border:1px solid var(--line);border-radius:24px;padding:24px;display:flex;flex-direction:column;gap:12px}
+.plan.hot{background:var(--violet);color:#fff;border-color:var(--violet);transform:translateY(-10px);box-shadow:0 40px 70px -40px var(--violet)}
+.plan h3{font-family:"Yekan Bakh";font-weight:700;font-size:17px}
+.plan .pr{font-family:"Paykan";font-size:32px;line-height:1.2}.plan .pr small{font-family:"Yekan Bakh";font-size:13px;opacity:.7}
+.plan ul{list-style:none;padding:0;margin:0;display:grid;gap:8px;font-size:14px}
+.plan li::before{content:"✓";display:inline-grid;place-items:center;width:18px;height:18px;border-radius:6px;background:var(--lime);color:var(--ink);font-size:11px;margin-inline-end:8px}
+.plan .btn{justify-content:center;margin-top:auto}.plan.hot .btn{background:#fff;color:var(--violet)}
+.pr-num{display:inline-block;transition:transform .35s,opacity .35s}.pr-num.flip{transform:translateY(-12px);opacity:0}
+@media (max-width:900px){.plans{grid-template-columns:1fr}.plan.hot{transform:none}}
+/* faq */
+.faq{max-width:780px;margin-inline:auto;display:grid;gap:10px}
+.q{background:#fff;border:1px solid var(--line);border-radius:18px;overflow:hidden}
+.q button{width:100%;text-align:right;font:inherit;font-weight:700;font-size:15.5px;padding:18px 20px;background:none;border:0;cursor:pointer;display:flex;justify-content:space-between;gap:12px;color:var(--ink)}
+.q button i{font-style:normal;width:26px;height:26px;border-radius:8px;background:#6b4dff14;color:var(--violet);display:grid;place-items:center;transition:transform .35s;flex:none}
+.q[open-q] button i{transform:rotate(45deg)}
+.q .a{display:grid;grid-template-rows:0fr;transition:grid-template-rows .4s cubic-bezier(.2,.8,.2,1)}
+.q[open-q] .a{grid-template-rows:1fr}
+.q .a>div{overflow:hidden}.q .a p{margin:0;padding:0 20px 18px;color:var(--ink-2)}
+.cta{background:linear-gradient(120deg,var(--violet),#3a22c9);color:#fff;border-radius:32px;padding:clamp(30px,5vw,60px);display:flex;justify-content:space-between;align-items:center;gap:20px;flex-wrap:wrap;position:relative;overflow:hidden}
+.cta::after{content:"</>";position:absolute;left:4%;bottom:-30px;font:800 160px ui-monospace,monospace;color:#ffffff12;direction:ltr}
+.cta h2{font-size:clamp(24px,3vw,38px)}.cta p{margin:6px 0 0;color:#ffffffcc}
+.cta .btn{background:var(--lime);color:var(--ink);position:relative;z-index:1}
+footer{padding:36px clamp(16px,4vw,44px) 70px;text-align:center;color:var(--mute);font-size:13px}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style></head>
+<body data-site="آکادمی رستاک">
+<header class="nav"><div class="wrap">
+  <a class="logo" href="#"><i>&lt;/&gt;</i>رستاک</a>
+  <nav aria-label="منو"><a href="#courses">دوره‌ها</a><a href="#path">مسیر یادگیری</a><a href="#pricing">اشتراک</a><a href="#faq">سؤال‌ها</a></nav>
+  <a class="btn" href="#pricing">شروع رایگان</a>
+</div></header>
+
+<main>
+  <section class="hero" aria-label="معرفی"><div class="wrap">
+    <div class="rv">
+      <span class="pill"><b>جدید</b>دوره‌ی هوش مصنوعی با پایتون اضافه شد</span>
+      <h1>برنامه‌نویسی را <span class="hl">پروژه‌محور</span> یاد بگیر</h1>
+      <p>از اولین خط کد تا اولین کار. هر دوره با یک پروژه‌ی واقعی تمام می‌شود که می‌توانی در رزومه‌ات بگذاری، و یک منتور کدت را خط‌به‌خط بررسی می‌کند.</p>
+      <div class="acts"><a class="btn" href="#courses">دیدن دوره‌ها ←</a><a class="btn ghost" href="#path">مسیر یادگیری</a></div>
+      <div class="avatars"><span><i style="background:#ffcb6b"></i><i style="background:#82aaff"></i><i style="background:#c792ea"></i><i style="background:#c6ff4d"></i></span>هر ماه یک گروه تازه شروع می‌کند</div>
+    </div>
+    <div class="editor-wrap rv">
+      <div class="badge">پروژه‌ی پایانی ✓</div>
+      <div class="editor" aria-label="ویرایشگر کد نمونه"><div class="ed-bar"><i style="background:#ff5f57"></i><i style="background:#febc2e"></i><i style="background:#28c840"></i><span>app.js — rastak</span></div><div class="code" id="code"></div></div>
+      <div class="preview"><b>دوره‌ی جاوااسکریپت</b><small>فصل ۷ از ۱۰ · ساخت فروشگاه</small><div class="bar"><i></i></div></div>
+    </div>
+  </div>
+  <div class="wrap"><div class="stats rv">
+    <div><b data-c="24">۰</b><span>دوره‌ی پروژه‌محور</span></div><div><b data-c="180">۰</b><span>ساعت ویدیو</span></div><div><b data-c="12">۰</b><span>منتور فعال</span></div><div><b data-c="48">۰</b><span>ساعت تا پاسخ منتور</span></div>
+  </div></div></section>
+
+  <section id="courses" aria-label="دوره‌ها"><div class="wrap">
+    <div class="sh rv"><div><small>دوره‌ها</small><h2>از کجا شروع کنی؟</h2></div><p>هر دوره سطح، مدت و پروژه‌ی پایانی مشخص دارد.</p></div>
+    <div class="chips" id="chips" role="group" aria-label="دسته‌بندی"></div>
+    <div class="courses" id="courseList"></div>
+  </div></section>
+
+  <section class="path" id="path" aria-label="مسیر یادگیری"><div class="wrap">
+    <div class="sh rv"><div><small>مسیر یادگیری</small><h2>چهار ماه تا اولین پروژه‌ی واقعی</h2></div><p>اگر هفته‌ای ده ساعت وقت بگذاری.</p></div>
+    <div class="steps rv">
+      <div class="step"><span class="w">ماه ۱</span><h3>مبانی</h3><p>HTML، CSS و منطق برنامه‌نویسی با تمرین‌های روزانه.</p></div>
+      <div class="step"><span class="w">ماه ۲</span><h3>جاوااسکریپت</h3><p>ساخت صفحه‌های تعاملی و کار با داده.</p></div>
+      <div class="step"><span class="w">ماه ۳</span><h3>فریم‌ورک</h3><p>ری‌اکت و ساخت یک اپ کامل با منتور.</p></div>
+      <div class="step"><span class="w">ماه ۴</span><h3>پروژه‌ی پایانی</h3><p>یک محصول واقعی برای رزومه، با بازبینی کد.</p></div>
+    </div>
+  </div></section>
+
+  <section id="pricing" aria-label="اشتراک"><div class="wrap" style="text-align:center">
+    <div class="sh rv" style="justify-content:center;text-align:center"><div><small>اشتراک</small><h2>یک اشتراک، همه‌ی دوره‌ها</h2></div></div>
+    <div class="toggle" role="group" aria-label="دوره‌ی پرداخت"><button type="button" aria-pressed="true" data-m="1">ماهانه</button><button type="button" aria-pressed="false" data-m="12">سالانه<em>۲ ماه رایگان</em></button></div>
+    <div class="plans" style="text-align:right">
+      <div class="plan rv"><h3>رایگان</h3><div class="pr"><span class="pr-num" data-p="0">۰</span> <small>تومان</small></div><ul><li>۳ دوره‌ی مقدماتی</li><li>تمرین‌های روزانه</li><li>انجمن پرسش و پاسخ</li></ul><a class="btn ghost" href="#">ثبت‌نام</a></div>
+      <div class="plan hot rv"><h3>حرفه‌ای</h3><div class="pr"><span class="pr-num" data-p="490000">۰</span> <small id="per">تومان در ماه</small></div><ul><li>همه‌ی ۲۴ دوره</li><li>بازبینی کد توسط منتور</li><li>پروژه‌ی پایانی و گواهی</li><li>جلسه‌ی زنده‌ی هفتگی</li></ul><a class="btn" href="#">شروع ۷ روز رایگان</a></div>
+      <div class="plan rv"><h3>تیمی</h3><div class="pr"><span class="pr-num" data-p="1900000">۰</span> <small>تومان در ماه</small></div><ul><li>تا ۵ نفر</li><li>داشبورد پیشرفت تیم</li><li>مسیر اختصاصی شرکت</li></ul><a class="btn ghost" href="#">تماس با ما</a></div>
+    </div>
+  </div></section>
+
+  <section id="faq" aria-label="سؤال‌های رایج"><div class="wrap">
+    <div class="sh rv" style="justify-content:center;text-align:center"><div><small>سؤال‌های رایج</small><h2>قبل از شروع</h2></div></div>
+    <div class="faq" id="faqList"></div>
+  </div></section>
+
+  <section style="padding-top:0"><div class="wrap"><div class="cta rv"><div><h2>اولین خط کدت را امروز بنویس</h2><p>هفت روز اول اشتراک حرفه‌ای رایگان است.</p></div><a class="btn" href="#pricing">شروع رایگان ←</a></div></div></section>
+</main>
+<footer>آکادمی رستاک · نمونه‌کار طراحی سایت</footer>
+
+<script src="../../assets/sig.js"></script>
+<script src="../common.js"></script>
+<script>
+const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+/* typing code editor */
+(function(){const el=document.getElementById('code');
+  const lines=[['c','// final project: tiny shop'],['k','const ',['f','cart'],' = []'],[''],['k','function ',['f','addToCart'],'(item) {'],['','  cart.push(item)'],['','  render(',['s','"cart: "'],' + cart.length)'],['','}'],[''],['f','addToCart',"({ name: ",['s','"book"'],', price: ',['n','120'],' })']];
+  const html=l=>{let o='';const cls=l[0];l.slice(1).forEach(p=>{o+=Array.isArray(p)?`<span class="${p[0]}">${p[1]}</span>`:(cls?`<span class="${cls}">${p}</span>`:p)});return o};
+  const full=lines.map(html);
+  if(reduce){el.innerHTML=full.join('\n');return}
+  let li=0,ci=0;const plain=lines.map(l=>{const d=document.createElement('div');d.innerHTML=html(l);return d.textContent});
+  function type(){if(li>=lines.length){el.innerHTML=full.join('\n')+'<span class="caret"></span>';setTimeout(()=>{li=0;ci=0;type()},4000);return}
+    ci++;const done=full.slice(0,li).join('\n');const cur=plain[li].slice(0,ci);el.innerHTML=(done?done+'\n':'')+cur.replace(/</g,'&lt;')+'<span class="caret"></span>';
+    if(ci>=plain[li].length){li++;ci=0;setTimeout(type,220)}else setTimeout(type,28+Math.random()*40)}
+  setTimeout(type,1600)})();
+/* counters */
+(function(){const io=new IntersectionObserver(es=>es.forEach(e=>{if(!e.isIntersecting)return;io.unobserve(e.target);const to=+e.target.dataset.c,t0=performance.now();
+  (function f(n){const k=Math.min(1,(n-t0)/1400);e.target.textContent=fa(Math.round(to*(1-Math.pow(1-k,3))));if(k<1)requestAnimationFrame(f)})(t0)}));document.querySelectorAll('[data-c]').forEach(e=>io.observe(e))})();
+/* courses */
+const C=[['وب','HTML و CSS از صفر','مقدماتی',18,0,'#ff7a59','</>'],['وب','جاوااسکریپت پروژه‌محور','متوسط',32,1890000,'#f7c948','JS'],['وب','ری‌اکت و Next','پیشرفته',40,2490000,'#5ac8fa','⚛'],
+ ['پایتون','پایتون برای همه','مقدماتی',24,0,'#3776ab','py'],['پایتون','تحلیل داده با پانداس','متوسط',30,1990000,'#7a5af8','df'],['پایتون','هوش مصنوعی کاربردی','پیشرفته',36,2790000,'#16133a','AI'],
+ ['موبایل','فلاتر از صفر','متوسط',34,2290000,'#02569b','◧'],['موبایل','ری‌اکت نیتیو','پیشرفته',30,2390000,'#6b4dff','RN'],['طراحی','UI/UX برای برنامه‌نویس‌ها','مقدماتی',16,990000,'#e2498a','◎']];
+(function(){const cats=['همه',...new Set(C.map(c=>c[0]))],ch=document.getElementById('chips'),list=document.getElementById('courseList');
+  ch.innerHTML=cats.map((c,i)=>`<button type="button" aria-pressed="${i===0}">${c}</button>`).join('');
+  const show=cat=>{list.innerHTML=C.filter(c=>cat==='همه'||c[0]===cat).map(([k,t,l,h,p,col,ic],i)=>`<article class="course" style="--i:${i}"><div class="cv" style="background:linear-gradient(135deg,${col},${col}cc)"><small>${l}</small>${ic}</div><div class="bd"><h3>${t}</h3><div class="meta"><span>${k}</span><span>${fa(h)} ساعت</span><span>پروژه‌ی پایانی</span></div><div class="ft"><b>${p?toman(p):'رایگان'}</b><button type="button" data-t="${t}">افزودن</button></div></div></article>`).join('');
+    list.querySelectorAll('.ft button').forEach(b=>b.onclick=()=>{b.textContent='✓ اضافه شد';toast(`«${b.dataset.t}» به فهرست یادگیری‌ات اضافه شد`)})};
+  ch.querySelectorAll('button').forEach((b,i)=>b.onclick=()=>{ch.querySelectorAll('button').forEach(x=>x.setAttribute('aria-pressed',x===b));show(cats[i])});show('همه')})();
+/* pricing toggle */
+(function(){const nums=document.querySelectorAll('.pr-num');let m=1;
+  const set=()=>nums.forEach(n=>{n.classList.add('flip');setTimeout(()=>{const p=+n.dataset.p;n.textContent=fa((m===12?Math.round(p*10/12/1000)*1000:p).toLocaleString('en-US').replace(/,/g,'٬'));n.classList.remove('flip')},200)});
+  document.querySelectorAll('.toggle button').forEach(b=>b.onclick=()=>{m=+b.dataset.m;document.querySelectorAll('.toggle button').forEach(x=>x.setAttribute('aria-pressed',x===b));document.getElementById('per').textContent=m===12?'تومان در ماه، پرداخت سالانه':'تومان در ماه';set()});set()})();
+/* faq */
+(function(){const Q=[['برای شروع به چه چیزی نیاز دارم؟','فقط یک لپ‌تاپ معمولی و اینترنت. همه‌ی ابزارهایی که لازم داری رایگان‌اند و در جلسه‌ی اول نصبشان می‌کنیم.'],['اگر وسط دوره گیر کنم چه می‌شود؟','زیر هر درس می‌توانی سؤال بپرسی؛ منتورها حداکثر تا ۴۸ ساعت جواب می‌دهند و هفته‌ای یک جلسه‌ی زنده هم داریم.'],['گواهی دوره معتبر است؟','گواهی رستاک نشان می‌دهد پروژه‌ی پایانی را ساخته‌ای. برای کارفرما، خود پروژه و کدت مهم‌تر از گواهی است.'],['می‌توانم اشتراک را لغو کنم؟','بله، هر وقت خواستی از صفحه‌ی حساب کاربری. تا پایان دوره‌ی پرداخت‌شده دسترسی‌ات می‌ماند.']];
+  const f=document.getElementById('faqList');f.innerHTML=Q.map(([q,a],i)=>`<div class="q rv"><button type="button" aria-expanded="false" aria-controls="a${i}">${q}<i>+</i></button><div class="a" id="a${i}"><div><p>${a}</p></div></div></div>`).join('');
+  f.querySelectorAll('.q').forEach(q=>q.querySelector('button').onclick=()=>{const o=q.hasAttribute('open-q');f.querySelectorAll('.q').forEach(x=>{x.removeAttribute('open-q');x.querySelector('button').setAttribute('aria-expanded','false')});if(!o){q.setAttribute('open-q','');q.querySelector('button').setAttribute('aria-expanded','true')}});
+  f.querySelectorAll('.rv').forEach(e=>e.classList.add('in'))})();
+</script>
+</body></html>

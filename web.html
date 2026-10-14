@@ -1,0 +1,189 @@
+<!doctype html>
+<html lang="fa" dir="rtl"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>نمونه‌کار سایت · گوات</title>
+<link rel="icon" href="assets/img/mark.svg">
+<link rel="stylesheet" href="assets/style.css">
+<style>
+.case{padding:clamp(22px,4vw,48px);margin-bottom:28px;scroll-margin-top:90px}
+.case-top{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.5fr);gap:clamp(24px,4vw,56px);align-items:center}
+.case .num{font-size:13px;color:var(--mute)}
+.case h2{font-size:clamp(22px,3vw,34px);margin-block:8px 10px}
+.case p{color:var(--dim);margin:0 0 14px}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin-block:16px}
+.chips span{font-size:12.5px;padding:3px 12px;border:1px solid var(--line-2);border-radius:999px;color:var(--gold-hi)}
+.did{list-style:none;padding:0;margin:0;display:grid;gap:8px}
+.did li{display:flex;gap:10px;font-size:14.5px;color:var(--ivory)}
+.did li::before{content:"";flex:none;width:6px;height:6px;margin-top:10px;border-radius:50%;background:var(--gold);box-shadow:0 0 10px var(--gold)}
+.shots{position:relative;padding-bottom:40px}
+.shots .phone{position:absolute;left:-10px;bottom:0;width:132px}
+.shots .phone.b{left:120px;bottom:-14px;width:118px}
+.shots .browser{margin-inline-end:60px}
+.thumbs{display:flex;gap:10px;margin-top:34px;overflow-x:auto;padding-bottom:6px}
+.thumbs button{flex:none;border:1px solid var(--line);border-radius:12px;padding:0;overflow:hidden;cursor:zoom-in;background:none;transition:border-color .3s,transform .3s}
+.thumbs button:hover{border-color:var(--gold);transform:translateY(-3px)}
+.thumbs img{height:84px;width:auto}
+.stats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin-top:20px}
+.stats div{border:1px solid var(--line);border-radius:16px;padding:12px 14px}
+.stats b{display:block;font-family:var(--display);font-size:18px;line-height:1.5;color:var(--gold-hi);white-space:nowrap}
+.stats span{font-size:12.5px;color:var(--mute)}
+@media (max-width:900px){.case-top{grid-template-columns:minmax(0,1fr)}.shots{order:-1}}
+@media (max-width:520px){.shots .phone{width:96px;left:-4px}.shots .phone.b{left:84px;width:86px}.shots .browser{margin-inline-end:20px}}
+</style></head>
+<body>
+<main data-page="web">
+  <header class="phead"><div class="wrap">
+    <div class="crumbs"><a href="index.html">خانه</a> / نمونه‌کار سایت</div>
+    <h1>نمونه‌کارهای سایت و اپ</h1>
+    <p>پروژه‌هایی که از طراحی تا اجرا خودم ساخته‌ام، و چند سایت نمونه که برای نمایش سبک‌های مختلف ساختم. تصویرها اسکرین‌شات واقعی همین سایت‌ها هستند؛ سایت‌های نمونه را می‌توانید زنده هم ببینید.</p>
+  </div></header>
+
+  <div class="wrap">
+    <article class="glass case rv" id="yasin">
+      <div class="case-top">
+        <div>
+          <span class="num"><span data-fa>01</span> · <span data-fa>1405</span></span>
+          <h2>یاسین دبی</h2>
+          <p>سایت معرفی خودروهای نمایشگاه Yasin automedia که خودرو را مستقیم از دبی سفارش می‌دهد. مشتری خودرو را می‌بیند، مشخصاتش را می‌خواند و از همان صفحه تماس می‌گیرد.</p>
+          <ul class="did">
+            <li>اسلایدر اصلی با عکس خودروها و افکت‌های کلاسیک</li>
+            <li>فروشگاه با دسته‌بندی تویوتا سفارش خلیج، النترا و لوکس کارکرده</li>
+            <li>پنل مدیریت جدا که همه‌چیز سایت را ویرایش می‌کند</li>
+            <li>افزودن خودرو از ربات تلگرام، روی هاست سی‌پنل داخل ایران</li>
+          </ul>
+          <div class="chips"><span>PHP</span><span>JSON</span><span>پنل مدیریت</span><span>ربات تلگرام</span><span>واکنش‌گرا</span></div>
+        </div>
+        <div class="shots">
+          <div class="browser"><div class="bar"><i></i><i></i><i></i><span>yasin automedia</span></div><img src="assets/img/yasin-d.jpg" alt="صفحه‌ی اصلی سایت یاسین دبی"></div>
+          <div class="phone"><img src="assets/img/yasin-m.jpg" alt="نسخه‌ی موبایل سایت یاسین دبی"></div>
+          <div class="phone b"><img src="assets/img/yasin-m2.jpg" alt="دسته‌بندی‌ها در موبایل"></div>
+        </div>
+      </div>
+      <div class="thumbs" data-set="yasin"></div>
+    </article>
+
+    <article class="glass case rv" id="tootia">
+      <div class="case-top">
+        <div>
+          <span class="num"><span data-fa>02</span> · <span data-fa>1405</span></span>
+          <h2>طوطیا</h2>
+          <p>برنامه‌ریز شخصی برای مک و موبایل: کارهای روز با ساعت، برد کارها، ردیاب عادت و تایمر تمرکز. بدون اینترنت هم کار می‌کند و مثل یک اپ نصب می‌شود.</p>
+          <ul class="did">
+            <li>لودر اختصاصی و پاپ‌آپ متفاوت برای هر کار</li>
+            <li>ردیاب عادت با جدول هفتگی و درصد پیشرفت</li>
+            <li>اعداد فارسی و تقویم شمسی</li>
+          </ul>
+          <div class="chips"><span>PWA</span><span>آفلاین</span><span>UI/UX</span><span>انیمیشن</span></div>
+          <div class="stats"><div><b data-fa>3</b><span>نما: روز، هفته، برد</span></div><div><b data-fa>100٪</b><span>آفلاین</span></div><div><b>مک + موبایل</b><span>قابل نصب</span></div></div>
+        </div>
+        <div class="shots">
+          <div class="browser"><div class="bar"><i></i><i></i><i></i><span>tootia</span></div><img src="assets/img/tootia-d.jpg" alt="نمای روز در طوطیا"></div>
+          <div class="phone"><img src="assets/img/tootia-m.jpg" alt="طوطیا در موبایل"></div>
+        </div>
+      </div>
+      <div class="thumbs" data-set="tootia"></div>
+    </article>
+
+    <article class="glass case rv" id="solstra">
+      <div class="case-top">
+        <div>
+          <span class="num"><span data-fa>03</span> · <span data-fa>1405</span> · نمونه‌کار مفهومی</span>
+          <h2>سولسترا</h2>
+          <p>سایت شرکت خیالی راکتور همجوشی برای کشتی‌ها، ساخته‌شده از روی یک ویدیوی برنده‌ی Awwwards. کشتی شیشه‌ای سه‌بعدی، رگه‌های نور، خورشیدگرفتگی زنده و گالری افقی پروژه‌ها.</p>
+          <ul class="did"><li>کشتی سه‌بعدی شیشه‌ای با WebGL، بدون کتابخانه</li><li>کارت‌های سه‌بعدی با تاری حرکت و خورشیدگرفتگی با شیدر</li><li>تایم‌لاین با نقطه‌ی نورانی و گالری افقی پروژه‌ها</li></ul>
+          <div class="chips"><span>WebGL</span><span>GLSL</span><span>اسکرول‌محور</span><span>RTL</span></div>
+          <a class="beam solid" href="work/solstra/index.html">مشاهده‌ی سایت زنده <span aria-hidden="true">←</span></a>
+        </div>
+        <div class="shots">
+          <div class="browser"><div class="bar"><i></i><i></i><i></i><span>solstra</span></div><img src="assets/img/solstra-d.jpg" alt="صفحه‌ی اصلی سولسترا" loading="lazy"></div>
+          <div class="phone"><img src="assets/img/solstra-m.jpg" alt="سولسترا در موبایل" loading="lazy"></div>
+        </div>
+      </div>
+      <div class="thumbs" data-set="solstra"></div>
+    </article>
+
+    <article class="glass case rv" id="narenj">
+      <div class="case-top">
+        <div>
+          <span class="num"><span data-fa>04</span> · <span data-fa>1405</span> · نمونه‌کار مفهومی</span>
+          <h2>کافه نارنج</h2>
+          <p>سایت یک کافه‌ی خیالی در شیراز: سبز باغ و نارنجی بهارنارنج، با شکوفه‌هایی که روی صفحه می‌ریزند.</p>
+          <ul class="did"><li>منوی سه‌بخشی با قیمت تومانی</li><li>تصویرسازی حیاط و درخت نارنج با SVG</li><li>فرم رزرو میز با انتخاب نفرات</li></ul>
+          <div class="chips"><span>منو</span><span>رزرو</span><span>تصویرسازی</span><span>انیمیشن</span></div>
+          <a class="beam solid" href="work/narenj/index.html">مشاهده‌ی سایت زنده <span aria-hidden="true">←</span></a>
+        </div>
+        <div class="shots">
+          <div class="browser"><div class="bar"><i></i><i></i><i></i><span>narenj</span></div><img src="assets/img/narenj-d.jpg" alt="صفحه‌ی اصلی کافه نارنج" loading="lazy"></div>
+          <div class="phone"><img src="assets/img/narenj-m.jpg" alt="کافه نارنج در موبایل" loading="lazy"></div>
+        </div>
+      </div>
+      <div class="thumbs" data-set="narenj"></div>
+    </article>
+
+    <article class="glass case rv" id="rastak">
+      <div class="case-top">
+        <div>
+          <span class="num"><span data-fa>05</span> · <span data-fa>1405</span> · نمونه‌کار مفهومی</span>
+          <h2>آکادمی رستاک</h2>
+          <p>سایت آموزش آنلاین برنامه‌نویسی: ویرایشگر کدی که خودش تایپ می‌کند، فیلتر دوره‌ها، مسیر یادگیری و جدول اشتراک.</p>
+          <ul class="did"><li>ویرایشگر کد زنده در بالای صفحه</li><li>فیلتر دوره‌ها و افزودن به فهرست یادگیری</li><li>اشتراک ماهانه و سالانه با تغییر قیمت متحرک</li></ul>
+          <div class="chips"><span>آموزش آنلاین</span><span>فیلتر</span><span>قیمت‌گذاری</span><span>FAQ</span></div>
+          <a class="beam solid" href="work/rastak/index.html">مشاهده‌ی سایت زنده <span aria-hidden="true">←</span></a>
+        </div>
+        <div class="shots">
+          <div class="browser"><div class="bar"><i></i><i></i><i></i><span>rastak</span></div><img src="assets/img/rastak-d.jpg" alt="صفحه‌ی اصلی آکادمی رستاک" loading="lazy"></div>
+          <div class="phone"><img src="assets/img/rastak-m.jpg" alt="آکادمی رستاک در موبایل" loading="lazy"></div>
+        </div>
+      </div>
+      <div class="thumbs" data-set="rastak"></div>
+    </article>
+
+    <article class="glass case rv" id="kish">
+      <div class="case-top">
+        <div>
+          <span class="num"><span data-fa>06</span> · <span data-fa>1405</span> · نمونه‌کار مفهومی</span>
+          <h2>کیش‌وی</h2>
+          <p>سایت اجاره‌ی ویلا در کیش: موج‌های زنده، جستجو، فیلتر ویلاها، نقشه‌ی تعاملی جزیره و پنل رزرو کشویی.</p>
+          <ul class="did"><li>دریای متحرک با Canvas</li><li>فیلتر و علاقه‌مندی ویلاها</li><li>محاسبه‌ی هزینه و بیعانه در پنل رزرو</li></ul>
+          <div class="chips"><span>رزرو آنلاین</span><span>نقشه</span><span>فیلتر</span><span>انیمیشن</span></div>
+          <a class="beam solid" href="work/kish/index.html">مشاهده‌ی سایت زنده <span aria-hidden="true">←</span></a>
+        </div>
+        <div class="shots">
+          <div class="browser"><div class="bar"><i></i><i></i><i></i><span>kish</span></div><img src="assets/img/kish-d.jpg" alt="صفحه‌ی اصلی کیش‌وی" loading="lazy"></div>
+          <div class="phone"><img src="assets/img/kish-m.jpg" alt="کیش‌وی در موبایل" loading="lazy"></div>
+        </div>
+      </div>
+      <div class="thumbs" data-set="kish"></div>
+    </article>
+
+    <article class="glass case rv" id="this-site">
+      <div class="case-top">
+        <div>
+          <span class="num"><span data-fa>07</span> · <span data-fa>1405</span></span>
+          <h2>همین سایت</h2>
+          <p>پورتفولیوی شخصی خودم؛ چندصفحه‌ای، با آسمان غروبی که با کد نقاشی می‌شود، لودری که امضایم را می‌کشد و لنز شیشه‌ای امضا که روی تیتر حرکت می‌کند.</p>
+          <div class="chips"><span>HTML/CSS/JS</span><span>Canvas</span><span>بدون کتابخانه</span><span>فونت محلی</span></div>
+          <a class="beam" href="about.html">داستان لقب و لوگو</a>
+        </div>
+        <div class="shots" style="display:grid;place-items:center;min-height:260px">
+          <img src="assets/img/g1.jpg" alt="پوستر برند گوات" style="width:min(260px,70%);border-radius:18px;border:1px solid var(--line-2);box-shadow:0 30px 70px -20px #000">
+        </div>
+      </div>
+    </article>
+
+    <div class="glass rv" style="padding:28px;display:flex;justify-content:space-between;align-items:center;gap:18px;flex-wrap:wrap;margin-block:10px 60px">
+      <div><h2 style="font-size:20px">پروژه‌ی سایت دارید؟</h2><p style="margin:6px 0 0;color:var(--dim)">از سایت معرفی ساده تا فروشگاه با پنل مدیریت.</p></div>
+      <a class="beam solid" href="contact.html">درخواست برآورد</a>
+    </div>
+  </div>
+</main>
+<script src="assets/sig.js"></script>
+<script src="assets/gl3d.js"></script>
+<script src="assets/app.js"></script>
+<script src="assets/fx.js"></script>
+<script>
+const sets={yasin:[['yasin-d','صفحه‌ی اصلی','دسکتاپ'],['yasin-d2','دسته‌بندی خودروها','دسکتاپ'],['yasin-m','اسلایدر موبایل','موبایل'],['yasin-m2','دسته‌بندی در موبایل','موبایل']],tootia:[['tootia-d','نمای روز','دسکتاپ'],['tootia-m','نمای روز در موبایل','موبایل']],solstra:[['solstra-d','کشتی سه‌بعدی','دسکتاپ'],['solstra-d2','گالری پروژه‌ها','دسکتاپ'],['solstra-m','موبایل','موبایل']],narenj:[['narenj-d','صفحه‌ی اصلی','دسکتاپ'],['narenj-d2','منو','دسکتاپ'],['narenj-m','موبایل','موبایل']],rastak:[['rastak-d','ویرایشگر کد','دسکتاپ'],['rastak-d2','دوره‌ها','دسکتاپ'],['rastak-m','موبایل','موبایل']],kish:[['kish-d','دریای متحرک','دسکتاپ'],['kish-d2','ویلاها','دسکتاپ'],['kish-m','موبایل','موبایل']]};
+document.querySelectorAll('.thumbs').forEach(t=>{const items=sets[t.dataset.set].map(([f,ti,m])=>({src:`assets/img/${f}.jpg`,title:ti,meta:m}));const open=lightbox(items);
+  items.forEach((it,i)=>{const b=document.createElement('button');b.type='button';b.setAttribute('aria-label','نمایش بزرگ: '+it.title);b.innerHTML=`<img src="${it.src}" alt="" loading="lazy">`;b.onclick=()=>open(i);t.appendChild(b)});
+  t.closest('.case').querySelectorAll('.shots img').forEach((im,i)=>{im.style.cursor='zoom-in';im.onclick=()=>open(Math.min(i===0?0:i+1,items.length-1))});});
+</script>
+</body></html>

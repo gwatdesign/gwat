@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="fa" dir="rtl"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>تماس · گوات</title>
+<link rel="icon" href="assets/img/mark.svg">
+<link rel="stylesheet" href="assets/style.css">
+<style>
+.cgrid{display:grid;grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr);gap:clamp(20px,4vw,40px);padding-bottom:60px}
+.chan{display:flex;flex-direction:column;gap:10px;margin-top:22px}
+.chan div{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:14px 18px;border:1px solid var(--line);border-radius:18px;background:var(--card)}
+.chan span{color:var(--mute);font-size:13px}
+.chan b{direction:ltr;font-weight:600}
+.chan button{font:inherit;font-size:12.5px;color:var(--gold);background:none;border:1px solid var(--line-2);border-radius:999px;padding:3px 14px;cursor:pointer}
+.facts{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin-top:18px}
+.facts div{border:1px solid var(--line);border-radius:16px;padding:12px 14px}
+.facts b{display:block;font-family:var(--display);color:var(--gold-hi);font-size:18px}
+.facts span{font-size:12.5px;color:var(--mute)}
+form{padding:clamp(22px,4vw,36px);display:flex;flex-direction:column;gap:16px}
+label,.lbl{font-size:13px;color:var(--dim);display:block;margin-bottom:6px}
+input,textarea,select{width:100%;font:inherit;color:var(--ivory);background:#0b0a09b3;border:1px solid var(--line);border-radius:14px;padding:12px 16px;transition:border-color .3s}
+input:focus,textarea:focus{outline:none;border-color:var(--gold)}
+textarea{min-height:120px;resize:vertical}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chips input{position:absolute;opacity:0;width:1px;height:1px}
+.chips label{cursor:pointer;margin:0;padding:7px 16px;border-radius:999px;border:1px solid var(--line-2);font-size:14px;color:var(--ivory);transition:all .3s}
+.chips input:checked+label{background:var(--gold);border-color:var(--gold);color:var(--bg);font-weight:700}
+.chips input:focus-visible+label{outline:2px solid var(--gold);outline-offset:2px}
+.row{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+@media (max-width:860px){.cgrid{grid-template-columns:minmax(0,1fr)}}
+@media (max-width:520px){.row{grid-template-columns:minmax(0,1fr)}}
+</style></head>
+<body>
+<main data-page="contact">
+  <header class="phead"><div class="wrap">
+    <div class="crumbs"><a href="index.html">خانه</a> / تماس</div>
+    <h1>بیایید چیزی ماندگار بسازیم</h1>
+    <p>پروژه‌تان را در چند خط بگویید. یک روز کاری بعد، برآورد زمان و هزینه را می‌فرستم.</p>
+  </div></header>
+  <div class="wrap cgrid">
+    <div class="rv">
+      <span class="eyebrow">راه‌های ارتباط</span>
+      <div class="chan">
+        <div><span>تلگرام</span><b id="tg">@gwat</b><button type="button" data-copy="tg">کپی</button></div>
+        <div><span>اینستاگرام</span><b id="ig">@gwat.design</b><button type="button" data-copy="ig">کپی</button></div>
+      </div>
+      <div class="facts">
+        <div><b>۱ روز کاری</b><span>زمان پاسخ</span></div>
+        <div><b>۲ تا ۴ هفته</b><span>ساخت یک سایت معمولی</span></div>
+      </div>
+    </div>
+    <form class="glass rv" id="f" novalidate>
+      <div><span class="lbl">نوع پروژه</span>
+        <div class="chips" role="group" aria-label="نوع پروژه">
+          <input type="checkbox" id="c1" checked><label for="c1">وب‌سایت</label>
+          <input type="checkbox" id="c2"><label for="c2">لوگو و هویت</label>
+          <input type="checkbox" id="c3"><label for="c3">پوستر و استوری</label>
+          <input type="checkbox" id="c4"><label for="c4">پنل مدیریت</label>
+          <input type="checkbox" id="c5"><label for="c5">موشن</label>
+        </div></div>
+      <div class="row">
+        <div><label for="nm">نام</label><input id="nm" autocomplete="name" placeholder="مثلاً علی رضایی"></div>
+        <div><label for="ph">شماره یا آیدی تلگرام</label><input id="ph" dir="ltr" placeholder="@username"></div>
+      </div>
+      <div><label for="msg">درباره‌ی پروژه</label><textarea id="msg" placeholder="چه کسب‌وکاری دارید و سایت قرار است چه کاری انجام دهد؟"></textarea></div>
+      <button class="beam solid" type="submit" style="align-self:flex-start">ارسال درخواست <span aria-hidden="true">←</span></button>
+    </form>
+  </div>
+</main>
+<script src="assets/sig.js"></script>
+<script src="assets/gl3d.js"></script>
+<script src="assets/app.js"></script>
+<script src="assets/fx.js"></script>
+<script>
+document.querySelectorAll('.chips input').forEach(c=>c.addEventListener('change',()=>toast(c.checked?`«${c.nextElementSibling.textContent}» اضافه شد`:`«${c.nextElementSibling.textContent}» برداشته شد`,c.checked?'+':'−')));
+document.querySelectorAll('[data-copy]').forEach(b=>b.addEventListener('click',()=>{const el=document.getElementById(b.dataset.copy),t=el.textContent;
+  const sel=()=>{const r=document.createRange();r.selectNodeContents(el);const s=getSelection();s.removeAllRanges();s.addRange(r);toast('متن انتخاب شد؛ با Cmd+C کپی کنید','⌘')};
+  try{navigator.clipboard.writeText(t).then(()=>toast('کپی شد: '+t,'⧉'),sel)}catch(e){sel()}}));
+document.getElementById('f').addEventListener('submit',e=>{e.preventDefault();
+  if(!document.getElementById('nm').value.trim()||!document.getElementById('msg').value.trim()){toast('نام و توضیح پروژه را بنویسید','!');return}
+  toast('فرم هنوز به تلگرام وصل نشده؛ نسخه‌ی نمایشی است','✦')});
+</script>
+</body></html>

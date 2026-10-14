@@ -1,0 +1,231 @@
+<!doctype html>
+<html lang="fa" dir="rtl"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>کیش‌وی</title>
+<link rel="stylesheet" href="../common.css">
+<style>
+@font-face{font-family:"Paykan";src:url("../../assets/fonts/Paykan-800.woff2") format("woff2");font-weight:800;font-display:swap}
+@font-face{font-family:"Yekan Bakh";src:url("../../assets/fonts/YekanBakh-Regular.woff2") format("woff2");font-weight:400;font-display:swap}
+@font-face{font-family:"Yekan Bakh";src:url("../../assets/fonts/YekanBakh-Bold.woff2") format("woff2");font-weight:700;font-display:swap}
+/* Kishway: villa rentals on Kish island. Warm sand + deep sea teal + coral; living waves in the hero; illustrated villas. */
+:root{--sand:#f4ede1;--sand-2:#ebe1cf;--sea:#0e6f78;--sea-2:#13909a;--deep:#072a30;--coral:#ff6f59;--sun:#ffc15e;--ink:#0b2328;--ink-2:#4b6267;--line:#0b232814;
+  --gw-bg:#f4ede1;--gw-fg:#072a30;--gw-ac:#0e6f78;--gw-acfg:#fff;--gw-tagbg:#072a30e0;--gw-tagfg:#ffc15e;color-scheme:light}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;overflow-x:clip}
+body{margin:0;background:var(--sand);color:var(--ink);font-family:"Yekan Bakh",Tahoma,sans-serif;font-size:15px;line-height:1.85}
+a{color:inherit;text-decoration:none}
+h1,h2,h3{font-family:"Paykan","Yekan Bakh",sans-serif;font-weight:800;margin:0;line-height:1.35;text-wrap:balance}
+.wrap{max-width:1200px;margin-inline:auto;padding-inline:clamp(16px,4vw,44px)}
+:focus-visible{outline:2px solid var(--coral);outline-offset:3px;border-radius:8px}
+.rv{transition:transform .9s cubic-bezier(.2,.8,.2,1)}.js .rv:not(.in){transform:translateY(30px)}
+.nav{position:absolute;top:0;left:0;right:0;z-index:20;padding-top:env(safe-area-inset-top,0px)}
+.nav .wrap{display:flex;align-items:center;justify-content:space-between;height:76px;color:#fff}
+.logo{display:flex;align-items:center;gap:10px;font-family:"Paykan";font-size:24px}
+.logo svg{width:36px;height:36px}
+.nav nav{display:flex;gap:4px}.nav nav a{padding:6px 14px;border-radius:999px;font-size:14px;opacity:.9}.nav nav a:hover{background:#ffffff22}
+.btn{display:inline-flex;align-items:center;gap:8px;padding:11px 22px;border-radius:999px;background:var(--coral);color:#fff;font-weight:700;font-size:15px;border:0;cursor:pointer;font-family:inherit;transition:transform .3s,box-shadow .3s}
+.btn:hover{transform:translateY(-2px);box-shadow:0 14px 30px -12px var(--coral)}
+.btn.light{background:#fff;color:var(--deep)}
+@media (max-width:820px){.nav nav{display:none}}
+/* hero with waves */
+.hero{position:relative;min-height:min(100vh,860px);min-height:min(100svh,860px);background:linear-gradient(180deg,#7fd3d8 0%,#bfe8e4 38%,#fde3b8 62%,#ffcf8a 70%);overflow:hidden;display:flex;flex-direction:column;justify-content:center;color:var(--deep)}
+.sun{position:absolute;left:12%;top:24%;width:min(200px,30vw);aspect-ratio:1;border-radius:50%;background:radial-gradient(circle,#fff6d8,var(--sun) 55%,#ff9e4a);box-shadow:0 0 120px 40px #ffc15e88;animation:sunr 8s ease-in-out infinite alternate}
+@keyframes sunr{to{transform:translateY(-14px)}}
+#waves{position:absolute;left:0;right:0;bottom:0;width:100%;height:46%}
+.palm{position:absolute;bottom:20%;left:3%;width:min(200px,26vw);z-index:1;transform-origin:50% 100%;animation:palm 6s ease-in-out infinite}
+@keyframes palm{50%{transform:rotate(-3deg)}}
+.birds{position:absolute;top:22%;left:30%;width:120px;animation:birds 22s linear infinite}
+@keyframes birds{from{transform:translateX(-40vw)}to{transform:translateX(60vw)}}
+.hero-in{position:relative;z-index:2;padding:100px clamp(16px,4vw,44px) 0;max-width:1200px;margin-inline:auto;width:100%}
+.hero h1{font-size:clamp(38px,6.4vw,84px);color:var(--deep);max-width:12ch}
+.hero p{max-width:40ch;color:#072a30cc;font-size:16px;margin:12px 0 0}
+/* search */
+.search{position:relative;z-index:3;margin:34px 0 0;display:grid;grid-template-columns:repeat(3,minmax(0,1fr)) auto;gap:6px;background:#fff;border-radius:22px;padding:8px;box-shadow:0 30px 60px -20px #072a3055;max-width:820px}
+.search label{display:flex;flex-direction:column;padding:8px 14px;border-radius:16px;cursor:pointer;transition:background .3s}
+.search label:hover{background:var(--sand)}
+.search span{font-size:12px;color:var(--ink-2)}
+.search select,.search input{font:inherit;font-weight:700;border:0;background:none;padding:0;color:var(--ink);width:100%}
+.search select:focus,.search input:focus{outline:none}
+.search .btn{border-radius:16px;justify-content:center}
+@media (max-width:760px){.search{grid-template-columns:1fr 1fr}.search .btn{grid-column:1/-1}}
+section{padding-block:clamp(60px,9vw,110px)}
+.sh{display:flex;justify-content:space-between;align-items:flex-end;gap:16px;flex-wrap:wrap;margin-bottom:26px}
+.sh small{color:var(--coral);font-weight:700;font-size:13px}.sh h2{font-size:clamp(26px,3.4vw,42px)}.sh p{margin:0;color:var(--ink-2);max-width:42ch}
+/* filters + listings */
+.filters{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:22px}
+.filters button{font:inherit;font-size:14px;padding:7px 16px;border-radius:999px;border:1px solid var(--line);background:#fff;color:var(--ink);cursor:pointer;transition:all .25s}
+.filters button[aria-pressed="true"]{background:var(--deep);color:#fff;border-color:var(--deep)}
+.grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px}
+.villa{background:#fff;border-radius:24px;overflow:hidden;box-shadow:0 1px 0 var(--line);transition:transform .45s cubic-bezier(.2,.8,.2,1),box-shadow .45s;animation:vin .55s cubic-bezier(.2,.8,.2,1) both;animation-delay:calc(var(--i)*70ms)}
+@keyframes vin{from{opacity:0;transform:translateY(22px)}}
+.villa:hover{transform:translateY(-6px);box-shadow:0 30px 50px -30px #072a3066}
+.villa .pic{position:relative;aspect-ratio:4/3;overflow:hidden}
+.villa .pic svg{width:100%;height:100%;display:block;transition:transform 1s cubic-bezier(.2,.8,.2,1)}
+.villa:hover .pic svg{transform:scale(1.06)}
+.fav{position:absolute;top:12px;left:12px;width:38px;height:38px;border-radius:50%;border:0;background:#ffffffd9;cursor:pointer;display:grid;place-items:center;transition:transform .3s}
+.fav svg{width:18px;height:18px;fill:none;stroke:var(--deep);stroke-width:2}
+.fav[aria-pressed="true"] svg{fill:var(--coral);stroke:var(--coral);animation:heart .5s cubic-bezier(.2,.9,.3,1.8)}
+@keyframes heart{from{transform:scale(.4)}}
+.tagv{position:absolute;top:12px;right:12px;font-size:12px;background:var(--deep);color:#fff;border-radius:999px;padding:2px 10px}
+.villa .bd{padding:14px 16px 16px}
+.villa h3{font-family:"Yekan Bakh";font-weight:700;font-size:16.5px}
+.villa .loc{font-size:13px;color:var(--ink-2)}
+.amen{display:flex;gap:10px;flex-wrap:wrap;font-size:12.5px;color:var(--ink-2);margin:8px 0 10px}
+.villa .ft{display:flex;justify-content:space-between;align-items:center;border-top:1px dashed var(--line);padding-top:10px}
+.villa .ft b{font-size:15px}.villa .ft small{color:var(--ink-2);font-size:12px}
+.villa .ft button{font:inherit;font-size:13px;font-weight:700;border:0;border-radius:12px;padding:7px 14px;background:#0e6f7814;color:var(--sea);cursor:pointer}
+@media (max-width:900px){.grid{grid-template-columns:repeat(2,minmax(0,1fr))}}@media (max-width:560px){.grid{grid-template-columns:1fr}}
+/* island map */
+.mapsec{background:var(--deep);color:#fff;border-radius:36px;margin-inline:clamp(8px,2vw,24px)}
+.mapsec .sh p{color:#ffffffaa}.mapsec .sh small{color:var(--sun)}
+.mapwrap{display:grid;grid-template-columns:minmax(0,1.3fr) minmax(0,1fr);gap:24px;align-items:center}
+.map{position:relative;aspect-ratio:16/11;border-radius:26px;overflow:hidden;background:radial-gradient(120% 100% at 50% 50%,#13909a,#0a4a52)}
+.map svg{position:absolute;inset:0;width:100%;height:100%}
+.pin{position:absolute;translate:-50% -100%;border:0;background:none;cursor:pointer;padding:0}
+.pin i{display:block;width:30px;height:30px;border-radius:50% 50% 50% 0;transform:rotate(-45deg);background:var(--coral);box-shadow:0 8px 20px -6px #000;transition:transform .3s}
+.pin i::after{content:"";position:absolute;inset:9px;border-radius:50%;background:#fff}
+.pin:hover i,.pin.on i{transform:rotate(-45deg) scale(1.25);background:var(--sun)}
+.pin::before{content:"";position:absolute;left:50%;bottom:-6px;width:30px;height:10px;translate:-50% 0;border-radius:50%;background:#0006;animation:ripple 2s ease-out infinite}
+@keyframes ripple{0%{transform:scale(.4);opacity:.8}100%{transform:scale(2.2);opacity:0}}
+.mapinfo{background:#ffffff0d;border:1px solid #ffffff1f;border-radius:22px;padding:22px;min-height:200px}
+.mapinfo h3{font-size:24px;margin-bottom:6px}.mapinfo p{color:#ffffffbb;margin:0 0 12px}
+.mapinfo ul{list-style:none;padding:0;margin:0;display:grid;gap:6px;font-size:14px}
+.mapinfo li::before{content:"◆ ";color:var(--sun)}
+@media (max-width:860px){.mapwrap{grid-template-columns:1fr}}
+/* steps */
+.how{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
+.how div{background:#fff;border-radius:22px;padding:22px;position:relative;overflow:hidden}
+.how b{font-family:"Paykan";font-size:44px;color:var(--sand-2);position:absolute;top:6px;left:16px;line-height:1}
+.how h3{font-family:"Yekan Bakh";font-weight:700;font-size:17px;margin-bottom:4px}.how p{margin:0;color:var(--ink-2);font-size:14px}
+@media (max-width:760px){.how{grid-template-columns:1fr}}
+/* booking drawer */
+.dw{position:fixed;inset:0;z-index:100;background:#072a3066;backdrop-filter:blur(4px);opacity:0;visibility:hidden;transition:all .4s}
+.dw.on{opacity:1;visibility:visible}
+.dw .pane{position:absolute;top:0;bottom:0;left:0;width:min(420px,100%);background:var(--sand);padding:24px;transform:translateX(-100%);transition:transform .55s cubic-bezier(.2,.9,.25,1);overflow:auto;padding-bottom:calc(24px + env(safe-area-inset-bottom,0px))}
+.dw.on .pane{transform:none}
+.dw .pane svg.big{width:100%;border-radius:18px;margin:10px 0 14px}
+.dw h3{font-size:24px}.dw .row{display:flex;justify-content:space-between;padding:10px 0;border-bottom:1px dashed var(--line);font-size:14px}
+.dw .tot{font-weight:700;font-size:17px;border:0}
+.nights{display:flex;align-items:center;gap:10px}.nights button{width:34px;height:34px;border-radius:50%;border:1px solid var(--line);background:#fff;font-size:18px;cursor:pointer}
+.x{position:absolute;top:14px;right:14px;width:38px;height:38px;border-radius:50%;border:0;background:#fff;cursor:pointer;font-size:16px}
+footer{background:var(--deep);color:#ffffffaa;text-align:center;padding:36px 16px 70px;font-size:13px;margin-top:40px}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style></head>
+<body data-site="کیش‌وی">
+<header class="nav"><div class="wrap">
+  <a class="logo" href="#"><svg viewBox="0 0 40 40" aria-hidden="true"><circle cx="20" cy="20" r="19" fill="#fff"/><circle cx="26" cy="15" r="6" fill="#ffc15e"/><path d="M4 26q8-6 16 0t16 0v6a16 16 0 0 1-32 0z" fill="#0e6f78"/><path d="M6 30q7-4 14 0t14 0" stroke="#fff" stroke-width="1.6" fill="none"/></svg>کیش‌وی</a>
+  <nav aria-label="منو"><a href="#villas">ویلاها</a><a href="#map">نقشه‌ی جزیره</a><a href="#how">چطور رزرو کنم</a></nav>
+  <a class="btn light" href="#villas">رزرو ویلا</a>
+</div></header>
+
+<main>
+  <section class="hero" aria-label="معرفی" style="padding:0">
+    <div class="sun" aria-hidden="true"></div>
+    <svg class="birds" viewBox="0 0 120 40" aria-hidden="true"><path d="M10 20q8-8 16 0q8-8 16 0M60 12q6-6 12 0q6-6 12 0M90 26q5-5 10 0q5-5 10 0" stroke="#072a30" stroke-width="2" fill="none" stroke-linecap="round"/></svg>
+    <svg class="palm" viewBox="0 0 200 260" aria-hidden="true"><path d="M100 260 C104 200 112 150 104 96" stroke="#5a3a22" stroke-width="12" fill="none" stroke-linecap="round"/><g fill="#1f7a5a"><path d="M104 96c-40-30-80-20-96 6 30-10 60-8 96-6z"/><path d="M104 96c30-40 70-46 92-24-30-4-60 6-92 24z"/><path d="M104 96c-10-46 10-80 40-92-12 28-22 56-40 92z"/><path d="M104 96c-30-10-60 10-70 40 20-20 44-34 70-40z"/><path d="M104 96c36-6 66 16 74 46-22-20-48-36-74-46z"/></g><circle cx="98" cy="102" r="7" fill="#7a4a22"/><circle cx="110" cy="104" r="7" fill="#7a4a22"/></svg>
+    <canvas id="waves" aria-hidden="true"></canvas>
+    <div class="hero-in">
+      <h1 class="rv">ویلای رویایی‌ات در کیش</h1>
+      <p class="rv">ویلاهای ساحلی و استخردار، با تحویل کلید در فرودگاه و پشتیبانی شبانه‌روزی.</p>
+      <form class="search rv" id="search" role="search">
+        <label><span>منطقه</span><select id="sArea"><option>همه‌ی جزیره</option><option>ساحل مرجان</option><option>میرمهنا</option><option>صفین</option></select></label>
+        <label><span>ورود</span><input id="sIn" value="۲۰ آبان"></label>
+        <label><span>نفرات</span><select id="sPpl"><option>۲ نفر</option><option>۴ نفر</option><option>۶ نفر</option><option>۸ نفر</option></select></label>
+        <button class="btn" type="submit">جستجو</button>
+      </form>
+    </div>
+  </section>
+
+  <section id="villas" aria-label="ویلاها"><div class="wrap">
+    <div class="sh rv"><div><small>ویلاها</small><h2>انتخاب‌های این هفته</h2></div><p>قیمت‌ها برای هر شب و به تومان است.</p></div>
+    <div class="filters" id="filters" role="group" aria-label="فیلتر"></div>
+    <div class="grid" id="grid"></div>
+  </div></section>
+
+  <section class="mapsec" id="map" aria-label="نقشه‌ی جزیره"><div class="wrap">
+    <div class="sh rv"><div><small>نقشه‌ی جزیره</small><h2>کجای کیش بمانی؟</h2></div><p>روی هر منطقه بزنید تا ببینید چه حال‌وهوایی دارد.</p></div>
+    <div class="mapwrap">
+      <div class="map rv" id="islandMap"><svg viewBox="0 0 640 440" aria-hidden="true" id="islandSvg"></svg></div>
+      <div class="mapinfo rv" id="mapInfo" aria-live="polite"></div>
+    </div>
+  </div></section>
+
+  <section id="how" aria-label="مراحل رزرو"><div class="wrap">
+    <div class="sh rv"><div><small>رزرو در سه قدم</small><h2>از انتخاب تا کلید</h2></div></div>
+    <div class="how rv">
+      <div><b>۱</b><h3>ویلا را انتخاب کن</h3><p>با فیلترها ویلای مناسب را پیدا کن و تاریخ را بزن.</p></div>
+      <div><b>۲</b><h3>بیعانه بده</h3><p>فقط ۳۰٪ هزینه را حالا می‌پردازی؛ بقیه هنگام تحویل.</p></div>
+      <div><b>۳</b><h3>کلید را بگیر</h3><p>همکار ما در فرودگاه کیش منتظرت است.</p></div>
+    </div>
+  </div></section>
+</main>
+<footer>کیش‌وی · اجاره‌ی ویلا در کیش · نمونه‌کار طراحی سایت</footer>
+
+<div class="dw" id="dw" role="dialog" aria-modal="true" aria-labelledby="dwT"><div class="pane"><button class="x" type="button" id="dwX" aria-label="بستن">✕</button>
+  <h3 id="dwT" style="margin-top:30px"></h3><div class="loc" id="dwLoc" style="color:var(--ink-2);font-size:14px"></div><div id="dwPic"></div>
+  <div class="row"><span>تعداد شب</span><span class="nights"><button type="button" id="nMinus" aria-label="کم کردن">−</button><b id="nVal">۳</b><button type="button" id="nPlus" aria-label="اضافه کردن">+</button></span></div>
+  <div class="row"><span>قیمت هر شب</span><span id="dwPer"></span></div><div class="row"><span>بیعانه (۳۰٪)</span><span id="dwDep"></span></div><div class="row tot"><span>جمع کل</span><span id="dwTot"></span></div>
+  <button class="btn" type="button" id="dwGo" style="width:100%;justify-content:center;margin-top:16px">درخواست رزرو</button></div></div>
+
+<script src="../../assets/sig.js"></script>
+<script src="../common.js"></script>
+<script>
+const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+/* waves */
+(function(){const c=document.getElementById('waves'),x=c.getContext('2d');let W,H;
+  function s(){const d=Math.min(devicePixelRatio||1,2);W=c.clientWidth;H=c.clientHeight;c.width=W*d;c.height=H*d;x.setTransform(d,0,0,d,0,0)}s();addEventListener('resize',s);
+  const L=[['#13909acc',.18,.9,22],['#0e6f78dd',.36,1.3,18],['#0b5a62',.56,1.7,14],['#f4ede1',.84,.8,8]];
+  function f(t){t=reduce?0:t/1000;x.clearRect(0,0,W,H);L.forEach(([col,y0,sp,amp],i)=>{x.beginPath();x.moveTo(0,H);for(let px=0;px<=W;px+=8){const y=H*y0+Math.sin(px/W*6+t*sp+i)*amp+Math.sin(px/W*14-t*sp*1.3)*amp*.35;x.lineTo(px,y)}x.lineTo(W,H);x.closePath();x.fillStyle=col;x.fill();
+    if(i<3){x.strokeStyle='#ffffff55';x.lineWidth=1.5;x.beginPath();for(let px=0;px<=W;px+=8){const y=H*y0+Math.sin(px/W*6+t*sp+i)*amp+Math.sin(px/W*14-t*sp*1.3)*amp*.35;px?x.lineTo(px,y):x.moveTo(px,y)}x.stroke()}});
+    if(!reduce)requestAnimationFrame(f)}requestAnimationFrame(f)})();
+/* villa illustration */
+const villa=(v,big)=>{const [sky1,sky2,wall,roof,pool]=v.pal;return `<svg viewBox="0 0 400 300" preserveAspectRatio="xMidYMid slice" ${big?'class="big"':''} aria-hidden="true"><defs><linearGradient id="s${v.id}" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="${sky1}"/><stop offset="1" stop-color="${sky2}"/></linearGradient></defs>
+  <rect width="400" height="300" fill="url(#s${v.id})"/><circle cx="${80+v.id*30}" cy="70" r="26" fill="#fff6d8" opacity=".9"/>
+  ${v.sea?'<path d="M0 190q50-10 100 0t100 0 100 0 100 0V300H0z" fill="#13909a"/><path d="M0 200q50-8 100 0t100 0 100 0 100 0" stroke="#fff" stroke-opacity=".5" fill="none"/>':''}
+  <rect x="0" y="230" width="400" height="70" fill="#efe2c8"/>
+  <rect x="${110-v.w}" y="${130-v.h}" width="${180+v.w*2}" height="${100+v.h}" fill="${wall}"/><rect x="${100-v.w}" y="${120-v.h}" width="${200+v.w*2}" height="14" fill="${roof}"/>
+  ${v.two?`<rect x="150" y="${70-v.h}" width="120" height="52" fill="${wall}"/><rect x="142" y="${62-v.h}" width="136" height="10" fill="${roof}"/><rect x="165" y="${82-v.h}" width="90" height="30" fill="#0b2328" opacity=".8"/>`:''}
+  <rect x="${130-v.w}" y="${160-v.h/2}" width="70" height="${70+v.h/2}" fill="#0b2328" opacity=".85"/><rect x="215" y="${160-v.h/2}" width="${60+v.w}" height="40" fill="#0b2328" opacity=".7"/>
+  ${pool?`<rect x="60" y="246" width="200" height="34" rx="6" fill="${pool}"/><path d="M70 262q20-6 40 0t40 0 40 0 40 0" stroke="#fff" stroke-opacity=".6" fill="none"/>`:''}
+  <g transform="translate(${v.id%2?320:30} 120)"><path d="M20 120 C22 80 26 50 20 20" stroke="#5a3a22" stroke-width="6" fill="none"/><g fill="#1f7a5a"><path d="M20 20c-20-14-40-8-46 4 14-4 30-4 46-4z"/><path d="M20 20c14-18 34-20 44-8-14 0-30 2-44 8z"/><path d="M20 20c-4-22 6-38 20-42-6 14-10 26-20 42z"/></g></g></svg>`};
+const V=[{id:1,name:'ویلا مرجان',area:'ساحل مرجان',tags:['ساحلی','استخردار'],price:8500000,ppl:6,room:3,pal:['#9fdde0','#fde8c4','#fff','#c96f4a','#3cc3cf'],sea:1,two:1,w:10,h:10,tag:'رو به دریا'},
+ {id:2,name:'خانه‌ی نخل',area:'صفین',tags:['اقتصادی'],price:3200000,ppl:4,room:2,pal:['#ffd8a8','#ffefd6','#f4e3c3','#7a8b5c',''],sea:0,two:0,w:0,h:0,tag:'به‌صرفه'},
+ {id:3,name:'ویلا آبی',area:'میرمهنا',tags:['استخردار'],price:6200000,ppl:8,room:4,pal:['#b8e3ff','#e9f6ff','#fff','#0e6f78','#2bb3c0'],sea:0,two:1,w:20,h:6,tag:'استخر آب‌گرم'},
+ {id:4,name:'کلبه‌ی ساحلی',area:'ساحل مرجان',tags:['ساحلی','اقتصادی'],price:4100000,ppl:2,room:1,pal:['#ffb88a','#ffe3c2','#f1d3a8','#9a4a2a',''],sea:1,two:0,w:-10,h:-10,tag:'برای دو نفر'},
+ {id:5,name:'عمارت سفید',area:'میرمهنا',tags:['استخردار','لوکس'],price:12800000,ppl:10,room:5,pal:['#c9d6ff','#f3f5ff','#fff','#2a3a5a','#5fd0d8'],sea:0,two:1,w:30,h:16,tag:'لوکس'},
+ {id:6,name:'ویلا غروب',area:'صفین',tags:['ساحلی','لوکس'],price:9900000,ppl:6,room:3,pal:['#ff9e7a','#ffd3a8','#fff3e3','#7a3a2a','#ff8a6a'],sea:1,two:1,w:14,h:4,tag:'منظره‌ی غروب'}];
+(function(){const f=document.getElementById('filters'),g=document.getElementById('grid');const cats=['همه','ساحلی','استخردار','اقتصادی','لوکس'];
+  f.innerHTML=cats.map((c,i)=>`<button type="button" aria-pressed="${i===0}">${c}</button>`).join('');
+  const show=(cat,area)=>{const L=V.filter(v=>(cat==='همه'||v.tags.includes(cat))&&(!area||area==='همه‌ی جزیره'||v.area===area));
+    g.innerHTML=L.length?L.map((v,i)=>`<article class="villa" style="--i:${i}"><div class="pic">${villa(v)}<span class="tagv">${v.tag}</span><button class="fav" type="button" aria-pressed="false" aria-label="نشان کردن ${v.name}"><svg viewBox="0 0 24 24"><path d="M12 21s-8-5.5-8-11a4.5 4.5 0 0 1 8-2.8A4.5 4.5 0 0 1 20 10c0 5.5-8 11-8 11z"/></svg></button></div>
+      <div class="bd"><h3>${v.name}</h3><div class="loc">${v.area}، کیش</div><div class="amen"><span>${fa(v.room)} خواب</span><span>تا ${fa(v.ppl)} نفر</span><span>${v.tags.join(' · ')}</span></div>
+      <div class="ft"><div><b>${toman(v.price)}</b> <small>/ شب</small></div><button type="button" data-id="${v.id}">رزرو</button></div></div></article>`).join(''):'<p style="color:var(--ink-2)">ویلایی با این فیلتر پیدا نشد؛ فیلتر را عوض کنید.</p>';
+    g.querySelectorAll('.fav').forEach(b=>b.onclick=()=>{const on=b.getAttribute('aria-pressed')!=='true';b.setAttribute('aria-pressed',on);toast(on?'به علاقه‌مندی‌ها اضافه شد ♥':'از علاقه‌مندی‌ها برداشته شد')});
+    g.querySelectorAll('.ft button').forEach(b=>b.onclick=()=>openDw(V.find(v=>v.id==b.dataset.id)))};
+  let cat='همه';f.querySelectorAll('button').forEach((b,i)=>b.onclick=()=>{cat=cats[i];f.querySelectorAll('button').forEach(x=>x.setAttribute('aria-pressed',x===b));show(cat,document.getElementById('sArea').value)});
+  document.getElementById('search').addEventListener('submit',e=>{e.preventDefault();show(cat,document.getElementById('sArea').value);document.getElementById('villas').scrollIntoView({behavior:reduce?'auto':'smooth'});toast('نتیجه‌ها به‌روز شد')});
+  show('همه')})();
+/* booking drawer */
+const dw=document.getElementById('dw');let cur=null,nights=3;
+function upd(){document.getElementById('nVal').textContent=fa(nights);document.getElementById('dwPer').textContent=toman(cur.price);document.getElementById('dwDep').textContent=toman(cur.price*nights*.3);document.getElementById('dwTot').textContent=toman(cur.price*nights)}
+function openDw(v){cur=v;nights=3;document.getElementById('dwT').textContent=v.name;document.getElementById('dwLoc').textContent=`${v.area}، کیش · ${fa(v.room)} خواب · تا ${fa(v.ppl)} نفر`;document.getElementById('dwPic').innerHTML=villa(v,1);upd();dw.classList.add('on');document.body.style.overflow='hidden';setTimeout(()=>document.getElementById('dwX').focus(),200)}
+const closeDw=()=>{dw.classList.remove('on');document.body.style.overflow=''};
+document.getElementById('dwX').onclick=closeDw;dw.addEventListener('click',e=>{if(e.target===dw)closeDw()});addEventListener('keydown',e=>{if(e.key==='Escape')closeDw()});
+document.getElementById('nMinus').onclick=()=>{nights=Math.max(1,nights-1);upd()};document.getElementById('nPlus').onclick=()=>{nights=Math.min(14,nights+1);upd()};
+document.getElementById('dwGo').onclick=()=>{closeDw();toast(`درخواست رزرو ${cur.name} برای ${fa(nights)} شب ثبت شد (نمایشی)`)};
+/* island map */
+(function(){const svg=document.getElementById('islandSvg');let o='';
+  for(let i=0;i<5;i++)o+=`<ellipse cx="320" cy="220" rx="${250+i*30}" ry="${170+i*22}" fill="none" stroke="#ffffff" stroke-opacity="${.12-i*.02}" stroke-width="1.5"><animate attributeName="rx" values="${250+i*30};${258+i*30};${250+i*30}" dur="${5+i}s" repeatCount="indefinite"/></ellipse>`;
+  o+='<path d="M150 210c10-70 90-120 190-118 90 2 160 50 160 120s-60 118-170 118S140 290 150 210z" fill="#f4ede1"/><path d="M170 214c10-58 80-100 170-98 80 2 140 44 140 104" fill="none" stroke="#e1cfae" stroke-width="10"/>';
+  o+='<path d="M230 180q40-20 80 0t80 10" stroke="#c9b58f" stroke-width="3" fill="none" stroke-dasharray="6 6"/><circle cx="300" cy="160" r="18" fill="#9fc98a"/><circle cx="380" cy="250" r="22" fill="#9fc98a"/><rect x="250" y="240" width="60" height="8" rx="4" fill="#c9b58f"/>';
+  o+='<text x="330" y="330" fill="#0b2328" font-size="14" text-anchor="middle" font-family="Yekan Bakh">جزیره‌ی کیش</text>';svg.innerHTML=o;
+  const Z=[{n:'ساحل مرجان',x:72,y:40,d:'آرام‌ترین ساحل جزیره، با آب شفاف و مرجان‌های نزدیک ساحل.',l:['غواصی و اسنورکل','غروب‌های معروف','۱۰ دقیقه تا فرودگاه']},
+    {n:'میرمهنا',x:56,y:66,d:'نزدیک مراکز خرید و رستوران‌ها؛ برای کسی که شب‌ها بیرون می‌رود.',l:['مراکز خرید','رستوران‌ها','ویلاهای استخردار']},
+    {n:'صفین',x:30,y:52,d:'محله‌ای آرام با ویلاهای اقتصادی و خانوادگی، کنار کشتی یونانی.',l:['کشتی یونانی','ویلاهای به‌صرفه','دوچرخه‌سواری ساحلی']}];
+  const m=document.getElementById('islandMap'),info=document.getElementById('mapInfo');
+  Z.forEach((z,i)=>m.insertAdjacentHTML('beforeend',`<button class="pin" type="button" style="left:${z.x}%;top:${z.y}%" aria-label="${z.n}"><i></i></button>`));
+  const pins=[...m.querySelectorAll('.pin')];
+  const sel=i=>{pins.forEach((p,k)=>p.classList.toggle('on',k===i));const z=Z[i];info.innerHTML=`<h3>${z.n}</h3><p>${z.d}</p><ul>${z.l.map(x=>`<li>${x}</li>`).join('')}</ul><button class="btn" type="button" style="margin-top:16px" id="zGo">ویلاهای ${z.n}</button>`;
+    document.getElementById('zGo').onclick=()=>{document.getElementById('sArea').value=z.n;document.getElementById('search').requestSubmit()}};
+  pins.forEach((p,i)=>{p.onclick=()=>sel(i);p.onmouseenter=()=>sel(i)});sel(0)})();
+</script>
+</body></html>

@@ -1,0 +1,125 @@
+<!doctype html>
+<html lang="fa" dir="rtl"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>درباره و لوگو · گوات</title>
+<link rel="icon" href="assets/img/mark.svg">
+<link rel="stylesheet" href="assets/style.css">
+<style>
+.hero2{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);gap:clamp(30px,5vw,80px);align-items:center}
+.stage{position:relative;aspect-ratio:1;max-width:460px;width:100%;margin-inline:auto;display:grid;place-items:center;border-radius:36px}
+.stage::before{content:"";position:absolute;inset:6%;border-radius:50%;border:1px dashed #c9a45c33;animation:spin 90s linear infinite}
+.stage .sig-line{fill:none;stroke:#f1d79a;stroke-width:1.6;stroke-linecap:round;stroke-dasharray:1;stroke-dashoffset:1}
+.stage.draw .sig-line{animation:sd 2.4s cubic-bezier(.5,0,.3,1) forwards}.stage.draw .sig-line+.sig-line{animation-delay:.8s}
+.stage .sig-fill{transition:opacity 1s .2s}.stage.draw .sig-fill{opacity:0}.stage.done .sig-fill{opacity:1}
+@keyframes sd{to{stroke-dashoffset:0}}
+.stage::after{content:"";position:absolute;inset:22%;border-radius:50%;background:radial-gradient(closest-side,#c9a45c38,transparent);filter:blur(10px)}
+.stage svg{width:78%;height:auto;overflow:visible;position:relative;z-index:1;filter:drop-shadow(0 24px 40px #000b)}
+@keyframes spin{to{transform:rotate(360deg)}}
+.name-card{padding:26px}
+.name-card .big{font-family:var(--display);font-size:clamp(40px,6vw,64px);line-height:1.2;color:var(--gold-hi)}
+.name-card .pron{font-size:14px;color:var(--mute)}
+.name-card p{color:var(--dim);margin:12px 0 0}
+.parts{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
+.part{padding:20px;display:flex;flex-direction:column;gap:8px}
+.part .vis{height:150px;border-radius:16px;display:grid;place-items:center;overflow:hidden;margin-bottom:8px;background:#0b0a09}
+.part .vis img,.part .vis svg{max-width:88%;max-height:120px}
+.part h3{font-size:17px}
+.part p{margin:0;color:var(--dim);font-size:14px}
+@media (max-width:900px){.parts{grid-template-columns:minmax(0,1fr)}.hero2{grid-template-columns:minmax(0,1fr)}}
+@media (max-width:460px){.parts{grid-template-columns:minmax(0,1fr)}}
+.sw{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:12px}
+.sw div{border-radius:20px;border:1px solid var(--line);overflow:hidden;font-size:12.5px}
+.sw i{display:block;height:90px}
+.sw span{display:block;padding:10px 12px;color:var(--dim)}
+.sw code{direction:ltr;display:block;color:var(--mute);font-size:11.5px}
+@media (max-width:700px){.sw{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.type{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+.type .glass{padding:24px}
+.type .spec{font-size:44px;line-height:1.3;margin-block:8px;color:var(--ivory)}
+.type small{color:var(--mute)}
+@media (max-width:700px){.type{grid-template-columns:minmax(0,1fr)}}
+.lockups{display:flex;gap:14px;flex-wrap:wrap}
+.lock{display:flex;align-items:center;gap:14px;padding:16px 22px;border-radius:20px;border:1px solid var(--line)}
+.lock svg{width:64px;height:auto}
+.lock b{font-family:var(--display);font-size:22px;display:block;line-height:1.2}
+.lock span{font-size:11px;letter-spacing:.3em;color:var(--gold)}
+.lock.light{background:var(--ivory);color:var(--bg)}.lock.light span{color:var(--gold-lo)}
+.steps{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));border-top:1px solid var(--line)}
+.step{padding:26px 0 0;padding-inline-end:24px;position:relative}
+.step::before{content:"";position:absolute;top:-5px;inset-inline-start:0;width:9px;height:9px;border-radius:50%;background:var(--gold);box-shadow:0 0 0 5px var(--bg),0 0 16px var(--gold)}
+.step .n{font-size:13px;color:var(--gold)}
+.step h3{font-size:18px;margin-block:4px 6px}
+.step p{margin:0;color:var(--dim);font-size:14.5px}
+@media (max-width:820px){.steps{grid-template-columns:repeat(2,minmax(0,1fr));row-gap:34px}}
+@media (max-width:460px){.steps{grid-template-columns:minmax(0,1fr)}}
+</style></head>
+<body>
+<main data-page="about">
+  <header class="phead"><div class="wrap hero2">
+    <div>
+      <div class="crumbs"><a href="index.html">خانه</a> / درباره و لوگو</div>
+      <h1>گوات، طراح بلوچ</h1>
+      <p>طراح وب و گرافیک هستم. سایت، اپ، پوستر و هویت بصری می‌سازم؛ با سبکی تیره، کلاسیک و طلایی، و با دقت روی نسخه‌ی موبایل. کار را از ایده تا تحویل روی هاست خودم انجام می‌دهم.</p>
+      <div class="glass name-card rv" style="margin-top:26px">
+        <span class="eyebrow">نام</span>
+        <div class="big">گُوات</div>
+        <div class="pron">gwat · در زبان بلوچی: باد</div>
+        <p>لوگوی گوات یک امضاست: یک حرکت پیوسته، با حلقه‌های کشیده و تند؛ مثل وزش باد. کار من هم باید همین حس را بدهد: روان، سریع و ماندگار.</p>
+      </div>
+    </div>
+    <div class="stage rv" id="stage"><svg data-mark role="img" aria-label="لوگوی گوات"></svg></div>
+  </div></header>
+
+  <section class="blk" style="padding-top:20px"><div class="wrap">
+    <div class="shead rv"><div><span class="eyebrow">ساختار لوگو</span><h2>از امضا تا لوگو</h2></div><p>لوگو خود امضای من است؛ همان خط، فقط تمیز و ماندگار.</p></div>
+    <div class="parts" id="parts"></div>
+  </div></section>
+
+  <section class="blk" style="padding-top:0"><div class="wrap">
+    <div class="shead rv"><div><span class="eyebrow">رنگ‌ها</span><h2>پالت برند</h2></div></div>
+    <div class="sw rv">
+      <div><i style="background:#0b0a09"></i><span>شب<code>#0B0A09</code></span></div>
+      <div><i style="background:#15130f"></i><span>کارت<code>#15130F</code></span></div>
+      <div><i style="background:#7d6230"></i><span>طلای تیره<code>#7D6230</code></span></div>
+      <div><i style="background:#c9a45c"></i><span>طلایی<code>#C9A45C</code></span></div>
+      <div><i style="background:#efe8da"></i><span>عاج<code>#EFE8DA</code></span></div>
+    </div>
+  </div></section>
+
+  <section class="blk" style="padding-top:0"><div class="wrap">
+    <div class="shead rv"><div><span class="eyebrow">تایپوگرافی</span><h2>دو فونت، دو نقش</h2></div></div>
+    <div class="type">
+      <div class="glass rv"><small>تیترها · پیکان</small><div class="spec" style="font-family:var(--display)">وزش گوات</div><small>برای تیترها، لوگوتایپ و پوسترها</small></div>
+      <div class="glass rv"><small>متن · یکان بخ</small><div class="spec" style="font-family:var(--body);font-weight:300">وزش گوات</div><small>برای متن، منو و دکمه‌ها؛ حروف لاتین هم با همین فونت</small></div>
+    </div>
+    <div class="lockups rv" style="margin-top:22px">
+      <div class="lock"><svg data-mark></svg><div><b>گوات</b><span class="lat">GWAT</span></div></div>
+      <div class="lock light"><svg data-mark></svg><div><b>گوات</b><span class="lat">WEB · DESIGN</span></div></div>
+      <div class="lock"><svg data-mark></svg></div>
+    </div>
+  </div></section>
+
+  <section class="blk" style="padding-top:0"><div class="wrap">
+    <div class="shead rv"><div><span class="eyebrow">روند کار</span><h2>چهار ایستگاه تا تحویل</h2></div></div>
+    <div class="steps rv">
+      <div class="step"><span class="n">ایستگاه <span data-fa>1</span></span><h3>شناخت</h3><p>کسب‌وکار، مخاطب و رقبا را بررسی می‌کنیم و هدف سایت را در یک جمله می‌نویسیم.</p></div>
+      <div class="step"><span class="n">ایستگاه <span data-fa>2</span></span><h3>طراحی</h3><p>سبک بصری و صفحه‌ها طراحی می‌شوند و پیش از کدنویسی تأیید می‌گیرند.</p></div>
+      <div class="step"><span class="n">ایستگاه <span data-fa>3</span></span><h3>ساخت</h3><p>سایت با انیمیشن، پنل مدیریت و نسخه‌ی موبایل ساخته و تست می‌شود.</p></div>
+      <div class="step"><span class="n">ایستگاه <span data-fa>4</span></span><h3>تحویل</h3><p>سایت روی هاست شما بالا می‌آید و کار با پنل را یاد می‌گیرید.</p></div>
+    </div>
+  </div></section>
+</main>
+<script src="assets/sig.js"></script>
+<script src="assets/gl3d.js"></script>
+<script src="assets/app.js"></script>
+<script src="assets/fx.js"></script>
+<script>
+const info=[
+ ['<img src="assets/img/signature-photo.png" alt="عکس امضا روی کاغذ خط‌دار">','امضای دست‌نویس','عکس امضا روی کاغذ دفتر؛ کج و با خط‌های آبی و قرمز.'],
+ [`<svg viewBox="0 0 ${SIG.w} ${SIG.h}"><g fill="none" stroke="#efe8da" stroke-width="2" stroke-linecap="round">${SIG.line.map(d=>`<path d="${d}"/>`).join('')}</g></svg>`,'صاف و برداری','کجی گرفته شد، خط‌های کاغذ حذف شد و خط امضا برداری و نرم شد.'],
+ [`<svg viewBox="0 0 ${SIG.w} ${SIG.h}">${markSVG('pt')}</svg>`,'قلم طلایی','ضخامت خط مثل قلم‌خودنویس کم و زیاد می‌شود و رنگ طلایی برند را می‌گیرد.']];
+document.getElementById('parts').innerHTML=info.map(([v,t,d])=>`<article class="glass part rv in"><div class="vis">${v}</div><h3>${t}</h3><p>${d}</p></article>`).join('');
+/* draw the signature once when the page opens */
+(function(){const st=document.getElementById('stage'),sv=st.querySelector('svg');if(matchMedia('(prefers-reduced-motion: reduce)').matches)return;
+ sv.insertAdjacentHTML('afterbegin',sigLine());st.classList.add('draw');setTimeout(()=>{st.classList.add('done')},2600)})();
+</script>
+</body></html>
