@@ -229,8 +229,6 @@ textarea.inp{min-height:90px;resize:vertical;line-height:1.9}
     <label class="chk"><input type="checkbox" id="lgRem" checked>روی همین مرورگر به خاطر بسپار</label>
     <div class="err" id="lgErr" role="alert"></div>
     <button class="btn" type="submit" id="lgBtn">ورود</button>
-    <div class="lg-or">یا</div>
-    <button class="btn ghost" type="button" id="lgDemo">ورود نمایشی (بدون انتشار)</button>
   </form>
 </section>
 
@@ -270,7 +268,7 @@ textarea.inp{min-height:90px;resize:vertical;line-height:1.9}
 const $=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)];
 const fa=n=>String(n).replace(/\d/g,d=>'۰۱۲۳۴۵۶۷۸۹'[d]);
 const esc=t=>String(t??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-const I={dash:'<path d="M4 4h7v7H4zM13 4h7v4h-7zM13 10h7v10h-7zM4 13h7v7H4z"/>',home:'<path d="M3 11 12 4l9 7v9h-6v-6H9v6H3z"/>',web:'<rect x="3" y="4" width="18" height="14" rx="2"/><path d="M3 8h18M8 21h8"/>',
+const I={quote:'<path d="M5 18v-5c0-4 2-7 6-8v3c-2 .5-3 2-3 4h3v6zm9 0v-5c0-4 2-7 6-8v3c-2 .5-3 2-3 4h3v6z"/>',dash:'<path d="M4 4h7v7H4zM13 4h7v4h-7zM13 10h7v10h-7zM4 13h7v7H4z"/>',home:'<path d="M3 11 12 4l9 7v9h-6v-6H9v6H3z"/>',web:'<rect x="3" y="4" width="18" height="14" rx="2"/><path d="M3 8h18M8 21h8"/>',
  gfx:'<rect x="4" y="3" width="16" height="18" rx="2"/><circle cx="10" cy="9" r="2"/><path d="m4 17 5-4 4 3 3-2 4 3"/>',contact:'<path d="M4 5h16v12H8l-4 3z"/>',media:'<rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="9" cy="10" r="2"/><path d="m3 17 6-5 5 4 3-2 4 3"/>',
  upd:'<path d="M12 3v12m0 0-4-4m4 4 4-4M4 17v3h16v-3"/>',set:'<circle cx="12" cy="12" r="3"/><path d="M19 12a7 7 0 0 0-.1-1.2l2-1.6-2-3.4-2.4 1a7 7 0 0 0-2-1.2L14 3h-4l-.5 2.6a7 7 0 0 0-2 1.2l-2.4-1-2 3.4 2 1.6A7 7 0 0 0 5 12c0 .4 0 .8.1 1.2l-2 1.6 2 3.4 2.4-1a7 7 0 0 0 2 1.2L10 21h4l.5-2.6a7 7 0 0 0 2-1.2l2.4 1 2-3.4-2-1.6c.1-.4.1-.8.1-1.2z"/>',
  user:'<circle cx="12" cy="8" r="4"/><path d="M4 21c1-4 4-6 8-6s7 2 8 6"/>',money:'<circle cx="12" cy="12" r="9"/><path d="M15 9c-.5-1-1.6-1.5-3-1.5-1.8 0-3 .9-3 2.2 0 3 6 1.6 6 4.6 0 1.3-1.3 2.2-3 2.2-1.5 0-2.6-.6-3-1.6M12 6v1.5M12 16.5V18"/>',
@@ -293,6 +291,7 @@ function pendingList(){const L=[];const o=JSON.parse(ST.orig||'{}'),d=ST.data||{
   if(JSON.stringify(o.web)!==JSON.stringify(d.web))L.push('نمونه‌کارهای سایت');
   if(JSON.stringify(o.graphic)!==JSON.stringify(d.graphic))L.push('نمونه‌کارهای گرافیک');
   if(JSON.stringify(o.contact)!==JSON.stringify(d.contact))L.push('اطلاعات تماس');
+  if(JSON.stringify(o.reviews||[])!==JSON.stringify(d.reviews||[]))L.push('نظرات کارفرماها');
   ST.uploads.forEach((u,p)=>L.push('عکس جدید: '+p.split('/').pop()));return L}
 function markDirty(){const n=pendingList().length;$('#pubBtn').disabled=!n;$('#pubBtn').textContent=n?`انتشار تغییرات (${fa(n)})`:'انتشار تغییرات';
   $('#bell').querySelector('.dot')?.remove();if(n)$('#bell').insertAdjacentHTML('beforeend','<i class="dot"></i>');
@@ -327,16 +326,15 @@ async function login(repo,token,rem){ST.repo=repo.trim().replace(/^https?:\/\/gi
 async function loadData(){
   if(!ST.demo){try{const f=await gh(`/repos/${ST.repo}/contents/data/site.json?ref=${ST.branch}`);ST.sha=f.sha;ST.data=JSON.parse(b64ToUtf8(f.content))}catch(e){if(e.status!==404)throw e}}
   if(!ST.data){const r=await fetch('../data/site.json?v='+Date.now());ST.data=await r.json()}
-  ST.data.web=ST.data.web||[];ST.data.graphic=ST.data.graphic||[];ST.data.home=ST.data.home||{};ST.data.contact=ST.data.contact||{};ST.orig=JSON.stringify(ST.data)}
+  ST.data.web=ST.data.web||[];ST.data.graphic=ST.data.graphic||[];ST.data.home=ST.data.home||{};ST.data.contact=ST.data.contact||{};ST.data.reviews=ST.data.reviews||[];ST.orig=JSON.stringify(ST.data)}
 $('#lgForm').addEventListener('submit',async e=>{e.preventDefault();const b=$('#lgBtn');$('#lgErr').textContent='';
   if(!$('#lgTok').value.trim()){$('#lgErr').textContent='توکن را وارد کن.';return}
   b.disabled=true;b.textContent='در حال بررسی…';
   try{await login($('#lgRepo').value,$('#lgTok').value,$('#lgRem').checked)}catch(er){$('#lgErr').textContent=er.status===401?'توکن نامعتبر است یا منقضی شده.':er.status===404?'مخزن پیدا نشد؛ اسم مخزن و دسترسی توکن را بررسی کن.':('خطا: '+er.message)}
   b.disabled=false;b.textContent='ورود'});
-$('#lgDemo').onclick=async()=>{ST.demo=true;ST.user={login:'gwatdesign',name:'گوات'};try{await loadData()}catch(e){ST.data={home:{},contact:{},web:[],graphic:[]};ST.orig=JSON.stringify(ST.data)}start()};
 
 /* ================= shell ================= */
-const NAV=[['dash','داشبورد','dash'],['home','صفحه‌ی اصلی','home'],['web','نمونه‌کار سایت','web'],['gfx','نمونه‌کار گرافیک','gfx'],['contact','تماس','contact'],['media','رسانه','media'],['sep','سیستم'],['upd','نصب آپدیت','upd'],['set','تنظیمات','set']];
+const NAV=[['dash','داشبورد','dash'],['home','صفحه‌ی اصلی','home'],['web','نمونه‌کار سایت','web'],['gfx','نمونه‌کار گرافیک','gfx'],['rev','نظرات کارفرماها','quote'],['contact','تماس','contact'],['media','رسانه','media'],['sep','سیستم'],['upd','نصب آپدیت','upd'],['set','تنظیمات','set']];
 function start(){$('#login').hidden=true;$('#login').style.display='none';$('#app').hidden=false;
   $('#nav').innerHTML=NAV.map(([k,t,i])=>k==='sep'?`<div class="nav-sep">${t}</div>`:`<a href="#${k}" data-v="${k}">${ic(i)}<span>${t}</span>${k==='web'||k==='gfx'?`<span class="badge" data-cnt="${k}"></span>`:''}</a>`).join('');
   const u=ST.user||{};$('#meName').innerHTML=esc(u.name||u.login||'گوات')+' <span style="color:var(--v3)">✔</span>';$('#meLogin').textContent='@'+(u.login||'');
@@ -346,7 +344,7 @@ function counts(){$$('[data-cnt]').forEach(b=>b.textContent=fa((b.dataset.cnt===
 function route(){const v=(location.hash||'#dash').slice(1);ST.view=NAV.some(n=>n[0]===v)?v:'dash';
   $$('#nav a').forEach(a=>a.classList.toggle('on',a.dataset.v===ST.view));$('#side').classList.remove('on');
   const V=$('#view');V.innerHTML=(ST.demo?'<div class="demo-bar">حالت نمایشی: تغییرها فقط روی همین صفحه می‌مانند و منتشر نمی‌شوند.</div>':'')+'<div class="fadein" id="vc"></div>';V.scrollTop=0;
-  ({dash:vDash,home:vHome,web:vWeb,gfx:vGfx,contact:vContact,media:vMedia,upd:vUpd,set:vSet})[ST.view]($('#vc'))}
+  ({dash:vDash,home:vHome,web:vWeb,gfx:vGfx,contact:vContact,rev:vRev,media:vMedia,upd:vUpd,set:vSet})[ST.view]($('#vc'))}
 $('#menuBtn').onclick=()=>$('#side').classList.toggle('on');
 $('#bell').onclick=e=>{e.stopPropagation();$('#bellPop').classList.toggle('on')};document.addEventListener('click',()=>$('#bellPop').classList.remove('on'));
 $('#srch').addEventListener('keydown',e=>{if(e.key!=='Enter')return;const q=e.target.value.trim();if(!q)return;
@@ -409,6 +407,20 @@ function vHome(el){el.innerHTML=`<div class="vh"><div><h1>صفحه‌ی اصلی
   </div><div class="card"><h3>پیش‌نمایش</h3><div class="prev-hero" id="pv"></div></div></div>`;
   const pv=()=>{const h=ST.data.home;$('#pv').innerHTML=`<small>${esc(h.eyebrow)}</small><h2>${esc(h.title).replace(/\n/g,'<br>')}</h2><p>${esc(h.lead)}</p>`};
   bind(el);el.addEventListener('bound',pv);pv()}
+function vRev(el){const R=ST.data.reviews;
+  el.innerHTML=`<div class="vh"><div><h1>نظرات کارفرماها</h1><p>${R.length?fa(R.length)+' نظر · روی صفحه‌ی اصلی نمایش داده می‌شود':'تا وقتی نظری اضافه نکنی، این بخش روی سایت دیده نمی‌شود'}</p></div><button class="btn" id="addR">${ic('plus')} نظر جدید</button></div>
+  <div class="demo-bar" style="background:#7b6cf21a;color:var(--v3);border-color:#7b6cf244">فقط نظر واقعی کارفرماها را بگذار، با اجازه‌ی خودشان. نظرِ ساختگی اعتماد مشتری را از بین می‌برد.</div>
+  <div class="grid g-2" id="rl">${R.map((r,i)=>`<div class="card form" data-i="${i}">
+    <div class="f2"><div class="field"><label>نام کارفرما</label><input class="inp" data-k="name" value="${esc(r.name||'')}" placeholder="مثلاً یاسین"></div><div class="field"><label>سمت یا کسب‌وکار</label><input class="inp" data-k="role" value="${esc(r.role||'')}" placeholder="مثلاً مدیر نمایشگاه"></div></div>
+    <div class="field"><label>پروژه (اختیاری)</label><input class="inp" data-k="project" value="${esc(r.project||'')}" placeholder="مثلاً سایت یاسین دبی"></div>
+    <div class="field"><label>متن نظر</label><textarea class="inp" data-k="text" style="min-height:110px">${esc(r.text||'')}</textarea></div>
+    <div style="display:flex;gap:8px;justify-content:space-between"><div style="display:flex;gap:6px"><button class="btn ghost sm" data-u="${i}" ${i?'':'disabled'}>▲</button><button class="btn ghost sm" data-d="${i}" ${i<R.length-1?'':'disabled'}>▼</button></div><button class="btn danger sm" data-x="${i}">${ic('trash')} حذف</button></div>
+  </div>`).join('')||'<div class="card" style="text-align:center;padding:40px"><b>هنوز نظری ثبت نشده</b><p class="hint" style="margin-top:8px">از کارفرماهای قبلی (مثلاً یاسین دبی) یک جمله نظر بگیر و اینجا اضافه کن.</p></div>'}</div>`;
+  $('#addR').onclick=()=>{R.unshift({name:'',role:'',project:'',text:''});markDirty();vRev(el);el.querySelector('[data-k="name"]')?.focus()};
+  el.querySelectorAll('[data-i]').forEach(c=>{const i=+c.dataset.i;c.querySelectorAll('[data-k]').forEach(f=>f.oninput=()=>{R[i][f.dataset.k]=f.value;markDirty()})});
+  el.querySelectorAll('[data-x]').forEach(b=>b.onclick=()=>{if(b.dataset.c){R.splice(+b.dataset.x,1);markDirty();toast('نظر حذف شد');vRev(el)}else{b.dataset.c=1;b.textContent='دوباره بزن تا حذف شود'}});
+  el.querySelectorAll('[data-u]').forEach(b=>b.onclick=()=>{const i=+b.dataset.u;[R[i-1],R[i]]=[R[i],R[i-1]];markDirty();vRev(el)});
+  el.querySelectorAll('[data-d]').forEach(b=>b.onclick=()=>{const i=+b.dataset.d;[R[i+1],R[i]]=[R[i],R[i+1]];markDirty();vRev(el)})}
 function vContact(el){el.innerHTML=`<div class="vh"><div><h1>تماس</h1><p>اطلاعاتی که در صفحه‌ی تماس دیده می‌شود</p></div></div>
   <div class="card form" style="max-width:640px"><div class="f2"><div class="field"><label for="c1">آیدی تلگرام</label><input class="inp ltr" id="c1" data-b="contact.telegram" placeholder="@username"></div>
   <div class="field"><label for="c2">آیدی اینستاگرام</label><input class="inp ltr" id="c2" data-b="contact.instagram" placeholder="@username"></div>

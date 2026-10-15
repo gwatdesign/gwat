@@ -1,0 +1,119 @@
+/* Gwat i18n: Persian (default) ⇄ English. Loaded in <head>; translates nodes as they are parsed or added. */
+(function(){
+var L='fa';try{L=(new URLSearchParams(location.search).get('lang'))||localStorage.getItem('gwat-lang')||'fa'}catch(e){}
+if(L!=='en')L='fa';
+try{localStorage.setItem('gwat-lang',L)}catch(e){}
+window.LANG=L;
+window.setLang=function(l){try{localStorage.setItem('gwat-lang',l)}catch(e){}var u=new URL(location.href);u.searchParams.delete('lang');var c=document.getElementById('langCurtain');if(c){c.classList.add('on');setTimeout(function(){location.href=u.href},520)}else location.href=u.href};
+if(L==='fa')return;
+var de=document.documentElement;de.lang='en';de.dir='ltr';de.classList.add('en');
+
+var D={
+/* chrome */
+'خانه':'Home','نمونه‌کار سایت':'Web Work','نمونه‌کار گرافیک':'Graphic Work','درباره و لوگو':'About & Logo','تماس':'Contact','شروع پروژه':'Start a Project',
+'باز کردن منو':'Open menu','بستن منو':'Close menu','منوی اصلی':'Main menu','پیوندهای پایین صفحه':'Footer links','بستن':'Close','قبلی':'Previous','بعدی':'Next',
+'/ تماس':'/ Contact','/ درباره و لوگو':'/ About & Logo','/ نمونه‌کار سایت':'/ Web Work','/ نمونه‌کار گرافیک':'/ Graphic Work',
+'گوات':'Gwat','گُوات':'Gwat','لوگوی گوات':'Gwat logo','تمامی حقوق محفوظ است':'All rights reserved','گوات · طراحی و ساخت وب':'Gwat · Web Design & Development',
+'پروژه‌ی بعدی مال شماست':'Your project could be next','بیایید با هم بسازیمش':'Let’s build it together','شروع گفت‌وگو':'Start a conversation',
+'بازگشت به گوات ✕':'Back to Gwat ✕','داخل قاب اسکرول و کلیک کنید · برای خروج Esc را بزنید':'Scroll and click inside the frame · Press Esc to exit',
+'دسکتاپ':'Desktop','تبلت':'Tablet','موبایل':'Mobile','اندازه‌ی نمایش':'Viewport size','مشاهده‌ی سایت زنده':'View live site','نمونه‌کار زنده':'Live demo',
+/* home */
+'گوات · طراح وب و گرافیک':'Gwat · Web & Graphic Designer','سایت‌هایی می‌سازم':'I build websites','که راه را نشان می‌دهند':'that show the way',
+'از طرح اولیه و هویت بصری تا سایت زنده، پنل مدیریت و ربات تلگرام. طراحی تیره و کلاسیک، با انیمیشن‌هایی که حس گران‌قیمت بودن می‌دهند.':'From first sketch and visual identity to a live website, admin panel and Telegram bot. Dark, classic design with animations that feel premium.',
+'نمونه‌کارهای سایت':'Web projects','نمونه‌کارهای گرافیک':'Graphic projects','gwat · در زبان بلوچی: باد':'gwat · Balochi for “wind”',
+'*گوات* در زبان بلوچی یعنی باد. طراح بلوچم؛ سایت می‌سازم، پوستر و هویت طراحی می‌کنم و کمک می‌کنم برندها در شلوغی اینترنت گم نشوند. هر پروژه با یک سؤال شروع می‌شود: مخاطب کجا باید برود؟':'*Gwat* means wind in Balochi. I’m a Baloch designer: I build websites, design posters and identities, and help brands stand out in the noise of the internet. Every project starts with one question: where should the visitor go?',
+'سلام! من گوات‌ام':'Hi! I’m Gwat','روی پسرک بزن تا باد بوزد':'Tap the boy to make the wind blow','۱ · نسیم':'1 · Breeze','۲ · طوفان':'2 · Storm','۳ · گوات':'3 · Gwat','ووووش!':'Whoosh!','پسرک باد':'Wind boy','معرفی گوات':'About Gwat',
+'هویت بصری چیست':'What is visual identity','هویت بصری چیست؟':'What is visual identity?',
+'مجموعه‌ای از قانون‌های تصویری که باعث می‌شود یک برند همه‌جا، از تابلو تا اینستاگرام، یک‌جور دیده شود. با اسکرول ببینید از چه لایه‌هایی ساخته می‌شود. برند نمونه:':'A set of visual rules that makes a brand look the same everywhere, from a shop sign to Instagram. Scroll to see the layers it’s built from. Sample brand:',
+'قهوه‌ی کویر':'Kavir Coffee','کویر':'Kavir','قهوه‌ای که طعم صبح کویر را دارد.':'Coffee that tastes like a desert morning.','برشتکاری تخصصی قهوه':'Specialty coffee roasters',
+'لوگو':'Logo','نشانه‌ای که مردم برند را با آن می‌شناسند؛ ساده، ماندگار و در اندازه‌ی کوچک هم خوانا.':'The mark people recognise the brand by: simple, memorable and readable even at small sizes.',
+'پالت رنگ':'Colour palette','چند رنگ ثابت که همیشه تکرار می‌شوند؛ معمولاً یک رنگ اصلی و چند رنگ کمکی.':'A few fixed colours that always repeat: usually one main colour and some supporting ones.',
+'تایپوگرافی':'Typography','فونت‌های برند: یکی برای تیترها، یکی برای متن‌ها.':'Brand fonts: one for headlines, one for body text.','تیتر · پیکان':'Headline · Paykan','متن · یکان بخ':'Body · Yekan Bakh','متن · یکان‌بخ':'Body · Yekan Bakh','تیترها · پیکان':'Headlines · Paykan',
+'المان‌های گرافیکی':'Graphic elements','المان گرافیکی':'Graphic element','الگوها و شکل‌های تکراری که بدون لوگو هم برند را یادآوری می‌کنند.':'Repeating patterns and shapes that recall the brand even without the logo.',
+'شبکه و چیدمان':'Grid & layout','قانون فاصله‌ها، حاشیه‌ها و جای هر چیز؛ برای اینکه همه‌ی طرح‌ها منظم و هم‌خانواده باشند.':'Rules for spacing, margins and placement, so every design stays tidy and part of one family.','۱۲ ستون · حاشیه‌ی ۴۸':'12 columns · 48 margin',
+'کاربردها':'Applications','جاهایی که هویت در آن‌ها زندگی می‌کند: کارت ویزیت، بسته‌بندی، استوری، سایت.':'Where the identity lives: business cards, packaging, stories, website.',
+'کارت ویزیت':'Business card','کارت':'Card','بسته‌بندی':'Packaging','استوری':'Story','وب‌سایت':'Website','سیستم کامل':'Complete system','همه‌ی لایه‌ها روی هم؛ این مجموعه همان «هویت بصری» است.':'All the layers together: this set is the “visual identity”.',
+'سایت‌ها و اپ‌هایی که ساخته‌ام':'Websites & apps I’ve built','همه‌ی ۷ پروژه‌ی سایت':'All 7 web projects','پوستر، استوری و بسته‌بندی':'Posters, stories & packaging','گالری سه‌بعدی؛ برای چرخاندن بکشید':'3D gallery: drag to rotate','برای چرخاندن بکشید · روی هر طرح بزنید':'Drag to rotate · tap any design','گالری کامل':'Full gallery',
+'همه‌چیز زیر یک سقف':'Everything under one roof','لازم نیست طراح، برنامه‌نویس و موشن‌کار جدا پیدا کنید.':'No need to hire a separate designer, developer and motion artist.','خدمات':'Services',
+'طراحی سایت':'Web design','سایت شرکتی، فروشگاهی و پورتفولیو با اسلایدرهای چشمگیر، انیمیشن و نسخه‌ی موبایل دقیق.':'Company sites, online stores and portfolios with striking sliders, animation and a carefully built mobile version.',
+'پنل مدیریت و ربات تلگرام':'Admin panel & Telegram bot','همه‌چیز سایت از پنل قابل ویرایش است و محصول را از تلگرام هم می‌شود اضافه کرد.':'Everything on the site is editable from the panel, and products can even be added from Telegram.',
+'لوگو و هویت بصری':'Logo & visual identity','لوگو، رنگ، تایپوگرافی و قالب‌های شبکه‌های اجتماعی.':'Logo, colour, typography and social media templates.',
+'پوستر و استوری':'Posters & stories','طرح‌های ۹:۱۶ و ۴:۵ برای اینستاگرام، مناسبت‌ها و کمپین‌ها.':'9:16 and 4:5 designs for Instagram, occasions and campaigns.',
+'موشن‌گرافیک':'Motion graphics','موشن':'Motion','ویدیوی کوتاه با ترنزیشن مورفینگ و خروجی MP4.':'Short videos with morphing transitions, exported as MP4.',
+'رابط کاربری':'UI design','اپ':'App','اپلیکیشن وب · PWA':'Web app · PWA',
+'روند کار':'Process','چهار ایستگاه تا تحویل':'Four stops to launch','شناخت':'Discovery','کسب‌وکار، مخاطب و رقبا را بررسی می‌کنیم و هدف سایت را در یک جمله می‌نویسیم.':'We study the business, audience and competitors, and write the site’s goal in one sentence.',
+'طراحی':'Design','سبک بصری و صفحه‌ها طراحی می‌شوند و پیش از کدنویسی تأیید می‌گیرند.':'The visual style and pages are designed and approved before any code is written.',
+'ساخت':'Build','سایت با انیمیشن، پنل مدیریت و نسخه‌ی موبایل ساخته و تست می‌شود.':'The site is built and tested with animation, admin panel and mobile version.',
+'تحویل':'Launch','سایت روی هاست شما بالا می‌آید و کار با پنل را یاد می‌گیرید.':'The site goes live on your hosting and you learn how to use the panel.',
+'بیایید چیزی ماندگار بسازیم':'Let’s build something lasting','پروژه‌ی سایت دارید؟':'Have a website project?','چند خط درباره‌ی کسب‌وکارتان بنویسید. یک روز کاری بعد، برآورد زمان و هزینه را می‌فرستم.':'Write a few lines about your business. Within one working day I’ll send you a time and cost estimate.',
+'درخواست برآورد':'Request an estimate','> راه را نشان بده </':'> show the way </',
+'نظرات کارفرماها':'Client reviews','همکاری از زبان خودشان':'Working together, in their words',
+/* web */
+'سایت‌ها و اپ‌ها':'Websites & apps','نمونه‌کارهای سایت و اپ':'Web & app projects',
+'پروژه‌هایی که از طراحی تا اجرا خودم ساخته‌ام، و چند سایت نمونه که برای نمایش سبک‌های مختلف ساختم. تصویرها اسکرین‌شات واقعی همین سایت‌ها هستند؛ سایت‌های نمونه را می‌توانید زنده هم ببینید.':'Projects I designed and built end to end, plus a few sample sites made to show different styles. The images are real screenshots of these sites, and you can open the sample sites live.',
+'سایت یا برند شما می‌تواند ستاره‌ی بعدی این صفحه باشد':'Your website or brand could be the next star on this page','پروژه‌ی بعدی':'Next project',
+'یاسین دبی':'Yasin Dubai','طوطیا':'Tootia','سولسترا':'Solstra','کافه نارنج':'Narenj Café','آکادمی رستاک':'Rastak Academy','کیش‌وی':'KishWay','همین سایت':'This website','نمونه‌کار مفهومی':'Concept work','طرح مفهومی':'Concept',
+'سایت معرفی خودروهای نمایشگاه Yasin automedia که خودرو را مستقیم از دبی سفارش می‌دهد. مشتری خودرو را می‌بیند، مشخصاتش را می‌خواند و از همان صفحه تماس می‌گیرد.':'A showcase site for the Yasin automedia car dealership, which orders cars directly from Dubai. Customers browse a car, read its specs and get in touch from the same page.',
+'برنامه‌ریز شخصی برای مک و موبایل: کارهای روز با ساعت، برد کارها، ردیاب عادت و تایمر تمرکز. بدون اینترنت هم کار می‌کند و مثل یک اپ نصب می‌شود.':'A personal planner for Mac and mobile: timed daily tasks, a task board, a habit tracker and a focus timer. It works offline and installs like an app.',
+'سایت شرکت خیالی راکتور همجوشی برای کشتی‌ها، ساخته‌شده از روی یک ویدیوی برنده‌ی Awwwards. کشتی شیشه‌ای سه‌بعدی، رگه‌های نور، خورشیدگرفتگی زنده و گالری افقی پروژه‌ها.':'A site for a fictional fusion-reactor company for ships, recreated from an Awwwards-winning video: a 3D glass ship, light streaks, a live eclipse and a horizontal project gallery.',
+'سایت یک کافه‌ی خیالی در شیراز: سبز باغ و نارنجی بهارنارنج، با شکوفه‌هایی که روی صفحه می‌ریزند.':'A site for a fictional café in Shiraz: garden green and orange-blossom orange, with petals drifting across the screen.',
+'سایت آموزش آنلاین برنامه‌نویسی: ویرایشگر کدی که خودش تایپ می‌کند، فیلتر دوره‌ها، مسیر یادگیری و جدول اشتراک.':'An online coding school: a code editor that types itself, course filters, a learning path and a pricing table.',
+'سایت اجاره‌ی ویلا در کیش: موج‌های زنده، جستجو، فیلتر ویلاها، نقشه‌ی تعاملی جزیره و پنل رزرو کشویی.':'A villa-rental site for Kish Island: live waves, search, villa filters, an interactive island map and a slide-out booking panel.',
+'پورتفولیوی شخصی خودم؛ چندصفحه‌ای، با آسمان غروبی که با کد نقاشی می‌شود، لودری که امضایم را می‌کشد و لنز شیشه‌ای امضا که روی تیتر حرکت می‌کند.':'My own portfolio: multi-page, with a sunset sky painted in code, a loader that draws my signature and a glass signature lens that moves over the headline.',
+'اسلایدر اصلی با عکس خودروها و افکت‌های کلاسیک':'Hero slider with car photos and classic effects','فروشگاه با دسته‌بندی تویوتا سفارش خلیج، النترا و لوکس کارکرده':'Store with categories: Gulf-spec Toyota, Elantra and used luxury','پنل مدیریت جدا که همه‌چیز سایت را ویرایش می‌کند':'A separate admin panel that edits everything on the site','افزودن خودرو از ربات تلگرام، روی هاست سی‌پنل داخل ایران':'Add cars from a Telegram bot, hosted on cPanel in Iran',
+'لودر اختصاصی و پاپ‌آپ متفاوت برای هر کار':'Custom loader and a different pop-up for every action','ردیاب عادت با جدول هفتگی و درصد پیشرفت':'Habit tracker with a weekly grid and progress percentage','اعداد فارسی و تقویم شمسی':'Persian numerals and Solar Hijri calendar',
+'کشتی سه‌بعدی شیشه‌ای با WebGL، بدون کتابخانه':'3D glass ship in WebGL, no libraries','کارت‌های سه‌بعدی با تاری حرکت و خورشیدگرفتگی با شیدر':'3D cards with motion blur and a shader eclipse','تایم‌لاین با نقطه‌ی نورانی و گالری افقی پروژه‌ها':'Timeline with a glowing dot and a horizontal project gallery',
+'تصویرسازی حیاط و درخت نارنج با SVG':'SVG illustration of a courtyard and orange tree','منوی سه‌بخشی با قیمت تومانی':'Three-part menu with toman prices','فرم رزرو میز با انتخاب نفرات':'Table booking form with party size',
+'ویرایشگر کد زنده در بالای صفحه':'Live code editor at the top of the page','فیلتر دوره‌ها و افزودن به فهرست یادگیری':'Course filters and an add-to-learning-list','اشتراک ماهانه و سالانه با تغییر قیمت متحرک':'Monthly/yearly plans with an animated price switch',
+'دریای متحرک با Canvas':'Animated sea in Canvas','فیلتر و علاقه‌مندی ویلاها':'Villa filters and favourites','محاسبه‌ی هزینه و بیعانه در پنل رزرو':'Cost and deposit calculation in the booking panel',
+'پنل مدیریت':'Admin panel','ربات تلگرام':'Telegram bot','واکنش‌گرا':'Responsive','آفلاین':'Offline','انیمیشن':'Animation','اسکرول‌محور':'Scroll-driven','منو':'Menu','رزرو':'Booking','تصویرسازی':'Illustration','آموزش آنلاین':'Online learning','فیلتر':'Filters','قیمت‌گذاری':'Pricing','رزرو آنلاین':'Online booking','نقشه':'Map','بدون کتابخانه':'No libraries','فونت محلی':'Local fonts',
+'نما: روز، هفته، برد':'Views: day, week, board','مک + موبایل':'Mac + mobile','قابل نصب':'Installable','۱۰۰٪':'100%',
+'صفحه‌ی اصلی':'Home page','دسته‌بندی خودروها':'Car categories','اسلایدر موبایل':'Mobile slider','دسته‌بندی در موبایل':'Categories on mobile','نمای روز':'Day view','نمای روز در موبایل':'Day view on mobile','کشتی سه‌بعدی':'3D ship','گالری پروژه‌ها':'Project gallery','ویرایشگر کد':'Code editor','دوره‌ها':'Courses','دریای متحرک':'Animated sea','ویلاها':'Villas',
+'صفحه‌ی اصلی سایت یاسین دبی':'Yasin Dubai home page','صفحه‌ی اصلی سولسترا':'Solstra home page','صفحه‌ی اصلی کیش‌وی':'KishWay home page','نمای روز در اپ طوطیا':'Day view in the Tootia app',
+'سایت نمایشگاه خودرو با پنل مدیریت کامل و افزودن خودرو از تلگرام.':'Car dealership site with a full admin panel and adding cars from Telegram.','برنامه‌ریز روزانه و ردیاب عادت که روی مک و موبایل نصب می‌شود.':'Daily planner and habit tracker that installs on Mac and mobile.','کشتی شیشه‌ای سه‌بعدی، خورشیدگرفتگی زنده و گالری افقی پروژه‌ها.':'3D glass ship, live eclipse and a horizontal project gallery.','اجاره‌ی ویلا در کیش با دریای متحرک، فیلتر و پنل رزرو.':'Villa rental on Kish with an animated sea, filters and booking panel.','از سایت معرفی ساده تا فروشگاه با پنل مدیریت.':'From a simple showcase site to a store with an admin panel.',
+'سایت فروشگاهی · پنل · ربات':'Store · panel · bot','سایت سه‌بعدی · WebGL':'3D site · WebGL','رزرو آنلاین · نقشه':'Online booking · map','آموزش کوتاه':'Short course','پروژه‌ی سایت و اپ':'Web & app project','درباره‌ی پروژه':'About the project',
+/* graphic */
+'پوستر، استوری، بسته‌بندی و طرح‌های شبکه‌های اجتماعی. روی هر طرح بزنید تا بزرگ شود؛ با کلیدهای جهت یا کشیدن انگشت ورق بزنید.':'Posters, stories, packaging and social media designs. Tap any design to enlarge it; use the arrow keys or swipe to browse.',
+'طرح‌هایی که نشان «طرح مفهومی» دارند برای نمایش سبک ساخته شده‌اند و سفارش مشتری نبوده‌اند.':'Designs marked “Concept” were made to show a style and were not client commissions.',
+'همه':'All','پوستر':'Poster','برندینگ':'Branding','شبکه‌ی اجتماعی':'Social media','طرح گرافیکی':'Graphic design',
+'پوستر برند گوات':'Gwat brand poster','استوری یاسین دبی':'Yasin Dubai story','پوستر شب یلدا':'Yalda Night poster','استوری معرفی طوطیا':'Tootia intro story','پوستر نوروز ۱۴۰۶':'Nowruz 1406 poster','کاروسل «۵ اشتباه رایج»':'“5 common mistakes” carousel','بسته‌بندی قهوه‌ی کویر':'Kavir Coffee packaging','کاور آلبوم شب‌های تهران':'“Tehran Nights” album cover',
+'هویت شخصی · ۴:۵':'Personal identity · 4:5','Yasin automedia · ۹:۱۶':'Yasin automedia · 9:16','مناسبتی · ۴:۵':'Occasion · 4:5','معرفی اپ · ۹:۱۶':'App intro · 9:16','اینستاگرام · ۴:۵':'Instagram · 4:5','لیبل و بسته‌بندی':'Label & packaging','کاور موسیقی · ۱:۱':'Music cover · 1:1',
+'نمایش بزرگ':'Enlarge',
+/* about */
+'گوات، طراح بلوچ':'Gwat, a Baloch designer','از امضا تا لوگو':'From signature to logo',
+'طراح وب و گرافیک هستم. سایت، اپ، پوستر و هویت بصری می‌سازم؛ با سبکی تیره، کلاسیک و طلایی، و با دقت روی نسخه‌ی موبایل. کار را از ایده تا تحویل روی هاست خودم انجام می‌دهم.':'I’m a web and graphic designer. I make websites, apps, posters and visual identities in a dark, classic, golden style, with careful attention to mobile. I take every project from idea to launch myself.',
+'لوگوی گوات یک امضاست: یک حرکت پیوسته، با حلقه‌های کشیده و تند؛ مثل وزش باد. کار من هم باید همین حس را بدهد: روان، سریع و ماندگار.':'The Gwat logo is a signature: one continuous stroke with long, quick loops, like a gust of wind. My work should feel the same: fluid, fast and lasting.',
+'لوگو خود امضای من است؛ همان خط، فقط تمیز و ماندگار.':'The logo is my own signature: the same line, just cleaned up to last.','عکس امضا روی کاغذ خط‌دار':'Photo of the signature on lined paper','عکس امضا روی کاغذ دفتر؛ کج و با خط‌های آبی و قرمز.':'The signature photographed on notebook paper: tilted, with blue and red lines.',
+'کجی گرفته شد، خط‌های کاغذ حذف شد و خط امضا برداری و نرم شد.':'The tilt was corrected, the paper lines removed, and the stroke vectorised and smoothed.','صاف و برداری':'Straightened & vectorised','قلم طلایی':'Golden pen','ضخامت خط مثل قلم‌خودنویس کم و زیاد می‌شود و رنگ طلایی برند را می‌گیرد.':'The stroke thickens and thins like a fountain pen and takes the brand’s gold colour.',
+'امضای طلایی سه‌بعدی گوات':'Gwat’s 3D golden signature','ساختار لوگو':'Logo structure','دو فونت، دو نقش':'Two fonts, two roles','برای تیترها، لوگوتایپ و پوسترها':'For headlines, logotype and posters','برای متن، منو و دکمه‌ها؛ حروف لاتین هم با همین فونت':'For body text, menus and buttons; Latin letters use this font too',
+'پالت برند':'Brand palette','طلایی':'Gold','طلای تیره':'Dark gold','عاج':'Ivory','شب':'Night','صبح':'Morning','وزش گوات':'Gwat’s gust','لوگو و هویت':'Logo & identity',
+/* contact */
+'راه‌های ارتباط':'Ways to reach me','پروژه‌تان را در چند خط بگویید. یک روز کاری بعد، برآورد زمان و هزینه را می‌فرستم.':'Tell me about your project in a few lines. Within one working day I’ll send a time and cost estimate.',
+'تلگرام':'Telegram','اینستاگرام':'Instagram','زمان پاسخ':'Response time','۱ روز کاری':'1 working day','ساخت یک سایت معمولی':'Building a typical website','۲ تا ۴ هفته':'2–4 weeks','روز کاری تا پاسخ':'working day to reply',
+'نام':'Name','مثلاً علی رضایی':'e.g. Ali Rezaei','شماره یا آیدی تلگرام':'Phone or Telegram ID','نوع پروژه':'Project type','طراحی و ساخت وب‌سایت':'Website design & build','چه کسب‌وکاری دارید و سایت قرار است چه کاری انجام دهد؟':'What’s your business, and what should the website do?','ارسال درخواست':'Send request','کپی':'Copy','سفارش':'Order',
+'فرم هنوز به تلگرام وصل نشده؛ نسخه‌ی نمایشی است':'The form isn’t connected to Telegram yet; this is a demo','متن انتخاب شد؛ با Cmd+C کپی کنید':'Text selected; press Cmd+C to copy','نام و توضیح پروژه را بنویسید':'Please enter your name and project details','کپی شد: ':'Copied: ',
+'دسته‌بندی':'Category','واکنش‌گرا روی موبایل':'Mobile responsive','هویت بصری':'Visual identity','شبکه':'Grid','طراحی و ساخت وب':'Web design & development','امضای دست‌نویس':'Handwritten signature','رنگ‌ها':'Colours','ایستگاه':'stops','پروژه‌ی بعدی مال شماست':'Your project could be next','نقش':'Role','سؤال':'Question'
+};
+/* phrase fallbacks for compound strings */
+var PH=[['نمونه‌کار مفهومی','Concept work'],['۱۴۰۵','2026'],['نمایش بزرگ:','Enlarge:'],['پروژه‌ی سایت','web projects'],['همه‌ی','All'],['نمونه‌کار','Work'],['طرح','designs'],['پروژه','projects']];
+var RX=[[/^همه‌?ی (\S+) پروژه‌?ی سایت$/,'All $1 web projects'],[/^(\S+) پروژه$/,'$1 projects']];
+var Z=/[‌‏‎]/g,norm=function(s){return s.replace(Z,'').replace(/\s+/g,' ').trim()};
+var M={};for(var k in D)M[norm(k)]=D[k];PH=PH.map(function(p){return[norm(p[0]),p[1]]});
+var dig=function(s){return s.replace(/←/g,'→').replace(/[۰-۹]/g,function(d){return '۰۱۲۳۴۵۶۷۸۹'.indexOf(d)}).replace(/٪/g,'%').replace(/،/g,',').replace(/؛/g,';').replace(/؟/g,'?')};
+var FA=/[؀-ۿ]/;
+function tr(s){if(s&&s.indexOf('←')>-1&&!FA.test(s))return s.replace(/←/g,'→');if(!s||!FA.test(s)&&!/[۰-۹]/.test(s))return s;var lead=s.match(/^\s*/)[0],tail=s.match(/\s*$/)[0],n=norm(s);if(!n)return s;
+  if(M[n]!==undefined)return lead+M[n]+tail;
+  for(var r=0;r<RX.length;r++){var mm=n.match(RX[r][0]);if(mm)return lead+dig(RX[r][1].replace('$1',mm[1]))+tail}
+  var o=n;for(var i=0;i<PH.length;i++)o=o.split(PH[i][0]).join(PH[i][1]);
+  o=o.split(' ').map(function(w){var m=M[w];return m!==undefined?m:w}).join(' ');
+  return lead+dig(o)+tail}
+window.T=tr;
+var ATTR=['placeholder','aria-label','alt','title'];
+function walk(n){if(n.nodeType===3){var p=n.parentNode;if(p&&(p.nodeName==='SCRIPT'||p.nodeName==='STYLE'))return;var v=n.nodeValue,t=tr(v);if(t!==v)n.nodeValue=t;return}
+  if(n.nodeType!==1)return;if(n.nodeName==='SCRIPT'||n.nodeName==='STYLE'||n.hasAttribute&&n.hasAttribute('data-noi18n'))return;
+  for(var a=0;a<ATTR.length;a++){var av=n.getAttribute(ATTR[a]);if(av){var at=tr(av);if(at!==av)n.setAttribute(ATTR[a],at)}}
+  for(var c=n.firstChild;c;c=c.nextSibling)walk(c)}
+var mo=new MutationObserver(function(rs){for(var i=0;i<rs.length;i++){var r=rs[i];if(r.type==='characterData')walk(r.target);else if(r.type==='attributes')walk(r.target);else for(var j=0;j<r.addedNodes.length;j++)walk(r.addedNodes[j])}});
+mo.observe(de,{childList:true,subtree:true,characterData:true,attributes:true,attributeFilter:ATTR});
+walk(de);
+})();

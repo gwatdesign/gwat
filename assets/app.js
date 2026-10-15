@@ -21,21 +21,25 @@ document.body.insertAdjacentHTML('afterbegin',`
 <nav class="nav" aria-label="منوی اصلی"><div class="nav-in">
   <a class="brand" href="index.html"><img src="assets/img/mark.svg" alt=""><b>گوات</b></a>
   ${links.slice(1).map(([h,t,k])=>`<a class="l" href="${h}"${cur(k)}>${t}</a>`).join('')}
-  <span style="display:flex;gap:6px;align-items:center"><a class="beam" href="contact.html">شروع پروژه</a>
+  <span style="display:flex;gap:6px;align-items:center"><button class="lang" type="button" id="lgBtn" data-noi18n aria-label="${window.LANG==='en'?'نسخه‌ی فارسی':'English version'}"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3"><circle cx="8" cy="8" r="6.3"/><path d="M1.8 8h12.4M8 1.7c2 2 2 10.6 0 12.6M8 1.7c-2 2-2 10.6 0 12.6"/></svg><span class="lg-t"><b class="${window.LANG==='en'?'':'on'}">فا</b><i></i><b class="${window.LANG==='en'?'on':''}">EN</b></span></button><a class="beam" href="contact.html">شروع پروژه</a>
   <button class="menu-btn" type="button" aria-label="باز کردن منو" id="mb"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M2 5h12M2 11h12"/></svg></button></span>
 </div></nav>
 <div class="sheet" id="sheet" aria-hidden="true"><button class="menu-btn x" type="button" aria-label="بستن منو" id="mx"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 3l10 10M13 3 3 13"/></svg></button>
-  ${links.map(([h,t,k],i)=>`<a href="${h}"${cur(k)} style="transition-delay:${i*50}ms">${t}</a>`).join('')}</div>`);
+  ${links.map(([h,t,k],i)=>`<a href="${h}"${cur(k)} style="transition-delay:${i*50}ms">${t}</a>`).join('')}
+  <button class="lang big" type="button" id="lgBtn2" data-noi18n>${window.LANG==='en'?'فارسی':'English'}</button></div>
+<div id="langCurtain" aria-hidden="true"><svg viewBox="0 0 ${SIG.w} ${SIG.h}">${markSVG('lc')}</svg></div>`);
 document.body.insertAdjacentHTML('beforeend',`
+${page!=='home'&&page!=='contact'?`<section class="wrap"><div class="glass ctaband rv"><div><span class="eyebrow">پروژه‌ی بعدی مال شماست</span><h2>بیایید با هم بسازیمش</h2></div><a class="beam solid" href="contact.html">شروع گفت‌وگو <span aria-hidden="true">←</span></a></div></section>`:''}
 <footer><div class="wrap foot">
-  <span>© ${fa(1405)} · گوات · طراحی و ساخت وب</span>
+  <span class="fbrand"><img src="assets/img/mark.svg" alt=""><b>گوات</b><em>طراحی و ساخت وب</em></span>
   <nav aria-label="پیوندهای پایین صفحه">${links.map(([h,t])=>`<a href="${h}">${t}</a>`).join('')}</nav>
-  <span class="sig">Made By M.D</span>
+  <span class="copy" data-noi18n>${window.LANG==='en'?'© 2026 Gwat · All rights reserved':`© ${fa(1405)} گوات · تمامی حقوق محفوظ است`}</span>
 </div></footer>
 <div id="toast" role="status" aria-live="polite"><i>✓</i><span></span></div>`);
 
 (function(){const el=document.getElementById('pct');const t0=performance.now(),D=page==='home'?1350:450;(function tick(t){const p=Math.min(1,(t-t0)/D);el.textContent=fa(Math.round(p*100));if(p<1)requestAnimationFrame(tick)})(t0)})();
 
+['lgBtn','lgBtn2'].forEach(id=>{const b=document.getElementById(id);if(b)b.onclick=()=>{const r=b.getBoundingClientRect(),c=document.getElementById('langCurtain');if(c){c.style.setProperty('--cx',(r.left+r.width/2)+'px');c.style.setProperty('--cy',(r.top+r.height/2)+'px')}window.setLang&&setLang(window.LANG==='en'?'fa':'en')}});
 const sheet=document.getElementById('sheet');
 document.getElementById('mb').onclick=()=>{sheet.classList.add('on');sheet.setAttribute('aria-hidden','false');document.body.style.overflow='hidden'};
 const closeSheet=()=>{sheet.classList.remove('on');sheet.setAttribute('aria-hidden','true');document.body.style.overflow=''};

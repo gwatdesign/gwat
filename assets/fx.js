@@ -14,7 +14,7 @@ function loop(){ctx.clearRect(0,0,W,H);for(let i=P.length-1;i>=0;i--){const p=P[
 addEventListener('pointerdown',e=>add(e.clientX,e.clientY,22,4.2,46,2.6));
 if(fine)addEventListener('pointermove',e=>{const d=Math.hypot(e.clientX-lx,e.clientY-ly);if(d>14){lx=e.clientX;ly=e.clientY;add(lx,ly,1,.6,34,1.6)}});
 /* eyebrow scramble */
-const chars='ابپتثجچحخدذرزژسشصضطظعغفقکگلمنوهی';
+const chars=window.LANG==='en'?'ABCDEFGHIJKLMNOPQRSTUVWXYZ#&*':'ابپتثجچحخدذرزژسشصضطظعغفقکگلمنوهی';
 const io=new IntersectionObserver(es=>es.forEach(en=>{if(!en.isIntersecting)return;io.unobserve(en.target);const el=en.target,txt=el.dataset.t;let f=0;const N=22;
   (function tick(){f++;el.textContent=[...txt].map((c,i)=>c===' '||c==='·'||i<(f/N)*txt.length?c:chars[Math.random()*chars.length|0]).join('');if(f<N)requestAnimationFrame(tick);else el.textContent=txt})()}),{rootMargin:'0px 0px -10% 0px'});
 document.querySelectorAll('.eyebrow').forEach(el=>{if(el.children.length)return;el.dataset.t=el.textContent;io.observe(el)});

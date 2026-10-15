@@ -23,6 +23,8 @@ if(page==='web'&&S.web&&q('#cases')){
       ${(w.stats||[]).length?`<div class="stats">${w.stats.map(([b,s])=>`<div><b>${esc(fa(b))}</b><span>${esc(s)}</span></div>`).join('')}</div>`:''}
       ${live}</div><div class="shots"${im.d?'':' style="display:grid;place-items:center;min-height:260px"'}>${shots}</div></div>
       ${(w.shots||[]).length?`<div class="thumbs" data-set="${esc(w.id)}"></div>`:''}</article>`}).join('\n');}
+if(page==='home'&&(S.reviews||[]).length&&q('#reviews')){q('#reviews').hidden=false;
+  q('#rvGrid').innerHTML=S.reviews.map(r=>`<figure class="glass rv-card rv"><svg class="qm" viewBox="0 0 40 30" aria-hidden="true"><path d="M0 30V17C0 7 6 1 16 0v6c-5 1-8 5-8 10h8v14zm24 0V17c0-10 6-16 16-17v6c-5 1-8 5-8 10h8v14z"/></svg><blockquote>${esc(r.text)}</blockquote><figcaption><span class="av">${esc((r.name||'?').trim().charAt(0))}</span><div><b>${esc(r.name)}</b><small>${esc(r.role||'')}</small></div>${r.project?`<span class="pj">${esc(r.project)}</span>`:''}</figcaption></figure>`).join('');}
 if(page==='contact'&&S.contact){const c=S.contact;
   if(c.telegram&&q('#tg'))q('#tg').textContent=c.telegram;if(c.instagram&&q('#ig'))q('#ig').textContent=c.instagram;
   const f=document.querySelectorAll('.facts b');if(f[0]&&c.response)f[0].textContent=c.response;if(f[1]&&c.build)f[1].textContent=c.build;}
