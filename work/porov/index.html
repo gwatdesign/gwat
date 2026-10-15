@@ -1,0 +1,421 @@
+<!doctype html><html lang="fa" dir="rtl"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><link rel="icon" href="data:,">
+<title>پرو مجازی پوشینه</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<style>
+/* Layout: store page (gallery + buy box) with a full-screen try-on studio sheet; admin as a second tab. Dark-gold, single theme by choice. */
+:root{
+  --bg:#0b0a09; --panel:#15130f; --panel2:#1c1915; --line:#c9a45c26; --line2:#c9a45c4d;
+  --gold:#c9a45c; --gold-hi:#f1d79a; --gold-lo:#7d6230; --ivory:#efe8da; --mute:#efe8da99; --ok:#7fd1a0; --warn:#e8b25a;
+  --disp:Paykan,Peyda,Tahoma,sans-serif; --body:Peyda,Tahoma,sans-serif;
+  color-scheme:dark;
+}
+@font-face{font-family:Paykan;src:url(fonts/Paykan-800.woff2) format("woff2");font-weight:800;font-display:swap}
+@font-face{font-family:Peyda;src:url(fonts/Peyda-500.woff2) format("woff2");font-weight:400 500;font-display:swap}
+@font-face{font-family:Peyda;src:url(fonts/Peyda-700.woff2) format("woff2");font-weight:600 800;font-display:swap}
+@property --ga{syntax:"<angle>";initial-value:0deg;inherits:false}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+html,body{background:var(--bg);color:var(--ivory)}
+body{font-family:var(--body);font-size:15px;line-height:1.8;margin:0}
+.app{direction:rtl;min-height:100%;background:radial-gradient(900px 500px at 85% -10%,#c9a45c1f,transparent 60%),var(--bg);padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:0 40px}
+.wrap{max-width:1120px;margin:0 auto}
+button,input{font:inherit;color:inherit}
+button{cursor:pointer}
+:focus-visible{outline:2px solid var(--gold-hi);outline-offset:2px}
+/* header */
+.hd{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;display:flex;align-items:center;justify-content:space-between;gap:12px;padding:14px 0;backdrop-filter:blur(12px);background:#0b0a09c7;border-bottom:1px solid var(--line)}
+.brand{display:flex;align-items:center;gap:10px}
+.brand b{font-family:var(--disp);font-size:24px;letter-spacing:-.3px}
+.brand small{font-size:11px;color:var(--gold);border:1px solid var(--line2);border-radius:99px;padding:1px 10px}
+.tabs{display:flex;gap:4px;background:var(--panel);border:1px solid var(--line);border-radius:99px;padding:4px}
+.tabs button{border:0;background:none;padding:6px 16px;border-radius:99px;font-size:14px;color:var(--mute)}
+.tabs button[aria-selected="true"]{background:var(--gold);color:var(--bg);font-weight:700}
+.cart{position:relative;width:42px;height:42px;border-radius:50%;border:1px solid var(--line2);background:var(--panel);display:grid;place-items:center}
+.cart i{position:absolute;top:-4px;left:-4px;min-width:20px;height:20px;border-radius:99px;background:var(--gold);color:var(--bg);font-style:normal;font-size:11px;font-weight:700;display:grid;place-items:center;padding:0 5px}
+/* product */
+.crumbs{font-size:13px;color:var(--mute);margin:22px 0 14px}
+.prod{display:grid;grid-template-columns:1.1fr 1fr;gap:36px;align-items:start}
+.gal{position:relative;border-radius:28px;background:radial-gradient(circle at 50% 40%,#2a241b,#14110d 70%);border:1px solid var(--line);aspect-ratio:1/1.05;max-width:100%;display:grid;place-items:center;overflow:hidden}
+.gal svg{width:68%;height:auto;filter:drop-shadow(0 30px 40px #0009);transition:transform .6s cubic-bezier(.2,.8,.2,1)}
+.gal .ring{position:absolute;inset:12%;border-radius:50%;border:1px dashed var(--line2)}
+.gal .badge{position:absolute;top:16px;right:16px;font-size:12px;background:#0b0a09b3;border:1px solid var(--line2);border-radius:99px;padding:3px 12px;color:var(--gold-hi)}
+.thumbs{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:12px}
+.thumbs button{aspect-ratio:1;border-radius:16px;border:1px solid var(--line);background:var(--panel);padding:8px;display:grid;place-items:center}
+.thumbs button[aria-pressed="true"]{border-color:var(--gold);box-shadow:0 0 0 3px #c9a45c33}
+.thumbs svg{width:80%;height:auto}
+.buy{min-width:0}
+.buy .cat{font-size:13px;color:var(--gold)}
+.buy h1{font-family:var(--disp);font-size:clamp(24px,4vw,40px);line-height:1.35;margin:4px 0 6px;text-wrap:balance}
+.price{font-size:22px;font-weight:700;color:var(--gold-hi);font-variant-numeric:tabular-nums}
+.price small{font-size:13px;color:var(--mute);font-weight:500}
+.desc{color:var(--mute);max-width:52ch;margin:12px 0 18px}
+.lbl{font-size:13px;color:var(--mute);margin-bottom:8px}
+.sizes{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:22px}
+.sizes button{min-width:48px;height:42px;border-radius:12px;border:1px solid var(--line2);background:var(--panel)}
+.sizes button[aria-pressed="true"]{background:var(--ivory);color:var(--bg);font-weight:700;border-color:var(--ivory)}
+.acts{display:grid;gap:10px}
+.beam{position:relative;border:0;border-radius:16px;padding:16px 20px;font-weight:700;font-size:17px;color:var(--bg);background:linear-gradient(135deg,var(--gold-hi),var(--gold) 50%,var(--gold-lo));isolation:isolate;display:flex;align-items:center;justify-content:center;gap:10px}
+.beam::before{content:"";position:absolute;inset:-2px;border-radius:18px;background:conic-gradient(from var(--ga),transparent 0 70%,#fff 80%,transparent 90%);z-index:-1;animation:spin 3s linear infinite}
+@keyframes spin{to{--ga:360deg}}
+.ghost{border:1px solid var(--line2);background:var(--panel);border-radius:16px;padding:14px 20px;font-size:16px}
+.note{display:flex;gap:10px;align-items:flex-start;margin-top:16px;font-size:13px;color:var(--mute);background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:12px 14px}
+.note b{color:var(--gold-hi)}
+.feat{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:40px}
+.feat div{background:var(--panel);border:1px solid var(--line);border-radius:20px;padding:18px}
+.feat b{display:block;font-size:15px;margin-bottom:4px}
+.feat span{font-size:13px;color:var(--mute)}
+/* try-on sheet */
+.sheet{position:fixed;inset:0;z-index:50;background:#060504f2;backdrop-filter:blur(10px);display:grid;place-items:center;padding:calc(16px + env(safe-area-inset-top,0px)) max(16px,env(safe-area-inset-right,0px)) calc(16px + env(safe-area-inset-bottom,0px)) max(16px,env(safe-area-inset-left,0px));direction:rtl}
+.studio{width:min(980px,100%);max-height:100%;overflow:auto;background:var(--panel);border:1px solid var(--line2);border-radius:28px;display:grid;grid-template-columns:1.15fr 1fr;animation:pop .45s cubic-bezier(.2,.9,.25,1.2)}
+@keyframes pop{from{transform:translateY(24px) scale(.97);opacity:.4}}
+.stage{position:relative;background:#0b0a09;min-height:420px;display:grid;place-items:center;border-left:1px solid var(--line)}
+.stage canvas{max-width:100%;max-height:72vh;display:block;touch-action:none}
+.side{padding:24px;display:flex;flex-direction:column;gap:14px;min-width:0}
+.side h2{font-family:var(--disp);font-size:24px;margin:0;line-height:1.4}
+.x{position:absolute;top:14px;left:14px;z-index:3;width:40px;height:40px;border-radius:50%;border:1px solid var(--line2);background:#0b0a09cc;font-size:18px}
+.steps{display:flex;gap:6px}
+.steps i{flex:1;height:4px;border-radius:4px;background:var(--line2)}
+.steps i.on{background:var(--gold)}
+.drop{border:1.5px dashed var(--line2);border-radius:20px;padding:22px;text-align:center;display:grid;gap:8px;place-items:center}
+.drop.hot{border-color:var(--gold);background:#c9a45c12}
+.drop svg{opacity:.8}
+.check{display:flex;gap:10px;align-items:flex-start;font-size:13px;color:var(--mute)}
+.check input{accent-color:var(--gold);margin-top:5px}
+.list{font-size:14px;display:grid;gap:8px}
+.list div{display:flex;gap:10px;align-items:center;color:var(--mute);transition:color .3s}
+.list div i{width:22px;height:22px;border-radius:50%;border:1px solid var(--line2);display:grid;place-items:center;font-style:normal;font-size:12px;flex:none}
+.list div.done{color:var(--ivory)}.list div.done i{background:var(--gold);color:var(--bg);border-color:var(--gold)}
+.list div.run i{border-color:var(--gold);border-top-color:transparent;animation:rot .8s linear infinite}
+@keyframes rot{to{transform:rotate(360deg)}}
+.scan{position:absolute;left:0;right:0;height:3px;background:linear-gradient(90deg,transparent,var(--gold-hi),transparent);box-shadow:0 0 24px 6px #f1d79a66;animation:scan 1.6s ease-in-out infinite alternate}
+@keyframes scan{from{top:8%}to{top:90%}}
+.cmp{position:absolute;inset:0;pointer-events:none}
+.cmp .bar{position:absolute;top:0;bottom:0;width:2px;background:var(--gold-hi);box-shadow:0 0 12px #f1d79a}
+.cmp .knob{position:absolute;top:50%;width:40px;height:40px;margin:-20px -19px;border-radius:50%;background:var(--gold);color:var(--bg);display:grid;place-items:center;font-size:14px;font-weight:700}
+.lb2{position:absolute;bottom:12px;font-size:12px;background:#0b0a09cc;border:1px solid var(--line2);border-radius:99px;padding:2px 10px}
+.chips{display:flex;gap:8px;overflow-x:auto;padding-bottom:4px}
+.chips button{flex:none;width:64px;height:64px;border-radius:14px;border:1px solid var(--line);background:var(--panel2);display:grid;place-items:center;padding:6px}
+.chips button[aria-pressed="true"]{border-color:var(--gold);box-shadow:0 0 0 3px #c9a45c33}
+.chips svg{width:100%;height:auto}
+.rng{display:grid;gap:4px;font-size:13px;color:var(--mute)}
+.rng input{accent-color:var(--gold);width:100%}
+.honest{font-size:12px;color:var(--warn);background:#e8b25a14;border:1px solid #e8b25a40;border-radius:12px;padding:8px 12px;line-height:1.7}
+/* admin */
+.adm{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-top:22px}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:22px;padding:20px;min-width:0}
+.card h3{margin:0 0 12px;font-size:16px}
+.kpi{font-family:var(--disp);font-size:30px;color:var(--gold-hi);font-variant-numeric:tabular-nums}
+.kpi+span{font-size:12px;color:var(--mute)}
+.span2{grid-column:span 2}.span4{grid-column:1/-1}
+.opt{display:flex;gap:12px;align-items:flex-start;border:1px solid var(--line);border-radius:16px;padding:12px 14px;margin-bottom:10px}
+.opt input{accent-color:var(--gold);margin-top:6px}
+.opt small{display:block;color:var(--mute);font-size:12px}
+.fld{width:100%;background:var(--bg);border:1px solid var(--line2);border-radius:12px;padding:10px 12px;direction:ltr;text-align:left;font-size:14px}
+.tg{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:10px 0;border-bottom:1px solid var(--line);font-size:14px}
+.tg:last-child{border-bottom:0}
+.sw{position:relative;width:46px;height:26px;flex:none}
+.sw input{position:absolute;inset:0;opacity:0;margin:0;cursor:pointer}
+.sw span{position:absolute;inset:0;border-radius:99px;background:var(--line2);transition:.25s;pointer-events:none}
+.sw span::after{content:"";position:absolute;top:3px;right:3px;width:20px;height:20px;border-radius:50%;background:var(--ivory);transition:.25s}
+.sw input:checked+span{background:var(--gold)}
+.sw input:checked+span::after{right:23px;background:var(--bg)}
+.tbl{width:100%;border-collapse:collapse;font-size:14px}
+.tbl td,.tbl th{padding:10px 8px;border-bottom:1px solid var(--line);text-align:right}
+.tbl th{font-size:12px;color:var(--mute);font-weight:500}
+.tbl td.n{font-variant-numeric:tabular-nums}
+.tblw{overflow-x:auto}
+.ex{font-size:11px;color:var(--mute);border:1px solid var(--line);border-radius:99px;padding:0 8px;margin-right:6px}
+/* toast */
+.toast{position:fixed;left:50%;bottom:calc(24px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);z-index:80;display:flex;gap:10px;align-items:center;background:var(--panel2);border:1px solid var(--gold);border-radius:16px;padding:12px 18px;box-shadow:0 20px 40px #000a;animation:tin .5s cubic-bezier(.2,.9,.25,1.3);direction:rtl;max-width:calc(100% - 32px)}
+.toast i{width:30px;height:30px;border-radius:50%;background:var(--gold);color:var(--bg);display:grid;place-items:center;font-style:normal;flex:none}
+@keyframes tin{from{transform:translate(-50%,30px) scale(.9);opacity:0}}
+.foot{margin-top:50px;padding-top:18px;border-top:1px solid var(--line);display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px;font-size:13px;color:var(--mute)}
+@media (max-width:860px){
+  .prod{grid-template-columns:1fr;gap:20px}
+  .feat{grid-template-columns:1fr}
+  .studio{grid-template-columns:1fr;border-radius:22px}
+  .studio{grid-auto-rows:max-content;align-content:start}
+  .stage{border-left:0;border-bottom:1px solid var(--line);min-height:300px}
+  .stage canvas{max-height:52vh}
+  .adm{grid-template-columns:1fr 1fr}
+  .span2{grid-column:1/-1}
+}
+@media (max-width:480px){
+  .tabs button{padding:6px 10px;font-size:13px}
+  .brand small{display:none}
+  .adm{grid-template-columns:1fr}
+  .side{padding:18px}
+  .sheet{padding:0;place-items:stretch}
+  .studio{border-radius:0;max-height:none;height:100%}
+}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head><body>
+
+<div class="app" id="app">
+  <div class="wrap">
+    <header class="hd">
+      <div class="brand"><b>پوشینه</b><small>نمونه‌کار مفهومی</small></div>
+      <div class="tabs" role="tablist">
+        <button role="tab" id="t-shop" aria-selected="true">فروشگاه</button>
+        <button role="tab" id="t-adm" aria-selected="false">پنل مدیریت</button>
+      </div>
+      <button class="cart" id="cartBtn" aria-label="سبد خرید"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M5 7h14l-1.5 12h-11z"/><path d="M9 7a3 3 0 016 0"/></svg><i id="cartN">۰</i></button>
+    </header>
+
+    <main id="shop">
+      <div class="crumbs">خانه / پوشاک / <span id="crCat">هودی</span></div>
+      <section class="prod">
+        <div>
+          <div class="gal"><span class="ring"></span><span class="badge">قابل پرو مجازی</span><div id="galImg"></div></div>
+          <div class="thumbs" id="thumbs"></div>
+        </div>
+        <div class="buy">
+          <div class="cat" id="pCat">هودی</div>
+          <h1 id="pName">هودی کویر</h1>
+          <div class="price" id="pPrice"></div>
+          <p class="desc" id="pDesc"></p>
+          <div class="lbl">سایز</div>
+          <div class="sizes" id="sizes"></div>
+          <div class="acts">
+            <button class="beam" id="tryBtn"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="3" width="16" height="18" rx="3"/><circle cx="12" cy="10" r="3"/><path d="M7 18c1-2.5 3-3.5 5-3.5s4 1 5 3.5"/></svg>پرو مجازی روی عکس خودت</button>
+            <button class="ghost" id="addBtn">افزودن به سبد</button>
+          </div>
+          <div class="note"><b>✦</b><span>عکس خودت را بفرست تا همین لباس را تنت ببینی. عکس فقط برای پرو استفاده می‌شود و بعد از ۲۴ ساعت خودکار پاک می‌شود.</span></div>
+        </div>
+      </section>
+      <section class="feat">
+        <div><b>سه مرحله، کمتر از یک دقیقه</b><span>عکس می‌گیری، لباس را انتخاب می‌کنی و نتیجه را با اسلایدر قبل و بعد می‌بینی.</span></div>
+        <div><b>لباس‌ها را عوض کن</b><span>بدون آپلود دوباره، لباس‌های دیگر فروشگاه را روی همان عکس امتحان کن.</span></div>
+        <div><b>مستقیم به سبد</b><span>از صفحه‌ی نتیجه با سایز انتخابی، لباس را به سبد اضافه کن.</span></div>
+      </section>
+    </main>
+
+    <main id="admin" hidden>
+      <div class="crumbs">پنل مدیریت / پرو مجازی <span class="ex">اعداد نمونه</span></div>
+      <section class="adm">
+        <div class="card"><h3>پروهای امروز</h3><div class="kpi" id="kToday">۱۴۸</div><span>از سقف ۵۰۰ پرو روزانه</span></div>
+        <div class="card"><h3>افزودن به سبد بعد از پرو</h3><div class="kpi">۳۸٪</div><span>بدون پرو: ۱۲٪</span></div>
+        <div class="card"><h3>میانگین زمان پردازش</h3><div class="kpi">۷ ثانیه</div><span>سرور اختصاصی</span></div>
+        <div class="card"><h3>عکس‌های در صف حذف</h3><div class="kpi">۶۱</div><span>پاک‌سازی خودکار هر ۲۴ ساعت</span></div>
+        <div class="card span2"><h3>پروها در ۷ روز گذشته</h3><svg id="chart" viewBox="0 0 420 170" width="100%" height="170" role="img" aria-label="نمودار پروهای ۷ روز گذشته"></svg></div>
+        <div class="card span2"><h3>موتور پردازش</h3>
+          <label class="opt"><input type="radio" name="eng" id="eng1" value="gpu" checked><span>سرور اختصاصی GPU<small>مدل متن‌باز با مجوز تجاری؛ هزینه‌ی هر عکس ندارد</small></span></label>
+          <label class="opt"><input type="radio" name="eng" id="eng2" value="api"><span>سرویس آنلاین<small>بدون سرور؛ هزینه برای هر عکس حساب می‌شود</small></span></label>
+          <div class="lbl">آدرس سرور پردازش</div>
+          <input class="fld" id="srv" value="https://tryon.pooshineh.example/api">
+        </div>
+        <div class="card span2"><h3>تنظیمات</h3>
+          <div class="tg"><span>پرو مجازی در فروشگاه فعال باشد</span><label class="sw"><input type="checkbox" id="s1" checked aria-label="فعال بودن پرو"><span></span></label></div>
+          <div class="tg"><span>تیک رضایت قبل از آپلود عکس</span><label class="sw"><input type="checkbox" id="s2" checked aria-label="تیک رضایت"><span></span></label></div>
+          <div class="tg"><span>حذف خودکار عکس‌ها بعد از ۲۴ ساعت</span><label class="sw"><input type="checkbox" id="s3" checked aria-label="حذف خودکار"><span></span></label></div>
+          <div class="tg"><span>سقف پرو برای هر کاربر در روز</span><input class="fld" id="lim" type="number" value="10" min="1" max="50" style="width:84px;text-align:center"></div>
+        </div>
+        <div class="card span2"><h3>محصولات قابل پرو</h3><div class="tblw"><table class="tbl"><thead><tr><th>محصول</th><th>پرو این هفته</th><th>فعال</th></tr></thead><tbody id="ptbl"></tbody></table></div></div>
+      </section>
+    </main>
+
+    <footer class="foot"><span>پوشینه، فروشگاه ساختگی برای نمایش نمونه‌کار</span><span>طراحی و توسعه: گوات</span></footer>
+  </div>
+</div>
+
+<div class="sheet" id="sheet" hidden>
+  <div class="studio" role="dialog" aria-modal="true" aria-labelledby="stTitle">
+    <div class="stage" id="stage">
+      <button class="x" id="closeBtn" aria-label="بستن">✕</button>
+      <canvas id="cv" width="600" height="800"></canvas>
+      <div class="cmp" id="cmp" hidden><div class="bar" id="cbar"><div class="knob">⇆</div></div><span class="lb2" style="right:12px">بعد</span><span class="lb2" style="left:12px">قبل</span></div>
+      <div class="scan" id="scan" hidden></div>
+    </div>
+    <div class="side" id="side"></div>
+  </div>
+</div>
+<input type="file" id="file" accept="image/*" capture="user" hidden>
+
+<script>
+const fa=s=>String(s).replace(/\d/g,d=>'۰۱۲۳۴۵۶۷۸۹'[d]);
+const money=n=>fa(n.toLocaleString('en-US').replace(/,/g,'٬'));
+const $=id=>document.getElementById(id);
+
+/* ---------- garments (SVG, viewBox 200x220; shoulders at x 40–160, neck at y 8) ---------- */
+function dark(h,f){const n=parseInt(h.slice(1),16);const r=n>>16&255,g=n>>8&255,b=n&255;return '#'+[r,g,b].map(v=>Math.round(v*f).toString(16).padStart(2,'0')).join('')}
+function shade(id,c){return `<defs><linearGradient id="${id}" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="${c}"/><stop offset=".55" stop-color="${c}"/><stop offset="1" stop-color="${dark(c,.55)}"/></linearGradient><linearGradient id="${id}h" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#000" stop-opacity=".28"/><stop offset=".35" stop-color="#fff" stop-opacity=".10"/><stop offset=".7" stop-color="#000" stop-opacity="0"/><stop offset="1" stop-color="#000" stop-opacity=".3"/></linearGradient></defs>`}
+const G={
+ hoodie:(c,k)=>`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 220">${shade('g'+k,c)}
+  <path d="M64 10 Q100 -6 136 10 L132 34 Q100 46 68 34Z" fill="${c}" opacity=".85"/>
+  <path d="M68 12 Q100 30 132 12 L166 24 L188 120 L196 198 L172 204 L158 112 L158 214 L42 214 L42 112 L28 204 L4 198 L12 120 L34 24Z" fill="url(#g${k})"/>
+  <path d="M68 12 Q100 30 132 12 L166 24 L188 120 L196 198 L172 204 L158 112 L158 214 L42 214 L42 112 L28 204 L4 198 L12 120 L34 24Z" fill="url(#g${k}h)"/>
+  <path d="M74 14 Q100 34 126 14 Q100 46 74 14Z" fill="#000" opacity=".35"/>
+  <path d="M90 32 V70 M110 32 V70" stroke="#fff" stroke-opacity=".7" stroke-width="2.4" stroke-linecap="round"/>
+  <path d="M62 150 H138 L146 192 H54Z" fill="#000" opacity=".16"/><path d="M62 150 H138" stroke="#000" stroke-opacity=".25" stroke-width="2"/>
+  <rect x="42" y="204" width="116" height="10" fill="#000" opacity=".18"/>
+  <path d="M158 112 L162 196 M42 112 L38 196" stroke="#000" stroke-opacity=".2" stroke-width="2"/></svg>`,
+ shirt:(c,k)=>`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 220">${shade('g'+k,c)}
+  <path d="M70 8 Q100 20 130 8 L164 22 L186 120 L196 200 L172 204 L158 110 L156 214 L44 214 L42 110 L28 204 L4 200 L14 120 L36 22Z" fill="url(#g${k})"/>
+  <path d="M70 8 Q100 20 130 8 L164 22 L186 120 L196 200 L172 204 L158 110 L156 214 L44 214 L42 110 L28 204 L4 200 L14 120 L36 22Z" fill="url(#g${k}h)"/>
+  <path d="M70 8 L100 40 L84 46 L66 16Z M130 8 L100 40 L116 46 L134 16Z" fill="#f3eee4"/>
+  <path d="M100 40 V214" stroke="#000" stroke-opacity=".25" stroke-width="2"/>
+  ${[60,90,120,150,180].map(y=>`<circle cx="104" cy="${y}" r="2.6" fill="#f3eee4"/>`).join('')}
+  <rect x="120" y="66" width="22" height="26" rx="3" fill="none" stroke="#000" stroke-opacity=".25" stroke-width="2"/>
+  <path d="M4 200 L28 204 M196 200 L172 204" stroke="#f3eee4" stroke-width="5"/></svg>`,
+ tee:(c,k)=>`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 220">${shade('g'+k,c)}
+  <path d="M70 8 Q100 26 130 8 L164 22 L198 64 L172 88 L156 72 L156 214 L44 214 L44 72 L28 88 L2 64 L36 22Z" fill="url(#g${k})"/>
+  <path d="M70 8 Q100 26 130 8 L164 22 L198 64 L172 88 L156 72 L156 214 L44 214 L44 72 L28 88 L2 64 L36 22Z" fill="url(#g${k}h)"/>
+  <path d="M70 8 Q100 26 130 8 Q100 36 70 8Z" fill="#000" opacity=".35"/><path d="M70 8 Q100 26 130 8" stroke="#000" stroke-opacity=".3" stroke-width="5" fill="none"/>
+  <circle cx="100" cy="96" r="22" fill="none" stroke="#f1e6cf" stroke-opacity=".7" stroke-width="2.5"/><path d="M88 102 Q100 80 112 102" stroke="#f1e6cf" stroke-opacity=".7" stroke-width="2.5" fill="none"/>
+  <path d="M60 130 Q70 170 62 210 M140 130 Q132 170 140 210" stroke="#000" stroke-opacity=".12" stroke-width="3" fill="none"/></svg>`,
+ coat:(c,k)=>`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 240">${shade('g'+k,c)}
+  <path d="M70 8 Q100 26 130 8 L162 20 L186 112 L194 198 L170 202 L158 114 L172 236 L28 236 L42 114 L30 202 L6 198 L14 112 L38 20Z" fill="url(#g${k})"/>
+  <path d="M70 8 Q100 26 130 8 L162 20 L186 112 L194 198 L170 202 L158 114 L172 236 L28 236 L42 114 L30 202 L6 198 L14 112 L38 20Z" fill="url(#g${k}h)"/>
+  <path d="M70 8 L96 70 L100 236 M130 8 L104 70" stroke="#c9a45c" stroke-width="3" fill="none"/>
+  <rect x="42" y="118" width="116" height="10" fill="#c9a45c"/><rect x="92" y="114" width="16" height="18" rx="2" fill="none" stroke="#f1d79a" stroke-width="3"/>
+  <path d="M6 198 L30 202 M194 198 L170 202" stroke="#c9a45c" stroke-width="5"/></svg>`
+};
+const P=[
+ {id:'p1',g:'hoodie',c:'#b8946c',name:'هودی کویر',cat:'هودی',price:1890000,desc:'هودی پنبه‌ای ضخیم با کلاه دولایه و جیب جلو. رنگ شنی گرم که با شلوار تیره و روشن هر دو جور می‌شود.',tries:412},
+ {id:'p2',g:'shirt',c:'#34507d',name:'پیراهن بندر',cat:'پیراهن',price:1450000,desc:'پیراهن نخی آبی نیلی با یقه‌ی سفید و دکمه‌های صدفی. مناسب کار و مهمانی‌های ساده.',tries:268},
+ {id:'p3',g:'tee',c:'#5f6b42',name:'تیشرت نخل',cat:'تیشرت',price:690000,desc:'تیشرت زیتونی با چاپ خطی کوچک روی سینه. جنس نخ صددرصد و خنک برای تابستان جنوب.',tries:351},
+ {id:'p4',g:'coat',c:'#1d1a16',name:'مانتو سپیده',cat:'مانتو',price:2750000,desc:'مانتوی بلند مشکی با نوار و کمربند طلایی. برش ساده و رسمی، برای پاییز و زمستان.',tries:193}
+];
+let cur=P[0],size='L',cart=0;
+const svgOf=(p,k)=>G[p.g](p.c,k||p.id);
+
+/* ---------- product page ---------- */
+function renderProduct(){
+  $('galImg').innerHTML=svgOf(cur,'main');
+  const s=$('galImg').firstElementChild; s.style.transform='translateY(10px) scale(.96)'; requestAnimationFrame(()=>s.style.transform='');
+  $('pName').textContent=cur.name;$('pCat').textContent=cur.cat;$('crCat').textContent=cur.cat;
+  $('pPrice').innerHTML=money(cur.price)+' <small>تومان</small>';$('pDesc').textContent=cur.desc;
+  $('thumbs').innerHTML=P.map(p=>`<button aria-pressed="${p===cur}" data-id="${p.id}" aria-label="${p.name}">${svgOf(p,'t'+p.id)}</button>`).join('');
+}
+$('thumbs').onclick=e=>{const b=e.target.closest('button');if(!b)return;cur=P.find(p=>p.id===b.dataset.id);renderProduct()};
+$('sizes').innerHTML=['S','M','L','XL','XXL'].map(s=>`<button aria-pressed="${s===size}" data-s="${s}">${s}</button>`).join('');
+$('sizes').onclick=e=>{const b=e.target.closest('button');if(!b)return;size=b.dataset.s;[...$('sizes').children].forEach(x=>x.setAttribute('aria-pressed',x===b))};
+function toast(msg,ic='✓'){document.querySelectorAll('.toast').forEach(t=>t.remove());const t=document.createElement('div');t.className='toast';t.innerHTML=`<i>${ic}</i><span>${msg}</span>`;document.body.appendChild(t);setTimeout(()=>t.remove(),2600)}
+function addCart(){cart++;$('cartN').textContent=fa(cart);$('cartBtn').animate([{transform:'scale(1)'},{transform:'scale(1.25)'},{transform:'scale(1)'}],{duration:450});toast(`${cur.name}، سایز ${size}، به سبد اضافه شد`,'🛍︎')}
+$('addBtn').onclick=addCart;
+
+/* ---------- tabs ---------- */
+function tab(a){$('t-shop').setAttribute('aria-selected',a==='shop');$('t-adm').setAttribute('aria-selected',a==='adm');$('shop').hidden=a!=='shop';$('admin').hidden=a!=='adm'}
+$('t-shop').onclick=()=>tab('shop');$('t-adm').onclick=()=>tab('adm');
+
+/* ---------- sample person (drawn, so the demo works without a photo) ---------- */
+const SAMPLE=`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 800"><defs><radialGradient id="bg" cx=".5" cy=".35" r=".8"><stop offset="0" stop-color="#3a3126"/><stop offset="1" stop-color="#14110d"/></radialGradient><linearGradient id="sk" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#d9a982"/><stop offset="1" stop-color="#a87451"/></linearGradient><linearGradient id="tp" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#e9e3d8"/><stop offset="1" stop-color="#bdb4a6"/></linearGradient></defs>
+<rect width="600" height="800" fill="url(#bg)"/><ellipse cx="300" cy="780" rx="190" ry="22" fill="#000" opacity=".35"/>
+<path d="M216 470 L206 770 H286 L298 520 L312 770 H392 L384 470Z" fill="#2b2f38"/>
+<path d="M196 262 Q170 270 160 330 L150 470 Q148 500 160 504 Q172 506 176 480 L190 360Z" fill="url(#sk)"/>
+<path d="M404 262 Q430 270 440 330 L450 470 Q452 500 440 504 Q428 506 424 480 L410 360Z" fill="url(#sk)"/>
+<path d="M270 196 H330 V246 H270Z" fill="url(#sk)"/>
+<path d="M196 250 Q300 228 404 250 L412 300 L396 480 H204 L188 300Z" fill="url(#tp)"/>
+<ellipse cx="300" cy="150" rx="58" ry="70" fill="url(#sk)"/>
+<path d="M240 140 Q238 70 300 70 Q364 70 360 140 Q350 104 300 100 Q252 104 240 140Z" fill="#2a1d14"/>
+<rect x="196" y="760" width="96" height="22" rx="10" fill="#111"/><rect x="308" y="760" width="96" height="22" rx="10" fill="#111"/></svg>`;
+/* where the garment sits on the sample (canvas px) */
+const SAMPLE_FIT={x:300,y:226,w:360};
+
+/* ---------- try-on studio ---------- */
+const cv=$('cv'),ctx=cv.getContext('2d');
+let base=null,fit={...SAMPLE_FIT},sel=cur,split=.5,phase='upload',consent=true;
+function img(src){return new Promise((r,j)=>{const i=new Image();i.onload=()=>r(i);i.onerror=j;i.src=src})}
+const svgUrl=s=>'data:image/svg+xml;charset=utf-8,'+encodeURIComponent(s);
+async function setBase(src,isSample){
+  const i=await img(src);const W=600,H=Math.round(W*i.height/i.width);
+  cv.width=W;cv.height=Math.min(H,1000);
+  const off=document.createElement('canvas');off.width=W;off.height=cv.height;off.getContext('2d').drawImage(i,0,0,W,H);base=off;
+  fit=isSample?{...SAMPLE_FIT}:{x:W/2,y:cv.height*.26,w:W*.6};
+  draw();
+}
+let gImg=null;
+async function loadGarment(){gImg=await img(svgUrl(svgOf(sel,'try')))}
+function draw(){
+  if(!base)return;ctx.clearRect(0,0,cv.width,cv.height);ctx.drawImage(base,0,0);
+  if(phase==='result'&&gImg){
+    const w=fit.w,h=w*gImg.height/gImg.width,x=fit.x-w/2,y=fit.y;
+    ctx.save();ctx.beginPath();ctx.rect(cv.width*(1-split),0,cv.width,cv.height);ctx.clip();
+    ctx.shadowColor='#0008';ctx.shadowBlur=18;ctx.shadowOffsetY=8;ctx.drawImage(gImg,x,y,w,h);ctx.restore();
+    const bx=cv.getBoundingClientRect(),sc=bx.width/cv.width;$('cbar').style.right=(split*bx.width)+'px';
+  }
+  if(phase==='scan'){
+    ctx.fillStyle='#f1d79a';const pts=[[0,-.1],[-.33,.03],[.33,.03],[-.38,.32],[.38,.32],[-.2,.62],[.2,.62],[-.1,.9],[.1,.9]];
+    pts.slice(0,scanPts).forEach(([a,b])=>{ctx.beginPath();ctx.arc(fit.x+a*fit.w,fit.y+b*fit.w*1.4,6,0,7);ctx.fill()});
+  }
+}
+let scanPts=0;
+const side=$('side');
+const stepBar=n=>`<div class="steps">${[1,2,3].map(i=>`<i class="${i<=n?'on':''}"></i>`).join('')}</div>`;
+function viewUpload(){
+  phase='upload';$('cmp').hidden=true;$('scan').hidden=true;draw();
+  side.innerHTML=`${stepBar(1)}<h2 id="stTitle">عکست را بفرست</h2>
+  <div class="drop" id="drop"><svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#c9a45c" stroke-width="1.6"><path d="M4 16v3h16v-3M12 4v11M7 9l5-5 5 5"/></svg>
+   <span>عکس تمام‌قد یا تا زانو، رو به دوربین</span><button class="ghost" id="pick">انتخاب یا گرفتن عکس</button><small style="color:var(--mute)">یا عکس را اینجا رها کن</small></div>
+  <button class="ghost" id="useSample">ادامه با عکس نمونه</button>
+  <label class="check"><input type="checkbox" id="ok" ${consent?'checked':''}><span>موافقم عکسم فقط برای پرو استفاده شود و بعد از ۲۴ ساعت پاک شود.</span></label>
+  <button class="beam" id="go">پرو کن: ${sel.name}</button>`;
+  $('pick').onclick=()=>$('file').click();
+  $('useSample').onclick=async()=>{await setBase(svgUrl(SAMPLE),true);toast('عکس نمونه انتخاب شد','👤')};
+  $('ok').onchange=e=>consent=e.target.checked;
+  const d=$('drop');['dragenter','dragover'].forEach(t=>d.addEventListener(t,e=>{e.preventDefault();d.classList.add('hot')}));
+  ['dragleave','drop'].forEach(t=>d.addEventListener(t,e=>{e.preventDefault();d.classList.remove('hot')}));
+  d.addEventListener('drop',e=>{const f=e.dataTransfer.files[0];if(f)readFile(f)});
+  $('go').onclick=()=>{if(!consent){toast('برای ادامه، تیک رضایت را بزن','!');return}viewScan()};
+}
+function readFile(f){if(!f.type.startsWith('image/')){toast('فایل باید عکس باشد','!');return}const r=new FileReader();r.onload=async()=>{await setBase(r.result,false);toast('عکست آماده‌ی پرو است','📷')};r.readAsDataURL(f)}
+$('file').onchange=e=>{const f=e.target.files[0];if(f)readFile(f);e.target.value=''};
+async function viewScan(){
+  phase='scan';scanPts=0;$('scan').hidden=false;await loadGarment();
+  const L=['پیدا کردن بدن و شانه‌ها','جدا کردن لباس فعلی','تطبیق «'+sel.name+'» با بدن','ساخت تصویر نهایی'];
+  side.innerHTML=`${stepBar(2)}<h2 id="stTitle">در حال پرو…</h2><div class="list" id="lst">${L.map(t=>`<div><i></i>${t}</div>`).join('')}</div>
+  <p style="font-size:13px;color:var(--mute);margin:0">در نسخه‌ی واقعی این مرحله روی سرور هوش مصنوعی انجام می‌شود و چند ثانیه طول می‌کشد.</p>`;
+  const rows=[...$('lst').children];
+  for(let i=0;i<rows.length;i++){rows[i].className='run';
+    for(let k=0;k<3;k++){await new Promise(r=>setTimeout(r,matchMedia('(prefers-reduced-motion:reduce)').matches?60:260));scanPts=Math.min(9,scanPts+1);draw()}
+    rows[i].className='done';rows[i].firstElementChild.textContent='✓'}
+  viewResult();
+}
+function viewResult(){
+  phase='result';split=.5;$('scan').hidden=true;$('cmp').hidden=false;draw();
+  side.innerHTML=`${stepBar(3)}<h2 id="stTitle">${sel.name} روی تو</h2>
+  <div class="lbl" style="margin:0">لباس دیگری امتحان کن</div>
+  <div class="chips" id="chips">${P.map(p=>`<button aria-pressed="${p===sel}" data-id="${p.id}" aria-label="${p.name}">${svgOf(p,'c'+p.id)}</button>`).join('')}</div>
+  <div class="rng"><label for="rs">اندازه‌ی لباس روی عکس</label><input id="rs" type="range" min="0.6" max="1.5" step="0.01" value="1"></div>
+  <div class="rng"><label for="rc">مقایسه‌ی قبل و بعد</label><input id="rc" type="range" min="0" max="1" step="0.01" value="0.5"></div>
+  <div class="honest">این نمونه‌کار به مدل هوش مصنوعی وصل نیست و لباس را فقط روی عکس می‌گذارد. در نسخه‌ی واقعی، مدل پرو مجازی لباس را با چین و نور بدن خودِ مشتری می‌سازد.</div>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px"><button class="beam" id="rAdd" style="font-size:15px;padding:14px">افزودن به سبد · ${size}</button><button class="ghost" id="rNew">عکس دیگر</button></div>`;
+  const w0=fit.w;
+  $('rs').oninput=e=>{fit.w=w0*e.target.value;draw()};
+  $('rc').oninput=e=>{split=+e.target.value;draw()};
+  $('chips').onclick=async e=>{const b=e.target.closest('button');if(!b)return;sel=P.find(p=>p.id===b.dataset.id);await loadGarment();[...$('chips').children].forEach(x=>x.setAttribute('aria-pressed',x===b));$('stTitle').textContent=sel.name+' روی تو';$('rAdd').onclick=()=>{cur=sel;renderProduct();addCart()};draw();toast(sel.name+' روی عکست نشست','👕')};
+  $('rAdd').onclick=()=>{cur=sel;renderProduct();addCart()};
+  $('rNew').onclick=viewUpload;
+}
+/* drag garment to adjust */
+let drag=null;
+cv.addEventListener('pointerdown',e=>{if(phase!=='result')return;const r=cv.getBoundingClientRect(),s=cv.width/r.width;drag={x:e.clientX,y:e.clientY,fx:fit.x,fy:fit.y,s};cv.setPointerCapture(e.pointerId)});
+cv.addEventListener('pointermove',e=>{if(!drag)return;fit.x=drag.fx+(e.clientX-drag.x)*drag.s;fit.y=drag.fy+(e.clientY-drag.y)*drag.s;draw()});
+cv.addEventListener('pointerup',()=>drag=null);
+async function openStudio(){sel=cur;$('sheet').hidden=false;document.body.style.overflow='hidden';if(!base)await setBase(svgUrl(SAMPLE),true);viewUpload();setTimeout(()=>$('closeBtn').focus(),50)}
+function closeStudio(){$('sheet').hidden=true;document.body.style.overflow='';$('tryBtn').focus()}
+$('tryBtn').onclick=openStudio;$('closeBtn').onclick=closeStudio;
+document.addEventListener('keydown',e=>{if(e.key==='Escape'&&!$('sheet').hidden)closeStudio()});
+addEventListener('resize',draw);
+
+/* ---------- admin ---------- */
+(function chart(){
+  const d=[96,122,108,141,165,132,148],days=['ش','ی','د','س','چ','پ','ج'],max=200,W=420,H=170,l=34,b=26,t=12,iw=(W-l-10)/7;
+  let s='';[0,50,100,150,200].forEach(v=>{const y=H-b-(v/max)*(H-b-t);s+=`<line x1="${l}" x2="${W-6}" y1="${y}" y2="${y}" stroke="#c9a45c22"/><text x="${l-6}" y="${y+4}" fill="#efe8da88" font-size="11" text-anchor="end" font-family="Peyda">${fa(v)}</text>`});
+  d.forEach((v,i)=>{const h=(v/max)*(H-b-t),x=l+6+i*iw+iw*.18,w=iw*.64,y=H-b-h,last=i===d.length-1;
+    s+=`<rect x="${x}" y="${y}" width="${w}" height="${h}" rx="6" fill="${last?'#f1d79a':'#c9a45c'}" opacity="${last?1:.55}"/><text x="${x+w/2}" y="${H-8}" fill="#efe8da99" font-size="12" text-anchor="middle" font-family="Peyda">${days[i]}</text>`;
+    if(last)s+=`<text x="${x+w/2}" y="${y-6}" fill="#f1d79a" font-size="12" text-anchor="middle" font-family="Peyda" font-weight="700">${fa(v)}</text>`});
+  $('chart').innerHTML=s;
+})();
+$('ptbl').innerHTML=P.map(p=>`<tr><td>${p.name}</td><td class="n">${fa(p.tries)}</td><td><label class="sw"><input type="checkbox" checked data-id="${p.id}" aria-label="پرو برای ${p.name}"><span></span></label></td></tr>`).join('');
+$('ptbl').onchange=e=>{const p=P.find(x=>x.id===e.target.dataset.id);toast(e.target.checked?`پرو برای ${p.name} روشن شد`:`پرو برای ${p.name} خاموش شد`,e.target.checked?'✓':'⏸︎')};
+document.querySelectorAll('input[name=eng]').forEach(r=>r.onchange=()=>toast(r.value==='gpu'?'موتور: سرور اختصاصی GPU':'موتور: سرویس آنلاین','⚙︎'));
+$('srv').onchange=()=>toast('آدرس سرور ذخیره شد','🔗');
+$('s1').onchange=e=>{$('tryBtn').hidden=!e.target.checked;toast(e.target.checked?'پرو مجازی در فروشگاه فعال شد':'پرو مجازی از فروشگاه برداشته شد',e.target.checked?'✓':'⏸︎')};
+$('s2').onchange=e=>toast(e.target.checked?'تیک رضایت نمایش داده می‌شود':'تیک رضایت برداشته شد','🛡︎');
+$('s3').onchange=e=>toast(e.target.checked?'حذف خودکار ۲۴ساعته روشن شد':'حذف خودکار خاموش شد','🗑︎');
+$('lim').onchange=e=>toast(`سقف هر کاربر: ${fa(e.target.value)} پرو در روز`,'⏱︎');
+renderProduct();
+</script>
+</body></html>
