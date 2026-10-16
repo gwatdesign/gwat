@@ -1,4 +1,4 @@
-/* shared bits for Gwat concept sites: portfolio notice, Made By M.D tag, toast */
+/* shared bits for Gwat concept sites: portfolio notice, Gwat tag, toast */
 .gw-note{position:fixed;inset:0;z-index:200;display:grid;place-items:center;padding:16px;background:#0008;backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);opacity:0;visibility:hidden;transition:opacity .45s,visibility .45s;font-family:"Yekan Bakh",Tahoma,sans-serif}
 .gw-note.on{opacity:1;visibility:visible}
 .gw-card{width:min(400px,100%);border-radius:22px;padding:28px 24px 22px;text-align:center;background:var(--gw-bg,#fff);color:var(--gw-fg,#111);box-shadow:0 40px 90px -20px #0008;transform:translateY(26px) scale(.95);transition:transform .6s cubic-bezier(.2,.9,.25,1.15)}
@@ -9,9 +9,9 @@
 .gw-card p{margin:0 0 18px;font-size:14px;line-height:1.9;opacity:.8}
 .gw-card button{font:inherit;font-weight:700;border:0;border-radius:999px;padding:11px 24px;background:var(--gw-ac,#111);color:var(--gw-acfg,#fff);cursor:pointer;transition:transform .3s}
 .gw-card button:hover{transform:translateY(-2px)}
-.gw-md{display:flex;align-items:center;justify-content:center;gap:8px;direction:ltr;margin-top:14px;font-size:11px;font-weight:700;letter-spacing:.14em;opacity:.75}
+.gw-md{display:flex;align-items:center;justify-content:center;gap:8px;direction:ltr;margin-top:14px;font-size:11px;font-weight:700;letter-spacing:0;font-size:13px;opacity:.75}
 .gw-md svg,.gw-tag svg{width:34px;height:auto;fill:currentColor}
-.gw-tag{position:fixed;left:14px;bottom:calc(14px + env(safe-area-inset-bottom,0px));z-index:150;display:flex;align-items:center;gap:7px;direction:ltr;padding:5px 12px 5px 8px;border-radius:999px;font:700 11px/1 "Yekan Bakh",sans-serif;letter-spacing:.12em;background:var(--gw-tagbg,#000b);color:var(--gw-tagfg,#f1d79a);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border:1px solid #ffffff22;opacity:0;transform:translateY(10px);animation:gwIn .8s cubic-bezier(.2,.8,.2,1) 1.8s forwards}
+.gw-tag{position:fixed;left:14px;bottom:calc(14px + env(safe-area-inset-bottom,0px));z-index:150;display:flex;align-items:center;gap:7px;direction:ltr;padding:5px 12px 5px 8px;border-radius:999px;font:700 13px/1 "Yekan Bakh",sans-serif;background:var(--gw-tagbg,#000b);color:var(--gw-tagfg,#f1d79a);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border:1px solid #ffffff22;opacity:0;transform:translateY(10px);animation:gwIn .8s cubic-bezier(.2,.8,.2,1) 1.8s forwards}
 @keyframes gwIn{to{opacity:1;transform:none}}
 .gw-toast{position:fixed;left:50%;bottom:calc(20px + env(safe-area-inset-bottom,0px));z-index:210;translate:-50% calc(100% + 60px);visibility:hidden;transition:translate .5s cubic-bezier(.2,.9,.25,1.25),visibility .5s;background:var(--gw-ac,#111);color:var(--gw-acfg,#fff);padding:11px 20px;border-radius:999px;font:600 14px "Yekan Bakh",sans-serif;box-shadow:0 18px 40px -10px #0008;max-width:calc(100vw - 32px);text-align:center}
 .gw-toast.on{translate:-50% 0;visibility:visible}
